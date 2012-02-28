@@ -2,7 +2,7 @@
 
 	Smart.ui.createLijstjeWindow = function() {
 		var lijstjeWindow = Titanium.UI.createWindow({
-			title : 'Lijstjes',
+			title : 'Mijn lijstjes',
 			barImage : 'img/header.png',
 			backgroundImage : 'img/bg.png',
 			fullscreen : false
@@ -23,8 +23,9 @@
 		})];
 		var tableview = Titanium.UI.createTableView({
 			data : data,
-			backgroundImage : 'img/bg.png',
+			backgroundImage : 'img/bg_list.png',
 			scrollable : false,
+			fullscreen : false,
 			style : Titanium.UI.iPhone.TableViewStyle.GROUPED
 		});
 		lijstjeWindow.add(tableview);
@@ -32,21 +33,22 @@
 		//
 		// Details lijstje tonen
 		//
-		
+
 		tableview.addEventListener('click', function(e) {
-			Titanium.API.info('Detail: '+e.rowData.title);
+			Titanium.API.info('Detail: ' + e.rowData.title);
 			Smart.navGroup.open(Titanium.UI.createWindow({
-				title : e.rowData.title
+				title : e.rowData.title,
+				backgroundImage : 'img/bg.png',
+				fullscreen : false,
 			}));
 			/*
-			Smart.navGroup.open(Smart.ui.createNieuwLijstjeWindow({
-				title : e.rowData.title
-			}), {
-				animated : true
-			});
-			*/
+			 Smart.navGroup.open(Smart.ui.createNieuwLijstjeWindow({
+			 title : e.rowData.title
+			 }), {
+			 animated : true
+			 });
+			 */
 		});
-		
 		//
 		// Add lijstje window
 		//
@@ -75,10 +77,10 @@
 			right : 20,
 			top : 15
 		});
-		btnCreateLijstje.addEventListener('click',function(e){
-			Ti.API.info('Nieuwe lijst: '+nameLijstje.value)
+		btnCreateLijstje.addEventListener('click', function(e) {
+			Ti.API.info('Nieuwe lijst: ' + nameLijstje.value)
 		});
-		
+
 		addWin.add(nameLijstje);
 		addWin.add(btnCreateLijstje);
 

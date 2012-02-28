@@ -1,6 +1,10 @@
 (function() {
+	var iconHeight = 67;
+	var iconWidth = 64;
 
 	Smart.ui.icons = {
+		height: iconHeight,
+		width: iconWidth,
 		list : [{
 			image : 'img/btn_scannen.png',
 			func : Smart.ui.createScannenWindow
