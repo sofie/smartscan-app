@@ -4,17 +4,9 @@
 		var infoWindow = Titanium.UI.createWindow({
 			title : 'Info',
 			barImage : 'img/header.png',
-			backgroundImage: 'img/bg.png',
-			fullscreen : false,
-			font:{fontFamily:'Museo'}
+			backgroundImage : 'img/bg_info.png',
+			fullscreen : false
 		});
-		
-		var label1 = Titanium.UI.createLabel({
-			text:'Informatie',
-			left:10
-		});
-		infoWindow.add(label1);
-		
 
 		return infoWindow;
 	};

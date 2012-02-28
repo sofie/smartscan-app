@@ -4,28 +4,11 @@
 	var navWindow;
 	var mainWindow = Ti.UI.createWindow({
 		backgroundImage : 'img/bg_main.png',
-		navBarHidden: true,
+		navBarHidden : true,
 		exitOnClose : true,
-		fullscreen:false
+		fullscreen : false
 
 	});
-	var platformWidth = Titanium.Platform.displayCaps.platformWidth;
-	var viewIcons = Titanium.UI.createView({
-		bottom:30,
-		height : 190,
-		width : 190,
-		layout : 'horizontal',
-	});
-	var viewIconsBg = Titanium.UI.createView({
-		bottom:35,
-		height : 190,
-		width : 264,
-		layout : 'horizontal',
-		backgroundImage:'img/bg_menu.png',
-		opacity:0.5
-	});
-	mainWindow.add(viewIconsBg);
-	mainWindow.add(viewIcons);
 
 	// handle cross-platform navigation
 	if(Smart.isAndroid()) {
@@ -44,16 +27,33 @@
 			window : mainWindow
 		});
 		navWindow.add(Smart.navGroup);
-	}
+	};
+	
+	var viewIcons = Titanium.UI.createView({
+		bottom : 55,
+		height : 180,
+		left:60,
+		width : 280,
+		layout : 'horizontal'
+	});
+	var viewIconsBg = Titanium.UI.createView({
+		bottom : 35,
+		height : 190,
+		width : 264,
+		layout : 'horizontal',
+		backgroundImage : 'img/bg_menu.png',
+		opacity : 0.5
+	});
+	mainWindow.add(viewIconsBg);
+	mainWindow.add(viewIcons);
 
 	// Create each menu icon and include properties for any windows it opens
 	var createIcon = function(icon) {
 		var iconWin = undefined;
-		var view = Ti.UI.createView({
+		var view = Titanium.UI.createView({
 			backgroundImage : icon.image,
-			top : 15,
-			left : 15,
-			bottom:15,
+			top : 25,
+			right : 70,
 			height : 67,
 			width : 64
 		});
@@ -63,10 +63,10 @@
 
 			// add a left navigation button for ios
 			if(!Smart.isAndroid()) {
-				var leftButton = Ti.UI.createButton({
-					title:'Back',
-					width : 41,
-					height : 31
+				var leftButton = Titanium.UI.createButton({
+					backgroundImage:"img/btn_back.png",
+					width : 57,
+					height : 35
 				});
 				leftButton.addEventListener('click', function() {
 					Smart.navGroup.close(iconWin, {

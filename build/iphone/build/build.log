@@ -5,7 +5,7 @@ reporting an issue to help us understand your environment, build settings
 and aid in debugging. Please attach this log to any issue that you report.
 ================================================================================
 
-Starting build at 02/28/12 17:28
+Starting build at 02/29/12 00:39
 
 Build details:
 
@@ -18,7 +18,7 @@ Build details:
 Script arguments:
    /Users/sofie/Library/Application Support/Titanium/mobilesdk/osx/1.8.1/iphone/builder.py
    simulator
-   5.0
+   4.3
    /Users/sofie/Documents/Titanium Studio Workspace/smart-app
    com.appcelerator.smartscan
    smart-app

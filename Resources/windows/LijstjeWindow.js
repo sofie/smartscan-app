@@ -4,7 +4,6 @@
 		var lijstjeWindow = Titanium.UI.createWindow({
 			title : 'Mijn lijstjes',
 			barImage : 'img/header.png',
-			backgroundImage : 'img/bg.png',
 			fullscreen : false
 		});
 
@@ -23,7 +22,7 @@
 		})];
 		var tableview = Titanium.UI.createTableView({
 			data : data,
-			backgroundImage : 'img/bg_list.png',
+			backgroundImage : 'img/bg.png',
 			scrollable : false,
 			fullscreen : false,
 			style : Titanium.UI.iPhone.TableViewStyle.GROUPED
@@ -38,7 +37,7 @@
 			Titanium.API.info('Detail: ' + e.rowData.title);
 			Smart.navGroup.open(Titanium.UI.createWindow({
 				title : e.rowData.title,
-				backgroundImage : 'img/bg.png',
+				barImage : 'img/header.png',
 				fullscreen : false,
 			}));
 			/*
@@ -53,9 +52,8 @@
 		// Add lijstje window
 		//
 		var addWin = Titanium.UI.createWindow({
-			title : 'Add',
+			title : 'Nieuw lijstje',
 			barImage : 'img/header.png',
-			backgroundImage : 'img/bg.png',
 			layout : 'vertical'
 		});
 
@@ -66,14 +64,20 @@
 			right : 20,
 			height : 40,
 			hintText : 'Nieuw boodschappenlijstje',
+			font : {
+				fontSize : 15
+			},
+			opacity : 0.65,
 			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
 			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED
+			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
+			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 		});
+		
 		var btnCreateLijstje = Titanium.UI.createButton({
-			title : 'Maak lijstje',
-			width : 150,
-			height : 30,
+			backgroundImage : 'img/btn_maak.png',
+			width : 100,
+			height : 42,
 			right : 20,
 			top : 15
 		});
@@ -84,10 +88,10 @@
 		addWin.add(nameLijstje);
 		addWin.add(btnCreateLijstje);
 
-		var addButton = Ti.UI.createButton({
-			title : '+',
-			width : 41,
-			height : 31
+		var addButton = Titanium.UI.createButton({
+			backgroundImage : "img/btn_add.png",
+			width : 37,
+			height : 35
 		});
 		addButton.addEventListener('click', function() {
 			Smart.navGroup.open(addWin, {
@@ -99,5 +103,3 @@
 		return lijstjeWindow;
 	};
 })();
-
-Ti.include('NieuwLijstjeWindow.js');
