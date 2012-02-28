@@ -4,7 +4,10 @@
 		var lijstjeWindow = Titanium.UI.createWindow({
 			title : 'Mijn lijstjes',
 			barImage : 'img/header.png',
-			fullscreen : false
+			fullscreen : false,
+			font : {
+				fontFamily : 'Bree Serif'
+			}
 		});
 
 		//
@@ -34,19 +37,19 @@
 		//
 
 		tableview.addEventListener('click', function(e) {
-			Titanium.API.info('Detail: ' + e.rowData.title);
+			/*var backBtn = Titanium.UI.createButton({
+			 backgroundImage : "img/btn_back.png",
+			 width : 57,
+			 height : 35
+			 });*/
+
 			Smart.navGroup.open(Titanium.UI.createWindow({
 				title : e.rowData.title,
 				barImage : 'img/header.png',
 				fullscreen : false,
+				//leftNavButton : backBtn
 			}));
-			/*
-			 Smart.navGroup.open(Smart.ui.createNieuwLijstjeWindow({
-			 title : e.rowData.title
-			 }), {
-			 animated : true
-			 });
-			 */
+
 		});
 		//
 		// Add lijstje window
@@ -65,7 +68,8 @@
 			height : 40,
 			hintText : 'Nieuw boodschappenlijstje',
 			font : {
-				fontSize : 15
+				fontSize : 15,
+				fontFamily : 'Bree Serif'
 			},
 			opacity : 0.65,
 			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
@@ -73,7 +77,7 @@
 			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 		});
-		
+
 		var btnCreateLijstje = Titanium.UI.createButton({
 			backgroundImage : 'img/btn_maak.png',
 			width : 100,
