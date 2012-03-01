@@ -2,13 +2,21 @@
 
 	Smart.ui.createLijstjeWindow = function() {
 		var lijstjeWindow = Titanium.UI.createWindow({
-			title : 'Mijn lijstjes',
 			barImage : 'img/header.png',
 			fullscreen : false,
 			font : {
 				fontFamily : 'Bree Serif'
 			}
 		});
+		var lblTitle = Titanium.UI.createLabel({
+			text : 'Mijn lijstjes',
+			color : '#fff',
+			font : {
+				fontFamily : 'Bree Serif',
+				fontSize : 24
+			}
+		});
+		lijstjeWindow.setTitleControl(lblTitle);
 
 		//
 		// Bestaande lijstjes van gebruiker
@@ -23,6 +31,7 @@
 			title : 'Toiletpapier,...',
 			hasChild : true
 		})];
+
 		var tableview = Titanium.UI.createTableView({
 			data : data,
 			backgroundImage : 'img/bg.png',
@@ -35,30 +44,31 @@
 		//
 		// Details lijstje tonen
 		//
-
 		tableview.addEventListener('click', function(e) {
-			/*var backBtn = Titanium.UI.createButton({
-			 backgroundImage : "img/btn_back.png",
-			 width : 57,
-			 height : 35
-			 });*/
-
-			Smart.navGroup.open(Titanium.UI.createWindow({
+			Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow({
 				title : e.rowData.title,
 				barImage : 'img/header.png',
-				fullscreen : false,
-				//leftNavButton : backBtn
+				fullscreen : false
 			}));
+
 
 		});
 		//
 		// Add lijstje window
 		//
 		var addWin = Titanium.UI.createWindow({
-			title : 'Nieuw lijstje',
 			barImage : 'img/header.png',
 			layout : 'vertical'
 		});
+		var lblAddTitle = Titanium.UI.createLabel({
+			text : 'Nieuw lijstje',
+			color : '#fff',
+			font : {
+				fontFamily : 'Bree Serif',
+				fontSize : 24
+			}
+		});
+		addWin.setTitleControl(lblAddTitle);
 
 		var nameLijstje = Titanium.UI.createTextField({
 			color : '#888',

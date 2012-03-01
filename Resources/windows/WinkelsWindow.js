@@ -2,9 +2,17 @@
 
 	Smart.ui.createWinkelsWindow = function() {
 		var winkelsWindow = Titanium.UI.createWindow({
-			title : 'Winkels',
 			barImage : 'img/header.png'
 		});
+		var lblTitle = Titanium.UI.createLabel({
+			text:'Winkels',
+			color:'#fff',
+			font : {
+				fontFamily : 'Bree Serif',
+				fontSize:24
+			}
+		});
+		winkelsWindow.setTitleControl(lblTitle);
 
 		var btnCurrentLocation = Titanium.UI.createButton({
 			backgroundImage : 'img/btn_gps.png',
@@ -27,7 +35,8 @@
 			height : 40,
 			hintText : 'Stad, postcode,...',
 			font : {
-				fontSize : 15
+				fontSize : 15,
+				fontFamily : 'Bree Serif'
 			},
 			opacity : 0.65,
 			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
@@ -46,11 +55,14 @@
 		btnSearch.addEventListener('click', function(e) {
 			Ti.API.info('Zoek winkel: ' + searchField.value)
 		});
+		winkelsWindow.add(searchField);
+		winkelsWindow.add(btnSearch);
+
 		var mapview = Titanium.Map.createView({
 			left : 30,
 			right : 30,
 			top : 80,
-			bottom : 30,
+			bottom : 70,
 			mapType : Titanium.Map.STANDARD_TYPE,
 			region : {
 				latitude : 50.883333,
@@ -64,8 +76,16 @@
 		});
 		winkelsWindow.add(mapview);
 
-		winkelsWindow.add(searchField);
-		winkelsWindow.add(btnSearch);
+		var btnBar = Titanium.UI.createButtonBar({
+			labels : ['Alle', 'Nu open'],
+			backgroundColor : '#73BD47',
+			bottom : 20,
+			style : Titanium.UI.iPhone.SystemButtonStyle.BAR,
+			height : 35,
+			width : Titanium.Platform.displayCaps.platformWidth - 60,
+			
+		});
+		winkelsWindow.add(btnBar);
 
 		return winkelsWindow;
 	};
