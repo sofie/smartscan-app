@@ -17,6 +17,22 @@
 			}
 		});
 		lijstjeWindow.setTitleControl(lblTitle);
+		
+		//
+		//Add lijstje button (rightNavButton)
+		//
+		var addButton = Titanium.UI.createButton({
+			backgroundImage : "img/btn_add.png",
+			width : 37,
+			height : 35
+		});
+		addButton.addEventListener('click', function() {
+			Smart.navGroup.open(addWin, {
+				animated : true
+			});
+		});
+		lijstjeWindow.rightNavButton = addButton;
+
 
 		//
 		// Bestaande lijstjes van gebruiker
@@ -50,9 +66,8 @@
 				barImage : 'img/header.png',
 				fullscreen : false
 			}));
-
-
 		});
+		
 		//
 		// Add lijstje window
 		//
@@ -102,18 +117,7 @@
 		addWin.add(nameLijstje);
 		addWin.add(btnCreateLijstje);
 
-		var addButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_add.png",
-			width : 37,
-			height : 35
-		});
-		addButton.addEventListener('click', function() {
-			Smart.navGroup.open(addWin, {
-				animated : true
-			});
-		});
-		lijstjeWindow.rightNavButton = addButton;
-
+		
 		return lijstjeWindow;
 	};
 })();

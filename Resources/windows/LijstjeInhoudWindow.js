@@ -17,7 +17,40 @@
 			}
 		});
 		inhoudlijstjeWindow.setTitleControl(lblTitle);
-		
+
+		//
+		//Add button (rightNavButton)
+		//
+		var addButton = Titanium.UI.createButton({
+			backgroundImage : "img/btn_add.png",
+			width : 37,
+			height : 35
+		});
+		addButton.addEventListener('click', function() {
+			Smart.navGroup.open(addProductWin, {
+				animated : true
+			});
+		});
+		inhoudlijstjeWindow.rightNavButton = addButton;
+
+		//
+		//Back button
+		//
+		var backButton = Titanium.UI.createButton({
+			backgroundImage : "img/btn_back.png",
+			width : 57,
+			height : 35
+		});
+		backButton.addEventListener('click', function() {
+			Smart.navGroup.close(inhoudlijstjeWindow, {
+				animated : true
+			});
+		});
+		inhoudlijstjeWindow.leftNavButton = backButton;
+
+		//
+		//Add window
+		//
 		var addProductWin = Titanium.UI.createWindow({
 			barImage : 'img/header.png'
 		});
@@ -31,7 +64,6 @@
 		});
 		addProductWin.setTitleControl(lblAddTitle);
 
-		
 		var widthTxtField = Titanium.Platform.displayCaps.platformWidth - 43 - 45;
 
 		var nameProduct = Titanium.UI.createTextField({
@@ -39,7 +71,7 @@
 			top : 20,
 			left : 20,
 			height : 40,
-			width: widthTxtField,
+			width : widthTxtField,
 			hintText : 'Boodschappen toevoegen...',
 			font : {
 				fontSize : 15,
@@ -65,21 +97,9 @@
 
 		addProductWin.add(nameProduct);
 		addProductWin.add(btnSearchProduct);
-		
-		var addButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_add.png",
-			width : 37,
-			height : 35
-		});
-		addButton.addEventListener('click', function() {
-			Smart.navGroup.open(addProductWin, {
-				animated : true
-			});
-		});
-		inhoudlijstjeWindow.rightNavButton = addButton;
 
 		//
-		// Bestaande lijstjes van gebruiker
+		// Producten op lijst
 		//
 		var data = [Ti.UI.createTableViewRow({
 			title : 'Tomaten',
@@ -104,15 +124,13 @@
 		//
 		// Details lijstje tonen
 		//
+		
 		tableview.addEventListener('click', function(e) {
-
-			Smart.navGroup.open(Titanium.UI.createWindow({
+			Smart.navGroup.open(Smart.ui.createDetailProductWindow({
 				title : e.rowData.title,
-				description : e.rowData.description,
 				barImage : 'img/header.png',
 				fullscreen : false
 			}));
-
 		});
 		return inhoudlijstjeWindow;
 	};
