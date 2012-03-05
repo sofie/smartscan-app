@@ -6,8 +6,8 @@
 		height: iconHeight,
 		width: iconWidth,
 		list : [{
-			image : 'img/btn_scannen.png',
-			func : Smart.ui.createScannenWindow
+			image : 'img/btn_winkelen.png',
+			func : Smart.ui.createWinkelenWindow
 		}, {
 			image : 'img/btn_lijstje.png',
 			func : Smart.ui.createLijstjeWindow

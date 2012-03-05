@@ -7,7 +7,7 @@ Ti.include('smart/smart.js');
 
 //windows & ui
 Ti.include(
-	'windows/ScannenWindow.js', 
+	'windows/WinkelenWindow.js', 
 	'windows/LijstjeWindow.js', 
 	'windows/LijstjeInhoudWindow.js', 
 	'windows/InfoWindow.js', 
