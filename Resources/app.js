@@ -12,7 +12,8 @@ Ti.include(
 	'windows/LijstjeInhoudWindow.js', 
 	'windows/DetailProductWindow.js',
 	'windows/InfoWindow.js', 
-	'windows/WinkelsWindow.js', 
+	'windows/WinkelsWindow.js',
 	'smart/icons.js', 
-	'windows/main.js'
+	'windows/main.js',
+	'windows/login.js'
 );

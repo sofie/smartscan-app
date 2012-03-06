@@ -61,6 +61,7 @@
 		// Details lijstje tonen
 		//
 		tableview.addEventListener('click', function(e) {
+			Titanium.App.fireEvent('app:listclicked',{action:'Inhoud lijst'});
 			Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow({
 				title : e.rowData.title,
 				barImage : 'img/header.png',
