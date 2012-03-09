@@ -110,15 +110,16 @@
 		height : 42
 	});
 	loginWin.add(loginBtn);
-
+	
 	var accountBtn = Titanium.UI.createButton({
 		backgroundImage : '/img/btn_account.png',
-		top : -42,
-		left : 20,
-		width : 182,
-		height : 42
+		top : -39,
+		left : 22,
+		width : 171,
+		height : 35
 	});
 	loginWin.add(accountBtn);
+
 
 	accountBtn.addEventListener('click', function() {
 		loginWin.close();
