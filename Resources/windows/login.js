@@ -106,11 +106,26 @@
 		backgroundImage : '/img/btn_login.png',
 		top : 10,
 		right : 20,
-		width : 100,
+		width : 90,
 		height : 42
 	});
 	loginWin.add(loginBtn);
 
+	var accountBtn = Titanium.UI.createButton({
+		backgroundImage : '/img/btn_account.png',
+		top : -42,
+		left : 20,
+		width : 182,
+		height : 42
+	});
+	loginWin.add(accountBtn);
+
+	accountBtn.addEventListener('click', function() {
+		loginWin.close();
+		Smart.navGroup.open(Smart.ui.createAccountWin(), {
+			animated : true
+		});
+	})
 	var wrmAccountView = Titanium.UI.createView({
 		width : 320,
 		height : 136,
@@ -145,14 +160,13 @@
 			loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
 			var params = {
 				userEmail : userEmail.value,
-				userPass : userPass.value
+				userPassword : userPass.value
 			};
 			loginReq.send(params);
 		} else {
 			alert("Gelieve alle velden in te vullen.");
 		}
 	});
-	
 	//
 	//Logout
 	//

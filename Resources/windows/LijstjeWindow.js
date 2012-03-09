@@ -3,10 +3,7 @@
 	Smart.ui.createLijstjeWindow = function() {
 		var lijstjeWindow = Titanium.UI.createWindow({
 			barImage : 'img/header.png',
-			fullscreen : false,
-			font : {
-				fontFamily : 'Bree Serif'
-			}
+			fullscreen : false
 		});
 		var lblTitle = Titanium.UI.createLabel({
 			text : 'Mijn lijstjes',

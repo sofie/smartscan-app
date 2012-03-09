@@ -15,5 +15,6 @@ Ti.include(
 	'windows/WinkelsWindow.js',
 	'smart/icons.js', 
 	'windows/main.js',
-	'windows/login.js'
+	'windows/login.js',
+	'windows/account.js'
 );
