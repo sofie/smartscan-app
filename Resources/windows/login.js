@@ -155,12 +155,14 @@
 			loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
 			var params = {
 				userEmail : userEmail.value,
-				userPass : userPass.value
+				userPassword : userPass.value
 			};
 			loginReq.send(params);
+			
 		} else {
 			alert("Gelieve alle velden in te vullen.");
 		}
+		
 	});
 	
 	//
