@@ -7,8 +7,7 @@
 		modal : true,
 		layout : 'vertical',
 		navBarHidden : false,
-		backgroundImage : 'img/bg.png',
-		exitOnClose : true
+		backgroundImage : 'img/bg.png'
 	});
 
 	var lblTitle = Titanium.UI.createLabel({
@@ -104,7 +103,7 @@
 
 	var loginBtn = Titanium.UI.createButton({
 		backgroundImage : '/img/btn_login.png',
-		top : 10,
+		top : 25,
 		right : 20,
 		width : 90,
 		height : 42
@@ -113,10 +112,10 @@
 	
 	var accountBtn = Titanium.UI.createButton({
 		backgroundImage : '/img/btn_account.png',
-		top : -39,
-		left : 22,
-		width : 171,
-		height : 35
+		top : -42,
+		left : 20,
+		width : 182,
+		height : 42
 	});
 	loginWin.add(accountBtn);
 
@@ -130,7 +129,7 @@
 	var wrmAccountView = Titanium.UI.createView({
 		width : 320,
 		height : 136,
-		top : 120,
+		top : 100,
 		opacity : 0.5,
 		backgroundImage : '/img/wrmAccount.png'
 	});

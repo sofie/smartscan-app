@@ -71,7 +71,7 @@
 				//Navbar tonen om terug naar main te gaan
 				iconWin.navBarHidden = false;
 				Smart.navGroup.open(iconWin, {
-					animated : true
+					animated : false
 				});
 			});
 			return view;
@@ -81,8 +81,6 @@
 			viewIcons.add(createIcon(Smart.ui.icons.list[i]));
 		}
 
-		navWindow.open({
-			transition : Ti.UI.iPhone.AnimationStyle.CURL_DOWN
-		});
+		navWindow.open();
 	}
 })();
