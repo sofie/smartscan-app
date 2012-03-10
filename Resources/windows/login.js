@@ -163,9 +163,11 @@
 				userPassword : userPass.value
 			};
 			loginReq.send(params);
+			
 		} else {
 			alert("Gelieve alle velden in te vullen.");
 		}
+		
 	});
 	//
 	//Logout
