@@ -106,7 +106,7 @@
 		backgroundImage : '/img/btn_login.png',
 		top : 10,
 		right : 20,
-		width : 100,
+		width : 90,
 		height : 42
 	});
 	loginWin.add(loginBtn);
@@ -121,6 +121,12 @@
 	loginWin.add(accountBtn);
 
 
+	accountBtn.addEventListener('click', function() {
+		loginWin.close();
+		Smart.navGroup.open(Smart.ui.createAccountWin(), {
+			animated : true
+		});
+	})
 	var wrmAccountView = Titanium.UI.createView({
 		width : 320,
 		height : 136,
@@ -164,7 +170,6 @@
 		}
 		
 	});
-	
 	//
 	//Logout
 	//
