@@ -37,16 +37,10 @@
 		});
 		registerWin.leftNavButton = backButton;
 		
-		/*var lblName = Titanium.UI.createLabel({
-			text:'Naam: ',
-			left:20,
-			top:0
-		});
-		mainWindow.add(lblName);*/
+		//
+		//Registreren - interface
+		//
 		
-		//
-		//Registreren
-		//
 		var viewRegister = Titanium.UI.createView({
 			backgroundImage : '/img/inputRegistreer.png',
 			width : 277,
@@ -56,6 +50,8 @@
 			right : 'auto',
 			opacity : 0.7
 		});
+		registerWin.add(viewRegister);
+		
 		
 		var userName = Titanium.UI.createTextField({
 		color : '#474240',
@@ -183,7 +179,7 @@
 		
 		});
 		viewRegister.add(userLastname);
-		registerWin.add(viewRegister);
+		
 		
 		var registerBtn = Titanium.UI.createButton({
 		backgroundImage : '/img/btn_registreer.png',
@@ -192,7 +188,100 @@
 		width : 99,
 		height : 37
 		});
-		registerWin.add(registerBtn);
+		registerWin.add(registerBtn); 
+		
+		
+		//
+		//registeren
+		//
+		var testresults;  
+	      
+	    function checkemail(emailAddress)  
+	    {  
+	        var str = emailAddress;  
+	        var filter = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;  
+	        if (filter.test(str))  
+	        {  
+	            testresults = true;  
+	        }  
+	        else  
+	        {  
+	            testresults = false;  
+	        }  
+	        return (testresults);  
+	    };  
+	      
+	    
+	    
+	    var createReq = Titanium.Network.createHTTPClient();  
+	    
+	    createReq.onload = function()  
+	    {  
+	        if (this.responseText == "Sorry, het registreren is mislukt." || this.responseText == "Deze gebruikersnaam en/of e-mail is al in gebruik.")  
+	        {    
+	            registerBtn.enabled = true;  
+	        	registerBtn.opacity = 1;
+	            alert(this.responseText);  
+	        }  
+	        else 
+	        {  
+	            var alertDialog = Titanium.UI.createAlertDialog({  
+	                title: 'Alert',  
+	                message: this.responseText,  
+	                buttonNames: ['OK']  
+	            });  
+	            alertDialog.show();  
+	            alertDialog.addEventListener('click',function(e)  
+	            {  
+	                Titanium.API.info("ok1");
+	                /*registerWin.close();
+						mainWin = Smart.ui.createApplicationMainWin();
+						mainWin.open(); */
+	            });  
+	        }
+	          
+	    };  
+	    
+	      
+	    registerBtn.addEventListener('click',function(e)  
+	    {  
+	        if (userName.value != '' && password1.value != '' && password2.value != '' && userFirstname.value != '' && userLastname.value != '' && userEmail.value != '')  
+	        {  
+	            if (password1.value != password2.value)  
+	            {  
+	                alert("Uw wachtwoorden komen niet overeen.");  
+	            }  
+	            else  
+	            {  
+	                if (!checkemail(userEmail.value))  
+	                {  
+	                    alert("Gelieve een geldig e-mailadres in te voeren.");  
+	                }  
+	                else  
+	                {  
+	        			//registerBtn.enabled = false;  
+	               	 	//registerBtn.opacity = 0.3; 
+	                	createReq.open("POST","http://localhost/SmartScan/post_register.php");  
+	                	var params = {  
+	                    	userName: userName.value,  
+	                    	userPassword: Ti.Utils.md5HexDigest(password1.value),  
+	                    	userFirstname: userFirstname.value, 
+	                    	userLastname: userLastname.value,  
+	                    	userEmail: userEmail.value  
+	                	};  
+	               	 createReq.send(params); 
+	                }  
+	            }  
+	        }  
+	        else  
+	        {  
+	            alert("Alle velden zijn verplicht.");  
+	        }  
+	    });
+		
+		
+		
+		
 		
 		navWindow.open();
 	}
