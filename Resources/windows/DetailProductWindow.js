@@ -29,7 +29,7 @@
 		});
 		backButton.addEventListener('click', function() {
 			Smart.navGroup.close(detailproductWindow, {
-				animated : true
+				animated : false
 			});
 		});
 		detailproductWindow.leftNavButton = backButton;

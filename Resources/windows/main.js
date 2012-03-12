@@ -8,13 +8,12 @@
 			exitOnClose : true,
 			fullscreen : false
 		});
-
 		navWindow = Ti.UI.createWindow();
 		Smart.navGroup = Ti.UI.iPhone.createNavigationGroup({
 			window : mainWindow
 		});
 		navWindow.add(Smart.navGroup);
-		
+
 		//
 		// back button/logout
 		//
@@ -22,17 +21,18 @@
 			backgroundImage : "img/btn_logout.png",
 			width : 100,
 			height : 35,
-			right:20,
-			top:20
+			right : 20,
+			top : 20
 		});
 		backButton.addEventListener('click', function() {
-			mainWindow.close();
+			
+			mainWindow.close({animated:false});
 			Ti.App.fireEvent('app:logoutback', {
 				action : 'Logout Back klik'
 			});
 		});
 		mainWindow.add(backButton);
-		
+
 		//
 		//Icons
 		//
@@ -73,6 +73,19 @@
 				Smart.navGroup.open(iconWin, {
 					animated : false
 				});
+
+				var backButton = Titanium.UI.createButton({
+					backgroundImage : "img/btn_back.png",
+					width : 57,
+					height : 35
+				});
+				backButton.addEventListener('click', function() {
+					Smart.navGroup.close(iconWin, {
+						animated : false
+					});
+				});
+				iconWin.leftNavButton = backButton;
+
 			});
 			return view;
 		};
@@ -84,3 +97,4 @@
 		navWindow.open();
 	}
 })();
+Ti.include('/smart/iconsWinkelen.js');

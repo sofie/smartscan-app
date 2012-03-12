@@ -32,7 +32,7 @@
 		});
 		backButton.addEventListener('click', function() {
 			Smart.navGroup.close(registerWin, {
-				animated : true
+				animated : false
 			});
 		});
 		registerWin.leftNavButton = backButton;

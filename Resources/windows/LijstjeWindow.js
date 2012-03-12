@@ -25,7 +25,7 @@
 		});
 		addButton.addEventListener('click', function() {
 			Smart.navGroup.open(addWin, {
-				animated : true
+				animated : false
 			});
 		});
 		lijstjeWindow.rightNavButton = addButton;
@@ -63,7 +63,9 @@
 				title : e.rowData.title,
 				barImage : 'img/header.png',
 				fullscreen : false
-			}));
+			}),{animated:false});
+			
+			
 		});
 		
 		//
@@ -82,7 +84,7 @@
 			}
 		});
 		addWin.setTitleControl(lblAddTitle);
-
+		
 		var nameLijstje = Titanium.UI.createTextField({
 			color : '#888',
 			top : 10,

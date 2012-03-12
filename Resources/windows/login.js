@@ -46,7 +46,7 @@
 	navWindow.add(Smart.navGroup);
 
 	navWindow.open({
-		transition : Ti.UI.iPhone.AnimationStyle.CURL_DOWN
+		transition : Titanium.UI.iPhone.AnimationStyle.NONE
 	});
 
 	//
@@ -121,9 +121,9 @@
 
 
 	accountBtn.addEventListener('click', function() {
-		loginWin.close();
+		loginWin.close({animated:false});
 		Smart.navGroup.open(Smart.ui.createAccountWin(), {
-			animated : true
+			animated : false
 		});
 	})
 	var wrmAccountView = Titanium.UI.createView({
@@ -146,9 +146,9 @@
 		var json = this.responseText;
 		var response = JSON.parse(json);
 		if(response.logged == true) {
-			loginWin.close();
+			loginWin.close({animated:false});
 			mainWin = Smart.ui.createApplicationMainWin();
-			mainWin.open();
+			mainWin.open({animated:false});
 
 		} else {
 			alert(response.message);
@@ -175,6 +175,6 @@
 	Titanium.App.addEventListener('app:logoutback', function(e) {
 		userEmail.value = '';
 		userPass.value = '';
-		loginWin.open();
+		loginWin.open({animated:false});
 	});
 })();

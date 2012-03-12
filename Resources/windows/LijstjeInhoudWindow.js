@@ -28,7 +28,7 @@
 		});
 		addButton.addEventListener('click', function() {
 			Smart.navGroup.open(addProductWin, {
-				animated : true
+				animated : false
 			});
 		});
 		inhoudlijstjeWindow.rightNavButton = addButton;
@@ -43,7 +43,7 @@
 		});
 		backButton.addEventListener('click', function() {
 			Smart.navGroup.close(inhoudlijstjeWindow, {
-				animated : true
+				animated : false
 			});
 		});
 		inhoudlijstjeWindow.leftNavButton = backButton;
@@ -130,7 +130,7 @@
 				title : e.rowData.title,
 				barImage : 'img/header.png',
 				fullscreen : false
-			}));
+			}),{animated:false});
 		});
 		return inhoudlijstjeWindow;
 	};
