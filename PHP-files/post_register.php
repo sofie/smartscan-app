@@ -1,5 +1,5 @@
     <?php  
-    $con =@ new mysqli('localhost','root','root', 'SmartscanDB'); 
+    $con =@ new mysqli('localhost','root','root', 'smartscan'); 
     if ($con->connect_error)  
     {  
         echo "Oeps, geen connectie met de databank.";  
