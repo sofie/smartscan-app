@@ -1,6 +1,6 @@
 var Ti;
 
-Titanium.UI.setBackgroundImage('img/bg.png');
+Titanium.UI.setBackgroundImage('img/bg_stripes.png');
 
 //libraries
 Ti.include('smart/smart.js');

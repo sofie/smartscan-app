@@ -108,12 +108,29 @@
 			right : 20,
 			top : 15
 		});
-		btnCreateLijstje.addEventListener('click', function(e) {
-			Ti.API.info('Nieuwe lijst: ' + nameLijstje.value)
-		});
+		
 
+		var lbLijst= Titanium.UI.createLabel({
+			text:'Lijst',
+			left:20,
+			width:100,
+			top:20
+		});
+		
 		addWin.add(nameLijstje);
 		addWin.add(btnCreateLijstje);
+		addWin.add(lbLijst);
+		
+		btnCreateLijstje.addEventListener('click', function(e) {
+			if(nameLijstje.value==""){
+				lbLijst.text='Nieuwe lijstjes hebben een naam nodig.';
+			}else{
+				Ti.API.info('Nieuwe lijst: ' + nameLijstje.value);
+				lbLijst.text=nameLijstje.value
+			}
+		});
+
+		
 
 		
 		return lijstjeWindow;
