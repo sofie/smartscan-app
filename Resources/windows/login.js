@@ -122,9 +122,7 @@
 
 	accountBtn.addEventListener('click', function() {
 		loginWin.close({animated:false});
-		Smart.navGroup.open(Smart.ui.createAccountWin(), {
-			animated : false
-		});
+		Smart.ui.createAccountWin();
 	})
 	var wrmAccountView = Titanium.UI.createView({
 		width : 320,
@@ -173,6 +171,13 @@
 	//Logout
 	//
 	Titanium.App.addEventListener('app:logoutback', function(e) {
+		userEmail.value = '';
+		userPassword.value = '';
+		loginWin.open({animated:false});
+	});
+	
+	//Back event account window
+	Titanium.App.addEventListener('app:accountclose', function(e) {
 		userEmail.value = '';
 		userPassword.value = '';
 		loginWin.open({animated:false});

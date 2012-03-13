@@ -5,7 +5,7 @@
 		var mainWindow = Ti.UI.createWindow({
 			backgroundImage : 'img/bg_main.png',
 			navBarHidden : true,
-			exitOnClose : true,
+			//exitOnClose : true,
 			fullscreen : false
 		});
 		navWindow = Ti.UI.createWindow();
@@ -19,13 +19,12 @@
 		//
 		var backButton = Titanium.UI.createButton({
 			backgroundImage : "img/btn_logout.png",
-			width : 100,
+			width : 82,
 			height : 35,
 			right : 20,
 			top : 20
 		});
 		backButton.addEventListener('click', function() {
-			
 			mainWindow.close({animated:false});
 			Ti.App.fireEvent('app:logoutback', {
 				action : 'Logout Back klik'

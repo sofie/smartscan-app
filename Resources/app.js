@@ -11,7 +11,7 @@ Ti.include(
 	'windows/LijstjeInhoudWindow.js', 
 	//'windows/DetailProductWindow.js',
 	
-	 'windows/WinkelenWindow.js', 
+	'windows/WinkelenWindow.js', 
 	'windows/StartVanLijstjeWindow.js',
 	'windows/StartWinkelenWindow.js',
 	
