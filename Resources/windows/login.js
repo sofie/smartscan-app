@@ -81,7 +81,7 @@
 	});
 	viewLogin.add(userEmail);
 
-	var userPass = Titanium.UI.createTextField({
+	var userPassword = Titanium.UI.createTextField({
 		color : '#474240',
 		top : 50,
 		width : 260,
@@ -98,7 +98,7 @@
 		borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
 		clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 	});
-	viewLogin.add(userPass);
+	viewLogin.add(userPassword);
 	loginWin.add(viewLogin);
 
 	var loginBtn = Titanium.UI.createButton({
@@ -156,11 +156,11 @@
 	};
 	//verbinding met phpfile en database
 	loginBtn.addEventListener('click', function() {
-		if(userEmail.value != '' && userPass.value != '') {
+		if(userEmail.value != '') {
 			loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
 			var params = {
 				userEmail : userEmail.value,
-				userPassword : userPass.value
+				userPassword: userPassword.value
 			};
 			loginReq.send(params);
 			
@@ -174,7 +174,7 @@
 	//
 	Titanium.App.addEventListener('app:logoutback', function(e) {
 		userEmail.value = '';
-		userPass.value = '';
+		userPassword.value = '';
 		loginWin.open({animated:false});
 	});
 })();

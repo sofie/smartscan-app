@@ -13,7 +13,7 @@
 			window : mainWindow
 		});
 		navWindow.add(Smart.navGroup);
-
+		
 		//
 		// back button/logout
 		//

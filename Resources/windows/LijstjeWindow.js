@@ -14,7 +14,7 @@
 			}
 		});
 		lijstjeWindow.setTitleControl(lblTitle);
-		
+
 		//
 		//Add lijstje button (rightNavButton)
 		//
@@ -29,7 +29,6 @@
 			});
 		});
 		lijstjeWindow.rightNavButton = addButton;
-
 
 		//
 		// Bestaande lijstjes van gebruiker
@@ -58,14 +57,17 @@
 		// Details lijstje tonen
 		//
 		tableview.addEventListener('click', function(e) {
-			Titanium.App.fireEvent('app:listclicked',{action:'Inhoud lijst'});
+			Titanium.App.fireEvent('app:listclicked', {
+				action : 'Inhoud lijst'
+			});
 			Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow({
 				title : e.rowData.title,
 				barImage : 'img/header.png',
 				fullscreen : false
-			}),{animated:false});
-			
-			
+			}), {
+				animated : false
+			});
+
 		});
 		
 		//
@@ -84,7 +86,21 @@
 			}
 		});
 		addWin.setTitleControl(lblAddTitle);
+
+		//Backbutton
+		var backButton = Titanium.UI.createButton({
+			backgroundImage : "img/btn_back.png",
+			width : 57,
+			height : 35
+		});
+		backButton.addEventListener('click', function() {
+			Smart.navGroup.close(addWin, {
+				animated : false
+			});
+		});
+		addWin.leftNavButton = backButton;
 		
+		//Inhoud add lijstje window
 		var nameLijstje = Titanium.UI.createTextField({
 			color : '#888',
 			top : 10,
@@ -104,37 +120,32 @@
 		});
 
 		var btnCreateLijstje = Titanium.UI.createButton({
-			backgroundImage : 'img/btn_maak.png',
+			backgroundImage : 'img/btn_maken.png',
 			width : 100,
 			height : 42,
 			right : 20,
 			top : 15
 		});
-		
 
-		var lbLijst= Titanium.UI.createLabel({
-			text:'Lijst',
-			left:20,
-			width:100,
-			top:20
+		var lbLijst = Titanium.UI.createLabel({
+			text : 'Lijst',
+			left : 20,
+			width : 100,
+			top : 20
 		});
-		
+
 		addWin.add(nameLijstje);
 		addWin.add(btnCreateLijstje);
 		addWin.add(lbLijst);
-		
+
 		btnCreateLijstje.addEventListener('click', function(e) {
-			if(nameLijstje.value==""){
-				lbLijst.text='Nieuwe lijstjes hebben een naam nodig.';
-			}else{
+			if(nameLijstje.value == "") {
+				lbLijst.text = 'Nieuwe lijstjes hebben een naam nodig.';
+			} else {
 				Ti.API.info('Nieuwe lijst: ' + nameLijstje.value);
-				lbLijst.text=nameLijstje.value
+				lbLijst.text = nameLijstje.value
 			}
 		});
-
-		
-
-		
 		return lijstjeWindow;
 	};
 })();

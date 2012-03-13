@@ -9,7 +9,7 @@ Ti.include('smart/smart.js');
 Ti.include(
 	'windows/LijstjeWindow.js', 
 	'windows/LijstjeInhoudWindow.js', 
-	'windows/DetailProductWindow.js',
+	//'windows/DetailProductWindow.js',
 	
 	 'windows/WinkelenWindow.js', 
 	'windows/StartVanLijstjeWindow.js',
