@@ -75,6 +75,7 @@
 		//
 		var addWin = Titanium.UI.createWindow({
 			barImage : 'img/header.png',
+			backgroundImage:'img/bg.png',
 			layout : 'vertical'
 		});
 		var lblAddTitle = Titanium.UI.createLabel({
@@ -100,8 +101,9 @@
 		});
 		addWin.leftNavButton = backButton;
 		
+		
 		//Inhoud add lijstje window
-		var nameLijstje = Titanium.UI.createTextField({
+		var lijstNaam = Titanium.UI.createTextField({
 			color : '#888',
 			top : 10,
 			left : 20,
@@ -127,25 +129,44 @@
 			top : 15
 		});
 
-		var lbLijst = Titanium.UI.createLabel({
-			text : 'Lijst',
-			left : 20,
-			width : 100,
-			top : 20
-		});
-
 		addWin.add(nameLijstje);
 		addWin.add(btnCreateLijstje);
-		addWin.add(lbLijst);
+		
+		var createReq = Titanium.Network.createHTTPClient({
+			onload : function() {
+				var json = this.responseText;
+				var response = JSON.parse(json);
+							
+				if(response.add == true) {
+					alert('Lijst is toegevoegd aan databank.');
+				} else {
+					alert('Lijst bestaat al. Kies een andere naam.');
+				}
+			},
+			
+			//Databank niet ok (path, MAMP,...)
+			onerror : function(e) {
+				Ti.API.info("TEXT onerror:   " + this.responseText);
+				alert('Er is iets mis met de databank.');
+			},
+			timeout : 5000
+		});
+
 
 		btnCreateLijstje.addEventListener('click', function(e) {
-			if(nameLijstje.value == "") {
-				lbLijst.text = 'Nieuwe lijstjes hebben een naam nodig.';
-			} else {
-				Ti.API.info('Nieuwe lijst: ' + nameLijstje.value);
-				lbLijst.text = nameLijstje.value
+			if(nameLijstje.value != '') {
+				createReq.open("POST", "http://localhost/SmartScan/post_addlijst.php");
+				var params = {
+					lijstNaam : lijstNaam.value,
+					message:'Niet ok'
+				};
+				createReq.send(params);
+			}else{
+				alert('Gelieve een naam in te vullen.');
 			}
 		});
+		
+		
 		return lijstjeWindow;
 	};
 })();

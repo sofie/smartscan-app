@@ -109,7 +109,7 @@
 		height : 42
 	});
 	loginWin.add(loginBtn);
-	
+
 	var accountBtn = Titanium.UI.createButton({
 		backgroundImage : '/img/btn_account.png',
 		top : -42,
@@ -119,9 +119,10 @@
 	});
 	loginWin.add(accountBtn);
 
-
 	accountBtn.addEventListener('click', function() {
-		loginWin.close({animated:false});
+		loginWin.close({
+			animated : false
+		});
 		Smart.ui.createAccountWin();
 	})
 	var wrmAccountView = Titanium.UI.createView({
@@ -137,35 +138,46 @@
 	//Login Service
 	//
 	//request
-	var loginReq = Titanium.Network.createHTTPClient();
+	var loginReq = Titanium.Network.createHTTPClient({
+		onload : function() {
+			var json = this.responseText;
+			var response = JSON.parse(json);
+			
+			if(response.logged == true) {
+				loginWin.close({
+					animated : false
+				});
+				mainWin = Smart.ui.createApplicationMainWin();
+				mainWin.open({
+					animated : false
+				});
 
-	//json response
-	loginReq.onload = function() {
-		var json = this.responseText;
-		var response = JSON.parse(json);
-		if(response.logged == true) {
-			loginWin.close({animated:false});
-			mainWin = Smart.ui.createApplicationMainWin();
-			mainWin.open({animated:false});
+			} else {
+				alert(response.message);
+			}
+		},
+		//Databank niet ok (path, MAMP,...)
+		onerror : function(e) {
+			Ti.API.info("TEXT onerror:   " + this.responseText);
+			alert('Er is iets mis met de databank.');
+		},
+		timeout : 5000
+	});
 
-		} else {
-			alert(response.message);
-		}
-	};
 	//verbinding met phpfile en database
 	loginBtn.addEventListener('click', function() {
 		if(userEmail.value != '') {
 			loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
 			var params = {
 				userEmail : userEmail.value,
-				userPassword: userPassword.value
+				userPassword : userPassword.value
 			};
 			loginReq.send(params);
-			
+
 		} else {
 			alert("Gelieve alle velden in te vullen.");
 		}
-		
+
 	});
 	//
 	//Logout
@@ -173,13 +185,16 @@
 	Titanium.App.addEventListener('app:logoutback', function(e) {
 		userEmail.value = '';
 		userPassword.value = '';
-		loginWin.open({animated:false});
+		loginWin.open({
+			animated : false
+		});
 	});
-	
 	//Back event account window
 	Titanium.App.addEventListener('app:accountclose', function(e) {
 		userEmail.value = '';
 		userPassword.value = '';
-		loginWin.open({animated:false});
+		loginWin.open({
+			animated : false
+		});
 	});
 })();

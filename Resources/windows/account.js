@@ -4,7 +4,7 @@
 	Smart.ui.createAccountWin = function() {
 		var registerWin = Titanium.UI.createWindow({
 			barImage : 'img/header.png',
-			backgroundImage:'img/bg.png'
+			backgroundImage : 'img/bg.png'
 		});
 		var lblTitle = Titanium.UI.createLabel({
 			text : 'Mijn account',
@@ -51,7 +51,7 @@
 			opacity : 0.7
 		});
 		registerWin.add(viewRegister);
-		
+
 		var userEmail = Titanium.UI.createTextField({
 			color : '#474240',
 			top : 0,
@@ -112,7 +112,7 @@
 
 		});
 		viewRegister.add(password2);
-	
+
 		var userName = Titanium.UI.createTextField({
 			color : '#474240',
 			top : 150,
@@ -132,49 +132,48 @@
 
 		});
 		viewRegister.add(userName);
-	
-		
+
 		/*
-		var userFirstname = Titanium.UI.createTextField({
-			color : '#474240',
-			top : 187,
-			left : 20,
-			width : 260,
-			height : 50,
-			hintText : 'Voornaam',
-			autocapitalization : false,
-			font : {
-				fontSize : 15,
-				fontFamily : 'Bree Serif'
-			},
-			keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
+		 var userFirstname = Titanium.UI.createTextField({
+		 color : '#474240',
+		 top : 187,
+		 left : 20,
+		 width : 260,
+		 height : 50,
+		 hintText : 'Voornaam',
+		 autocapitalization : false,
+		 font : {
+		 fontSize : 15,
+		 fontFamily : 'Bree Serif'
+		 },
+		 keyboardType : Titanium.UI.KEYBOARD_EMAIL,
+		 returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
+		 borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
+		 clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 
-		});
-		viewRegister.add(userFirstname);
+		 });
+		 viewRegister.add(userFirstname);
 
-		var userLastname = Titanium.UI.createTextField({
-			color : '#474240',
-			top : 233,
-			left : 20,
-			width : 260,
-			height : 50,
-			hintText : 'Achternaam',
-			autocapitalization : false,
-			font : {
-				fontSize : 15,
-				fontFamily : 'Bree Serif'
-			},
-			keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
+		 var userLastname = Titanium.UI.createTextField({
+		 color : '#474240',
+		 top : 233,
+		 left : 20,
+		 width : 260,
+		 height : 50,
+		 hintText : 'Achternaam',
+		 autocapitalization : false,
+		 font : {
+		 fontSize : 15,
+		 fontFamily : 'Bree Serif'
+		 },
+		 keyboardType : Titanium.UI.KEYBOARD_EMAIL,
+		 returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
+		 borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
+		 clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 
-		});
-		viewRegister.add(userLastname);
-		*/
+		 });
+		 viewRegister.add(userLastname);
+		 */
 		var registerBtn = Titanium.UI.createButton({
 			backgroundImage : '/img/btn_registreer.png',
 			top : 320,
@@ -184,6 +183,15 @@
 		});
 		registerWin.add(registerBtn);
 
+		/*
+		var viewSpace = Titanium.UI.createView({
+		top:340,
+		height:100,
+		left:30,
+		width:100
+		});
+		registerWin.add(viewSpace);
+		*/
 		//
 		//registeren
 		//
@@ -200,25 +208,37 @@
 			return (testresults);
 		};
 
-		var createReq = Titanium.Network.createHTTPClient();
+		var createReq = Titanium.Network.createHTTPClient({
+			onload : function() {
+				var json = this.responseText;
+				var response = JSON.parse(json);
+				
+				if(response.registered == true) {
+					registerWin.close({
+						animated : false
+					});
+					
+					mainWin = Smart.ui.createApplicationMainWin();
+					mainWin.open({
+						animated : false
+					});
+				} else {
+					alert('User bestaat al.');
+				}
+			},
+			
+			//Databank niet ok (path, MAMP,...)
+			onerror : function(e) {
+				Ti.API.info("TEXT onerror:   " + this.responseText);
+				alert('Er is iets mis met de databank.');
+			},
+			timeout : 5000
+		});
 
-		createReq.onload = function() {
-			var json = this.responseText;
-			var response = JSON.parse(json);
-			if(response.registered == true) {
-				registerWin.close({animated:false});
-				mainWin = Smart.ui.createApplicationMainWin();
-				mainWin.open({animated:false});
-	
-			} else {
-				Titanium.API.info('Alert: '+response.message);
-				alert(response.message);
-			}
-		};
 
 		registerBtn.addEventListener('click', function(e) {
-			if(password1.value != '' && password2.value != '' && userEmail.value != '' && userName.value!='') {
-			//if(userName.value != '' && password1.value != '' && password2.value != '' && userFirstname.value != '' && userLastname.value != '' && userEmail.value != '') {
+			if(password1.value != '' && password2.value != '' && userEmail.value != '' && userName.value != '') {
+				//if(userName.value != '' && password1.value != '' && password2.value != '' && userFirstname.value != '' && userLastname.value != '' && userEmail.value != '') {
 				if(password1.value != password2.value) {
 					alert("Uw wachtwoorden komen niet overeen.");
 				} else {
@@ -232,7 +252,7 @@
 							//userPassword : Ti.Utils.md5HexDigest(password1.value),
 							userPassword : password1.value,
 							userEmail : userEmail.value,
-							userName: userName.value
+							userName : userName.value
 						};
 						createReq.send(params);
 					}

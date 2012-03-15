@@ -14,6 +14,18 @@
 		});
 		navWindow.add(Smart.navGroup);
 		
+		var lblName = Titanium.UI.createLabel({
+			text:'Naam',
+			top:0,
+			left:30,
+			font : {
+				fontSize : 15,
+				fontFamily : 'Bree Serif'
+			},
+			color : '#474240',
+		});
+		mainWindow.add(lblName);
+		
 		//
 		// back button/logout
 		//
