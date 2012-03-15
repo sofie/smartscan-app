@@ -129,7 +129,7 @@
 			top : 15
 		});
 
-		addWin.add(nameLijstje);
+		addWin.add(lijstNaam);
 		addWin.add(btnCreateLijstje);
 		
 		var createReq = Titanium.Network.createHTTPClient({
@@ -154,7 +154,7 @@
 
 
 		btnCreateLijstje.addEventListener('click', function(e) {
-			if(nameLijstje.value != '') {
+			if(lijstNaam.value != '') {
 				createReq.open("POST", "http://localhost/SmartScan/post_addlijst.php");
 				var params = {
 					lijstNaam : lijstNaam.value,
