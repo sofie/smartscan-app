@@ -142,7 +142,9 @@
 		onload : function() {
 			var json = this.responseText;
 			var response = JSON.parse(json);
-			
+
+			Titanium.API.info('Text: '+response.userEmail);
+
 			if(response.logged == true) {
 				loginWin.close({
 					animated : false
@@ -166,7 +168,7 @@
 
 	//verbinding met phpfile en database
 	loginBtn.addEventListener('click', function() {
-		if(userEmail.value != '') {
+		if(userEmail.value != '' && userPassword.value != '') {
 			loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
 			var params = {
 				userEmail : userEmail.value,

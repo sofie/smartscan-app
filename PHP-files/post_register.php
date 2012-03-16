@@ -6,11 +6,8 @@ if (!$conn -> connect_error)
 {
 	$username = $_POST['userName'];
 	$password = $_POST['userPassword'];
-	//$firstname = $_POST['userFirstname'];
-	//$lastname = $_POST['userLastname'];
 	$email = $_POST['userEmail'];
 
-	//$sql = "SELECT userName,userEmail FROM tblUser WHERE userName = '" . $username . "' OR userEmail = '" . $email . "'";
 	$sql = "SELECT userEmail FROM tblUser WHERE userEmail = '" . $email . "' OR userName = '" . $username . "'";
 
 	$query = $conn -> query($sql);
@@ -23,7 +20,7 @@ if (!$conn -> connect_error)
 	{
 		$insert = "INSERT INTO tblUser (userPassword,userEmail,userName) 
 		VALUES (
-		'" . mysqli_real_escape_string($conn, $password) . "',
+		'" . md5($password) . "',
 		'" . mysqli_real_escape_string($conn, $email) . "',
 		'" . mysqli_real_escape_string($conn, $username) . "')";
 

@@ -7,7 +7,7 @@ if (!$conn -> connect_error)
 	
 	$lijstNaam = $_POST['lijstNaam'];
 
-	$qry = "SELECT lijstNaam FROM tblList WHERE lijstNaam = '" . mysqli_real_escape_string($conn,$lijstNaam) . "'";
+	$qry = "SELECT lijstNaam FROM tblList WHERE lijstNaam = '" .$lijstNaam. "'";
 
 	$query = $conn -> query($qry);
 	if ($num_rows = $query -> num_rows > 0) 

@@ -138,14 +138,15 @@
 		//
 		// Details lijstje tonen
 		//
-
+		
+	
 		tableview.addEventListener('click', function(e) {
 			Titanium.API.info('e:rowData.title: ' + e.rowData.title);
 			Smart.navGroup.open(detailproductWindow, {
 				animated : false
 			});
 			Ti.App.fireEvent('app:detailtonen', {
-				action : 'Detail product tonen'
+				title:'Detail product tonen'
 			});
 		});
 		//
@@ -158,7 +159,7 @@
 			pName.text = 'Productnaam';
 			pImage.image = '/img/milka.jpg';
 			pDescription.text = 'Omschrijving van product';
-			pPrice.text='€ 2,45'
+			pPrice.text = '€ 2,45'
 		});
 		var detailproductWindow = Titanium.UI.createWindow({
 			barImage : 'img/header.png',

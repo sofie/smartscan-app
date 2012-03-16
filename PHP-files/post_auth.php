@@ -5,15 +5,15 @@ $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 if (!$conn -> connect_error) 
 {
 	$userEmail = $_POST['userEmail'];
-	$userPassword = $_POST['userPassword'];
+	$userPassword = md5($_POST['userPassword']);
 
-	$qry = "SELECT * FROM tblUser WHERE userEmail = '" . mysqli_real_escape_string($conn, $userEmail) . "' AND userPassword = '" . mysqli_real_escape_string($conn, $userPassword) . "'";
+	$qry = "SELECT * FROM tblUser WHERE userEmail = '" .$userEmail . "' AND userPassword = '".$userPassword. "'";
 	
 	$query = $conn -> query($qry);
 	if ($num_rows = $query -> num_rows > 0) 
 	{
 		$row = mysqli_fetch_array($query);
-		$response = array('logged' => true, 'userEmail' => $row['userEmail'], 'userPassword' => $row['userPassword']);
+		$response = array('logged' => true, 'userEmail' => $userEmail, 'userPassword' => $userPassword);
 		echo json_encode($response);
 	} 
 	else 
