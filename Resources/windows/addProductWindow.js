@@ -1,7 +1,7 @@
 (function() {
 
-	Smart.ui.createAddLijstjeWindow = function() {
-		var addLijstjeWin = Titanium.UI.createWindow({
+	Smart.ui.createAddProductWindow = function() {
+		var addProductWin = Titanium.UI.createWindow({
 			barImage : 'img/header.png',
 			layout : 'vertical',
 			fullscreen:false
@@ -14,7 +14,7 @@
 				fontSize : 24
 			}
 		});
-		addLijstjeWin.setTitleControl(lblAddTitle);
+		addProductWin.setTitleControl(lblAddTitle);
 
 		//Backbutton
 		var backButton = Titanium.UI.createButton({
@@ -23,11 +23,11 @@
 			height : 35
 		});
 		backButton.addEventListener('click', function() {
-			Smart.navGroup.close(addLijstjeWin, {
+			Smart.navGroup.close(addProductWin, {
 				animated : false
 			});
 		});
-		addLijstjeWin.leftNavButton = backButton;
+		addProductWin.leftNavButton = backButton;
 
 		//
 		//Inhoud window
@@ -38,7 +38,7 @@
 			left : 20,
 			right : 20,
 			height : 40,
-			hintText : 'Nieuw lijstje',
+			hintText : 'Naam Lijstje',
 			font : {
 				fontSize : 15,
 				fontFamily : 'Bree Serif'
@@ -51,30 +51,22 @@
 		});
 
 		var btnCreateLijstje = Titanium.UI.createButton({
-			backgroundImage : 'img/btn_maken.png',
-			width : 100,
+			backgroundImage : 'img/btn_search.png',
+			width : 43,
 			height : 42,
 			right : 20,
-			top : 15
+			top : 10
 		});
 		
-		var createReq = Titanium.Network.createHTTPClient({
+		/*var createReq = Titanium.Network.createHTTPClient({
 			onload : function() {
 				var json = this.responseText;
 				var response = JSON.parse(json);
 							
 				if(response.add == true) {
-					//alert('Lijstje is toegevoegd aan databank.');
-					/*addLijstjeWin.close({
-						animated : false
-					});
-					addProductWin = Smart.ui.Smart.ui.createAddProductWindow();
-					addProductWin.open({
-						animated : false
-					});*/
-				
+					alert('Lijstje is toegevoegd aan databank.');
 				} else {
-					alert('Sorry, Lijstje bestaat al.');
+					alert('Lijstje bestaat al.');
 				}
 			},
 			
@@ -88,7 +80,7 @@
 
 		btnCreateLijstje.addEventListener('click', function(e) {
 			if(linkNaam.value != '') {
-				createReq.open("POST", "http://localhost/smartscan/post_addlijstje.php");
+				//createReq.open("POST", "http://localhost/smartscan/post_addlijstje.php");
 				var params = {
 					linkNaam : linkNaam.value,
 					message:'Niet ok'
@@ -97,11 +89,11 @@
 			}else{
 				alert('Gelieve een naam in te vullen.');
 			}
-		});
+		});*/
 
-		addLijstjeWin.add(lijstjeNaam);
-		addLijstjeWin.add(btnCreateLijstje);
+		addProductWin.add(lijstjeNaam);
+		//addProductWin.add(btnCreateLijstje);
 		
-		return addLijstjeWin;
+		return addProductWin;
 	};
 })();
