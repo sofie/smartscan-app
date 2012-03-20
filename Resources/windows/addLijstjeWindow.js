@@ -1,20 +1,20 @@
 (function() {
 
 	Smart.ui.createAddLijstjeWindow = function() {
-		var addLijstjeWin = Titanium.UI.createWindow({
+		var addWin = Titanium.UI.createWindow({
 			barImage : 'img/header.png',
-			layout : 'vertical',
-			fullscreen:false
+			backgroundImage : 'img/bg.png',
+			layout : 'vertical'
 		});
 		var lblAddTitle = Titanium.UI.createLabel({
-			text : 'Nieuwe koppeling',
+			text : 'Nieuw lijstje',
 			color : '#fff',
 			font : {
 				fontFamily : 'Bree Serif',
 				fontSize : 24
 			}
 		});
-		addLijstjeWin.setTitleControl(lblAddTitle);
+		addWin.setTitleControl(lblAddTitle);
 
 		//Backbutton
 		var backButton = Titanium.UI.createButton({
@@ -23,22 +23,20 @@
 			height : 35
 		});
 		backButton.addEventListener('click', function() {
-			Smart.navGroup.close(addLijstjeWin, {
+			Smart.navGroup.close(addWin, {
 				animated : false
 			});
 		});
-		addLijstjeWin.leftNavButton = backButton;
+		addWin.leftNavButton = backButton;
 
-		//
-		//Inhoud window
-		//
-		var lijstjeNaam = Titanium.UI.createTextField({
+		//Inhoud add lijstje window
+		var lijstNaam = Titanium.UI.createTextField({
 			color : '#888',
 			top : 10,
 			left : 20,
 			right : 20,
 			height : 40,
-			hintText : 'Nieuw lijstje',
+			hintText : 'Nieuw boodschappenlijstje',
 			font : {
 				fontSize : 15,
 				fontFamily : 'Bree Serif'
@@ -57,27 +55,25 @@
 			right : 20,
 			top : 15
 		});
-		
+
+		addWin.add(lijstNaam);
+		addWin.add(btnCreateLijstje);
+
 		var createReq = Titanium.Network.createHTTPClient({
 			onload : function() {
 				var json = this.responseText;
 				var response = JSON.parse(json);
-							
+
 				if(response.add == true) {
-					//alert('Lijstje is toegevoegd aan databank.');
-					/*addLijstjeWin.close({
+					alert('Lijst is toegevoegd aan databank.');
+					
+					Smart.navGroup.open(Smart.ui.createAddProductWindow({
 						animated : false
-					});
-					addProductWin = Smart.ui.Smart.ui.createAddProductWindow();
-					addProductWin.open({
-						animated : false
-					});*/
-				
+					}));
 				} else {
-					alert('Sorry, Lijstje bestaat al.');
+					alert('Lijst bestaat al. Kies een andere naam.');
 				}
 			},
-			
 			//Databank niet ok (path, MAMP,...)
 			onerror : function(e) {
 				Ti.API.info("TEXT onerror:   " + this.responseText);
@@ -87,21 +83,17 @@
 		});
 
 		btnCreateLijstje.addEventListener('click', function(e) {
-			if(linkNaam.value != '') {
-				createReq.open("POST", "http://localhost/smartscan/post_addlijstje.php");
+			if(lijstNaam.value != '') {
+				createReq.open("POST", "http://localhost/SmartScan/post_addlijst.php");
 				var params = {
-					linkNaam : linkNaam.value,
-					message:'Niet ok'
+					lijstNaam : lijstNaam.value,
+					message : 'Niet ok'
 				};
 				createReq.send(params);
-			}else{
+			} else {
 				alert('Gelieve een naam in te vullen.');
 			}
 		});
-
-		addLijstjeWin.add(lijstjeNaam);
-		addLijstjeWin.add(btnCreateLijstje);
-		
-		return addLijstjeWin;
+		return addWin;
 	};
 })();

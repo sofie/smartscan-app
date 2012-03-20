@@ -7,7 +7,7 @@ if (!$conn -> connect_error)
 	
 	$lijstNaam = $_POST['lijstNaam'];
 
-	$qry = "SELECT lijstNaam FROM tblList WHERE lijstNaam = '" .$lijstNaam. "'";
+	$qry = "SELECT lijstNaam FROM tblLijst WHERE lijstNaam = '" .$lijstNaam. "'";
 
 	$query = $conn -> query($qry);
 	if ($num_rows = $query -> num_rows > 0) 
@@ -18,7 +18,7 @@ if (!$conn -> connect_error)
 	else 
 	{
 		$insert = "
-			INSERT INTO tblList (lijstNaam) 
+			INSERT INTO tblLijst (lijstNaam) 
 			VALUES ('" . mysqli_real_escape_string($conn, $lijstNaam) . "')
 			";
 
