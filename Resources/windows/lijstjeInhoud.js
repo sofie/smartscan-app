@@ -141,7 +141,8 @@
 		
 	
 		tableview.addEventListener('click', function(e) {
-			Titanium.API.info('e:rowData.title: ' + e.rowData.title);
+			//Globale variabele
+			Titanium.App.productTitle=e.rowData.title;
 			Smart.navGroup.open(detailproductWindow, {
 				animated : false
 			});
@@ -155,8 +156,8 @@
 		//
 		Titanium.App.addEventListener('app:detailtonen', function(e) {
 			//Titanium.API.info('title: ' + e.rowData.title);
-			lblTitle.text = 'Product';
-			pName.text = 'Productnaam';
+			lblTitle.text = Titanium.App.productTitle;
+			pName.text = Titanium.App.productTitle;
 			pImage.image = '/img/milka.jpg';
 			pDescription.text = 'Omschrijving van product';
 			pPrice.text = '€ 2,45'

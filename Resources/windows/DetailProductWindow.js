@@ -10,7 +10,7 @@
 			layout : 'vertical'
 		});
 		var lblTitle = Titanium.UI.createLabel({
-			text : 'Product',
+			text : Titanium.App.productTitle,
 			color : '#fff',
 			font : {
 				fontFamily : 'Bree Serif',
