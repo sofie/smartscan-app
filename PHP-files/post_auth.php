@@ -13,7 +13,7 @@ if (!$conn -> connect_error)
 	if ($num_rows = $query -> num_rows > 0) 
 	{
 		$row = mysqli_fetch_array($query);
-		$response = array('logged' => true, 'userEmail' => $userEmail, 'userPassword' => $userPassword);
+		$response = array('logged' => true, 'userEmail' => $userEmail, 'userPassword' => $userPassword, 'userId' => $row['userId']);
 		echo json_encode($response);
 	} 
 	else 

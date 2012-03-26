@@ -143,7 +143,9 @@
 			var json = this.responseText;
 			var response = JSON.parse(json);
 
-			Titanium.API.info('Text: '+response.userEmail);
+			Titanium.API.info(this.responseText);
+			
+			Titanium.App.userId = response.userId;
 
 			if(response.logged == true) {
 				loginWin.close({

@@ -6,6 +6,7 @@ if (!$conn -> connect_error)
 {
 	
 	$lijstNaam = $_POST['lijstNaam'];
+	$userId = $_POST['userId'];
 
 	$qry = "SELECT lijstNaam FROM tblLijst WHERE lijstNaam = '" .$lijstNaam. "'";
 
@@ -18,14 +19,15 @@ if (!$conn -> connect_error)
 	else 
 	{
 		$insert = "
-			INSERT INTO tblLijst (lijstNaam) 
-			VALUES ('" . mysqli_real_escape_string($conn, $lijstNaam) . "')
+			INSERT INTO tblLijst (lijstNaam, userId) 
+			VALUES ('" . mysqli_real_escape_string($conn, $lijstNaam) . "',
+					'" . mysqli_real_escape_string($conn, $userId ). "')
 			";
 
 		$query = $conn -> query($insert);
 		if ($query) 
 		{
-			$response = array('add' => true, 'lijstNaam' => $lijstNaam);
+			$response = array('add' => true, 'lijstNaam' => $lijstNaam, 'userId' => $userId);
 			echo json_encode($response);
 			$conn -> close();
 		} 

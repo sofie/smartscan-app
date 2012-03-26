@@ -65,6 +65,8 @@
 				var response = JSON.parse(json);
 
 				if(response.add == true) {
+					Titanium.API.info(response);
+					Titanium.API.info(Titanium.App.userId);
 					alert('Lijst is toegevoegd aan databank.');
 					
 					Smart.navGroup.open(Smart.ui.createAddProductWindow({
@@ -87,7 +89,7 @@
 				createReq.open("POST", "http://localhost/SmartScan/post_addlijst.php");
 				var params = {
 					lijstNaam : lijstNaam.value,
-					message : 'Niet ok'
+					userId : Titanium.App.userId
 				};
 				createReq.send(params);
 			} else {
