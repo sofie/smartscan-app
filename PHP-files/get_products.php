@@ -4,11 +4,14 @@ $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 
 if (!$conn -> connect_error) {
 	
-	$userId = $_POST['userId'];
+	$lijstId = $_POST['lijstId'];
 	
-	$qry = "SELECT lijstNaam, lijstId
-			FROM tblLijst
-			WHERE userId='".$userId ."'";
+	$qry = "SELECT productId, productNaam
+			FROM  `tblBevatten` 	
+			WHERE lijstId = '".$lijstId ."'
+			ORDER BY bevattenId";
+			//INNER JOIN tblProduct ON ( tblBevatten.productId = tblProduct.productId ) 
+
 			
 	$result = $conn -> query($qry);
 	$singleResult = mysqli_fetch_assoc($result);
@@ -18,7 +21,7 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getList" => true, "lijstNaam" => $singleResult['lijstNaam'],"lijstId" => $singleResult['lijstId']);
+			$response = array("getList" => true, "productNaam" => $singleResult['productNaam'],"productId" => $singleResult['productId']);
 			$list[] = $response;
 		};
 		echo json_encode($list);

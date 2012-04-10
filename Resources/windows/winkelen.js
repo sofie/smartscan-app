@@ -11,10 +11,7 @@
 		var lblTitle = Titanium.UI.createLabel({
 			text : 'Winkelen',
 			color : '#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 24
-			}
+			font : FontTitle
 		});
 		winkelenWindow.setTitleControl(lblTitle);
 

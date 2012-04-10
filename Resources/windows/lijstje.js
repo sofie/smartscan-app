@@ -8,10 +8,7 @@
 		var lblTitle = Titanium.UI.createLabel({
 			text : 'Mijn lijstjes',
 			color : '#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 24
-			}
+			font : FontTitle
 		});
 		lijstjeWindow.setTitleControl(lblTitle);
 
@@ -57,9 +54,9 @@
 						Titanium.API.info('Geen links');
 						var lblNoLinks = Titanium.UI.createLabel({
 							top : 70,
-							text : 'Er zijn nog geen links. Maak 1 aan.',
-							//font : FontNormal,
-							//color : '#AC3724',
+							text : 'Er zijn nog geen lijstjes. Maak 1 aan.',
+							font : FontNormal,
+							color : '#AC3724',
 							left : 30,
 							right : 30,
 							width : 300,
@@ -70,7 +67,7 @@
 					} else {
 
 						for(var i = 0; i < lists.length; i++) {
-							var lijstid = lists[i].listId;
+							var lijstid = lists[i].lijstId;
 							var lijstnaam = lists[i].lijstNaam;
 
 							var row = Ti.UI.createTableViewRow({
@@ -84,9 +81,7 @@
 								height : 'auto',
 								textAlign : 'left',
 								color : '#474240',
-								font : {
-									fontFamily : 'Bree serif'
-								}
+								font : FontNormal
 							});
 
 							row.add(name);
@@ -96,8 +91,8 @@
 
 						var listLists = Titanium.UI.createTableView({
 							top : 0,
-							left : 0,
-							right : 0,
+							left : 10,
+							right : 10,
 							bottom : 64,
 							data : data,
 
@@ -107,14 +102,14 @@
 						lijstjeWindow.add(listLists);
 
 						//Open detail van window
-						/*listLists.addEventListener('click', function(e) {
-						 Titanium.App.selectedIndex = lists[e.index].linkId;
-						 Titanium.App.selectedNaam = lists[e.index].linkNaam;
-						 Titanium.App.selectedProd1 = lists[e.index].productNaam;
-						 Smart.navGroup.open(Smart.ui.createDetailWindow(), {
-						 animated : false
-						 });
-						 });*/
+						listLists.addEventListener('click', function(e) {
+							Titanium.App.selectedLijstje = lists[e.index].lijstId;
+							Titanium.App.selectedLijstjeNaam = lists[e.index].lijstNaam;
+							Titanium.App.selectedProd1 = lists[e.index].productNaam;
+							Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow(), {
+								animated : false
+							});
+						});
 					}
 
 				} catch(e) {

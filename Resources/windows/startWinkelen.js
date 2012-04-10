@@ -8,10 +8,7 @@
 		var lblTitle = Titanium.UI.createLabel({
 			text : 'Scan uw producten',
 			color : '#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 24
-			}
+			font : FontTitle
 		});
 		winkelenWindow.setTitleControl(lblTitle);
 

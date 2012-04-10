@@ -9,10 +9,7 @@
 		var lblTitle = Titanium.UI.createLabel({
 			text : 'Mijn account',
 			color : '#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 24
-			}
+			font : FontTitle
 		});
 		registerWin.setTitleControl(lblTitle);
 		navWindow = Ti.UI.createWindow();
@@ -40,21 +37,28 @@
 		//
 		//Registreren - interface
 		//
+		var viewScrollRegister = Titanium.UI.createScrollView({
+			contentWidth : 'auto',
+			contentHeight : 'auto',
+			top : 0,
+			showVerticalScrollIndicator : true
+		});
+		registerWin.add(viewScrollRegister);
 
 		var viewRegister = Titanium.UI.createView({
-			backgroundImage : '/img/inputRegistreer.png',
+			backgroundImage : '/img/input_register.png',
 			width : 277,
-			height : 283,
+			height : 188,
 			top : 20,
 			left : 'auto',
 			right : 'auto',
 			opacity : 0.7
 		});
-		registerWin.add(viewRegister);
+		viewScrollRegister.add(viewRegister);
 
 		var userEmail = Titanium.UI.createTextField({
 			color : '#474240',
-			top : 0,
+			top : -3,
 			left : 20,
 			width : 260,
 			height : 50,
@@ -73,7 +77,7 @@
 		viewRegister.add(userEmail);
 		var password1 = Titanium.UI.createTextField({
 			color : '#474240',
-			top : 50,
+			top : 47,
 			left : 20,
 			width : 260,
 			height : 50,
@@ -94,7 +98,7 @@
 
 		var password2 = Titanium.UI.createTextField({
 			color : '#474240',
-			top : 100,
+			top : 97,
 			left : 20,
 			width : 260,
 			height : 50,
@@ -115,7 +119,7 @@
 
 		var userName = Titanium.UI.createTextField({
 			color : '#474240',
-			top : 150,
+			top : 140,
 			left : 20,
 			width : 260,
 			height : 50,
@@ -133,50 +137,9 @@
 		});
 		viewRegister.add(userName);
 
-		/*
-		 var userFirstname = Titanium.UI.createTextField({
-		 color : '#474240',
-		 top : 187,
-		 left : 20,
-		 width : 260,
-		 height : 50,
-		 hintText : 'Voornaam',
-		 autocapitalization : false,
-		 font : {
-		 fontSize : 15,
-		 fontFamily : 'Bree Serif'
-		 },
-		 keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-		 returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-		 borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-		 clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
-
-		 });
-		 viewRegister.add(userFirstname);
-
-		 var userLastname = Titanium.UI.createTextField({
-		 color : '#474240',
-		 top : 233,
-		 left : 20,
-		 width : 260,
-		 height : 50,
-		 hintText : 'Achternaam',
-		 autocapitalization : false,
-		 font : {
-		 fontSize : 15,
-		 fontFamily : 'Bree Serif'
-		 },
-		 keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-		 returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-		 borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-		 clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
-
-		 });
-		 viewRegister.add(userLastname);
-		 */
 		var registerBtn = Titanium.UI.createButton({
 			backgroundImage : '/img/btn_registreer.png',
-			top : 320,
+			top : 230,
 			right : 20,
 			width : 99,
 			height : 37
@@ -212,12 +175,11 @@
 			onload : function() {
 				var json = this.responseText;
 				var response = JSON.parse(json);
-				
+
 				if(response.registered == true) {
 					registerWin.close({
 						animated : false
 					});
-					
 					mainWin = Smart.ui.createApplicationMainWin();
 					mainWin.open({
 						animated : false
@@ -226,7 +188,6 @@
 					alert('User bestaat al.');
 				}
 			},
-			
 			//Databank niet ok (path, MAMP,...)
 			onerror : function(e) {
 				Ti.API.info("TEXT onerror:   " + this.responseText);
@@ -235,21 +196,16 @@
 			timeout : 5000
 		});
 
-
 		registerBtn.addEventListener('click', function(e) {
 			if(password1.value != '' && password2.value != '' && userEmail.value != '' && userName.value != '') {
-				//if(userName.value != '' && password1.value != '' && password2.value != '' && userFirstname.value != '' && userLastname.value != '' && userEmail.value != '') {
 				if(password1.value != password2.value) {
 					alert("Uw wachtwoorden komen niet overeen.");
 				} else {
 					if(!checkemail(userEmail.value)) {
 						alert("Gelieve een geldig e-mailadres in te voeren.");
 					} else {
-						//registerBtn.enabled = false;
-						//registerBtn.opacity = 0.3;
 						createReq.open("POST", "http://localhost/SmartScan/post_register.php");
 						var params = {
-							//userPassword : Ti.Utils.md5HexDigest(password1.value),
 							userPassword : password1.value,
 							userEmail : userEmail.value,
 							userName : userName.value

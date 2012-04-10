@@ -13,10 +13,7 @@
 	var lblTitle = Titanium.UI.createLabel({
 		text : 'Inloggen',
 		color : '#fff',
-		font : {
-			fontFamily : 'Bree Serif',
-			fontSize : 24
-		}
+		font : FontTitle
 	});
 	loginWin.setTitleControl(lblTitle);
 
@@ -114,7 +111,7 @@
 		backgroundImage : '/img/btn_account.png',
 		top : -42,
 		left : 20,
-		width : 182,
+		width : 183,
 		height : 42
 	});
 	loginWin.add(accountBtn);

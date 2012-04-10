@@ -11,10 +11,7 @@
 		var lblTitle = Titanium.UI.createLabel({
 			text:'Informatie',
 			color:'#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize:24
-			}
+			font : FontTitle
 		});
 		infoWindow.setTitleControl(lblTitle);
 		

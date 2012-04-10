@@ -12,10 +12,7 @@
 		var lblTitle = Titanium.UI.createLabel({
 			text : Titanium.App.productTitle,
 			color : '#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 24
-			}
+			font : FontTitle
 		});
 		detailproductWindow.setTitleControl(lblTitle);
 

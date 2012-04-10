@@ -7,10 +7,7 @@
 		var lblTitle = Titanium.UI.createLabel({
 			text:'Winkels',
 			color:'#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize:24
-			}
+			font : FontTitle
 		});
 		winkelsWindow.setTitleControl(lblTitle);
 

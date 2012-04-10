@@ -4,11 +4,8 @@ $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 
 if (!$conn -> connect_error) {
 	
-	$userId = $_POST['userId'];
-	
-	$qry = "SELECT lijstNaam, lijstId
-			FROM tblLijst
-			WHERE userId='".$userId ."'";
+	$qry = "SELECT categorieNaam, categorieId
+			FROM tblCategorie";
 			
 	$result = $conn -> query($qry);
 	$singleResult = mysqli_fetch_assoc($result);
@@ -18,13 +15,13 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getList" => true, "lijstNaam" => $singleResult['lijstNaam'],"lijstId" => $singleResult['lijstId']);
+			$response = array("getCat" => true, "catNaam" => $singleResult['categorieNaam'],"catId" => $singleResult['categorieId']);
 			$list[] = $response;
 		};
 		echo json_encode($list);
 
 	} else {
-		$response = array("getList" => false);
+		$response = array("getCat" => false);
 		echo json_encode($response);
 		$conn -> close();
 	}

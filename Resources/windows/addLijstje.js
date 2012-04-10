@@ -9,10 +9,7 @@
 		var lblAddTitle = Titanium.UI.createLabel({
 			text : 'Nieuw lijstje',
 			color : '#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 24
-			}
+			font : FontTitle
 		});
 		addWin.setTitleControl(lblAddTitle);
 

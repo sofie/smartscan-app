@@ -2,6 +2,9 @@ var Ti;
 
 Titanium.UI.setBackgroundImage('img/bg.png');
 
+Titanium.include('styles/font_styles.js');
+var commonStyle = require('styles/common_styles').commonStyles();
+
 //libraries
 Ti.include('smart/smart.js');
 
@@ -10,6 +13,7 @@ Ti.include(
 	'windows/lijstje.js', 
 	'windows/lijstjeInhoud.js', 
 	'windows/addLijstje.js', 
+	'windows/addProductWindow.js',
 	//'windows/DetailProductWindow.js',
 	
 	'windows/winkelen.js', 
