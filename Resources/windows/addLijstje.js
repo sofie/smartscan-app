@@ -55,44 +55,51 @@
 
 		addWin.add(lijstNaam);
 		addWin.add(btnCreateLijstje);
-
-		var createReq = Titanium.Network.createHTTPClient({
-			onload : function() {
-				var json = this.responseText;
-				var response = JSON.parse(json);
-
-				if(response.add == true) {
-					Titanium.API.info(response);
-					Titanium.API.info(Titanium.App.userId);
-					alert('Lijst is toegevoegd aan databank.');
-					
-					Smart.navGroup.open(Smart.ui.createAddProductWindow({
-						animated : false
-					}));
-				} else {
-					alert('Lijst bestaat al. Kies een andere naam.');
-				}
-			},
-			//Databank niet ok (path, MAMP,...)
-			onerror : function(e) {
-				Ti.API.info("TEXT onerror:   " + this.responseText);
-				alert('Er is iets mis met de databank.');
-			},
-			timeout : 5000
-		});
-
+		
 		btnCreateLijstje.addEventListener('click', function(e) {
 			if(lijstNaam.value != '') {
-				createReq.open("POST", "http://localhost/SmartScan/post_addlijst.php");
-				var params = {
-					lijstNaam : lijstNaam.value,
-					userId : Titanium.App.userId
-				};
-				createReq.send(params);
+				addLijst();
 			} else {
 				alert('Gelieve een naam in te vullen.');
 			}
 		});
+		
+		function addLijst() {
+			var createReq = Titanium.Network.createHTTPClient();
+			createReq.open("POST", "http://localhost/SmartScan/post_addlijst.php");
+			
+			var params = {
+				lijstNaam : lijstNaam.value,
+				userId : Titanium.App.userId
+			};
+			
+			createReq.onload = function() {
+				try {
+					var json = this.responseText;
+					var response = JSON.parse(json);
+					
+					if(response.add === true) {
+						Titanium.API.info(response);
+						alert('Lijst is toegevoegd aan databank.');
+						
+						Smart.navGroup.open(Smart.ui.createAddProductWindow({
+							animated : false
+						}));
+					} else {
+						alert('Lijst bestaat al. Kies een andere naam.');
+					}
+				} catch(e) {
+					alert(e);
+				}
+			};
+			//Databank niet ok (path, MAMP,...)
+			createReq.onerror =function(e) {
+				Ti.API.info("TEXT onerror:   " + this.responseText);
+				alert('Er is iets mis met de databank.');
+			};
+			createReq.send(params);
+		};
+		
 		return addWin;
 	};
 })();

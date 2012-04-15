@@ -69,7 +69,7 @@
 
 					//Er staan nog geen producten op lijst
 					if(products.getList == false) {
-						Titanium.API.info('Geen links');
+						Titanium.API.info('Geen lijstjes');
 						var lblNoLinks = Titanium.UI.createLabel({
 							top : 70,
 							text : 'Dit lijstje bevat nog geen producten. Voeg er toe.',

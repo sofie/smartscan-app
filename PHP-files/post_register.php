@@ -8,7 +8,7 @@ if (!$conn -> connect_error)
 	$password = $_POST['userPassword'];
 	$email = $_POST['userEmail'];
 
-	$sql = "SELECT userEmail FROM tblUser WHERE userEmail = '" . $email . "' OR userName = '" . $username . "'";
+	$sql = "SELECT email FROM users WHERE email = '" . $email . "' OR username = '" . $username . "'";
 
 	$query = $conn -> query($sql);
 	if ($num_rows = $query -> num_rows > 0) 
@@ -18,7 +18,7 @@ if (!$conn -> connect_error)
 	} 
 	else 
 	{
-		$insert = "INSERT INTO tblUser (userPassword,userEmail,userName) 
+		$insert = "INSERT INTO users (password,email,username) 
 		VALUES (
 		'" . md5($password) . "',
 		'" . mysqli_real_escape_string($conn, $email) . "',

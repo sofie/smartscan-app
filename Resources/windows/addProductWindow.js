@@ -45,7 +45,6 @@
 			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 		});
-		Titanium.API.info('Naam: '+productNaam.value);
 
 		var btnAddProduct = Titanium.UI.createButton({
 			backgroundImage : "img/btn_search.png",

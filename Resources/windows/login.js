@@ -143,6 +143,7 @@
 			Titanium.API.info(this.responseText);
 			
 			Titanium.App.userId = response.userId;
+			Ti.API.info('Id: '+Titanium.App.userId);
 
 			if(response.logged == true) {
 				loginWin.close({

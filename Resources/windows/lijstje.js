@@ -51,7 +51,7 @@
 
 					//Er zijn nog geen linken in de databank
 					if(lists.getList == false) {
-						Titanium.API.info('Geen links');
+						Titanium.API.info('Geen lijstjes');
 						var lblNoLinks = Titanium.UI.createLabel({
 							top : 70,
 							text : 'Er zijn nog geen lijstjes. Maak 1 aan.',

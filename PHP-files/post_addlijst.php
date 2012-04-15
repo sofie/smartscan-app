@@ -2,23 +2,18 @@
 
 $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 
-if (!$conn -> connect_error) 
-{
+if (!$conn -> connect_error) {
 	
 	$lijstNaam = $_POST['lijstNaam'];
 	$userId = $_POST['userId'];
 
 	$qry = "SELECT lijstNaam FROM tblLijst WHERE userId = '" .$userId. "' AND lijstNaam ='".$lijstNaam."'";
 	
-
 	$query = $conn -> query($qry);
-	if ($num_rows = $query -> num_rows > 0) 
-	{
+	if ($num_rows = $query -> num_rows > 0){
 		$response = array('add' => false);
 		echo json_encode($response);
-	} 
-	else 
-	{
+	}else {
 		$insert = "
 			INSERT INTO tblLijst (lijstNaam, userId) 
 			VALUES ('" . mysqli_real_escape_string($conn, $lijstNaam) . "',
