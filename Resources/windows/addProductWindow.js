@@ -81,8 +81,8 @@
 			createReq.open("POST", "http://localhost/smartscan/post_addproduct.php");
 
 			var params = {
-				lijstId : Titanium.App.selectedLijstje,
-				productNaam : productNaam.value
+				list_id : Titanium.App.selectedLijstje,
+				product_id : productNaam.value
 			};
 
 			createReq.onload = function() {

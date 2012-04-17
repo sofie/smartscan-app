@@ -69,13 +69,16 @@
 			createReq.open("POST", "http://localhost/SmartScan/post_addlijst.php");
 			
 			var params = {
-				lijstNaam : lijstNaam.value,
-				userId : Titanium.App.userId
+				name : lijstNaam.value,
+				user_id : Titanium.App.userId
 			};
+			Ti.API.info('Naam: '+params.name);
+			Ti.API.info('Id: '+params.user_id);
 			
 			createReq.onload = function() {
 				try {
 					var json = this.responseText;
+					Ti.API.info('JSON: '+json);
 					var response = JSON.parse(json);
 					
 					if(response.add === true) {

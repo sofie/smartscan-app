@@ -41,7 +41,7 @@
 			var getReq = Titanium.Network.createHTTPClient();
 			getReq.open("GET", "http://localhost/SmartScan/get_lists.php");
 			var params = {
-				userId : Titanium.App.userId
+				user_id : Titanium.App.userId
 			};
 			getReq.timeout = 5000;
 

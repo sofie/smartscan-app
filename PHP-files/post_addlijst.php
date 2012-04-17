@@ -4,10 +4,10 @@ $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 
 if (!$conn -> connect_error) {
 	
-	$lijstNaam = $_POST['lijstNaam'];
-	$userId = $_POST['userId'];
+	$name = $_POST['name'];
+	$user_id = $_POST['user_id'];
 
-	$qry = "SELECT lijstNaam FROM tblLijst WHERE userId = '" .$userId. "' AND lijstNaam ='".$lijstNaam."'";
+	$qry = "SELECT name FROM lists WHERE user_id = '" .$user_id. "' AND name ='".$name."'";
 	
 	$query = $conn -> query($qry);
 	if ($num_rows = $query -> num_rows > 0){
@@ -15,15 +15,15 @@ if (!$conn -> connect_error) {
 		echo json_encode($response);
 	}else {
 		$insert = "
-			INSERT INTO tblLijst (lijstNaam, userId) 
-			VALUES ('" . mysqli_real_escape_string($conn, $lijstNaam) . "',
-					'" . mysqli_real_escape_string($conn, $userId ). "')
+			INSERT INTO lists (name, user_id) 
+			VALUES ('" . mysqli_real_escape_string($conn, $name) . "',
+					'" . mysqli_real_escape_string($conn, $user_id ). "')
 			";
 
 		$query = $conn -> query($insert);
 		if ($query) 
 		{
-			$response = array('add' => true, 'lijstNaam' => $lijstNaam, 'userId' => $userId);
+			$response = array('add' => true, 'lijstNaam' => $name, 'userId' => $user_id);
 			echo json_encode($response);
 			$conn -> close();
 		} 

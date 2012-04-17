@@ -59,7 +59,7 @@
 			var getReq = Titanium.Network.createHTTPClient();
 			getReq.open("GET", "http://localhost/SmartScan/get_products.php");
 			var params = {
-				lijstId : Titanium.App.selectedLijstje
+				list_id : Titanium.App.selectedLijstje
 			};
 			getReq.timeout = 5000;
 

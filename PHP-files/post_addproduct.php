@@ -5,10 +5,10 @@ $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 if (!$conn -> connect_error) 
 {
 	
-	$lijstNaam = $_POST['lijstNaam'];
-	$userId = $_POST['userId'];
+	$list_id = $_POST['list_id'];
+	$product_id = $_POST['product_id'];
 
-	$qry = "SELECT lijstNaam FROM tblLijst WHERE userId = '" .$userId. "' AND lijstNaam ='".$lijstNaam."'";
+	$qry = "SELECT * FROM list_details WHERE list_id = '" .$list_id. "' AND product_id ='".$product_id."'";
 	
 
 	$query = $conn -> query($qry);
@@ -20,15 +20,15 @@ if (!$conn -> connect_error)
 	else 
 	{
 		$insert = "
-			INSERT INTO tblLijst (lijstNaam, userId) 
-			VALUES ('" . mysqli_real_escape_string($conn, $lijstNaam) . "',
-					'" . mysqli_real_escape_string($conn, $userId ). "')
+			INSERT INTO list_details (list_id, product_id) 
+			VALUES ('" . mysqli_real_escape_string($conn, $list_id) . "',
+					'" . mysqli_real_escape_string($conn, $product_id ). "')
 			";
 
 		$query = $conn -> query($insert);
 		if ($query) 
 		{
-			$response = array('add' => true, 'lijstNaam' => $lijstNaam, 'userId' => $userId);
+			$response = array('add' => true, 'listId' => $list_id, 'productId' => $product_id);
 			echo json_encode($response);
 			$conn -> close();
 		} 
