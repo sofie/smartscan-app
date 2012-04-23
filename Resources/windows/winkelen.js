@@ -4,15 +4,10 @@
 		//
 		// Main window
 		//
-		var winkelenWindow = Titanium.UI.createWindow({
-			barImage : 'img/header.png',
-			fullscreen : false
-		});
-		var lblTitle = Titanium.UI.createLabel({
-			text : 'Winkelen',
-			color : '#fff',
-			font : FontTitle
-		});
+		var winkelenWindow = Titanium.UI.createWindow(style.Window);
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text : 'Winkelen'
+		}));
 		winkelenWindow.setTitleControl(lblTitle);
 
 		//
@@ -55,11 +50,7 @@
 					animated : false
 				});
 
-				var backButton = Titanium.UI.createButton({
-					backgroundImage : "img/btn_back.png",
-					width : 57,
-					height : 35
-				});
+				var backButton = Titanium.UI.createButton(style.backButton);
 				backButton.addEventListener('click', function() {
 					Smart.navGroup.close(iconWin, {
 						animated : false

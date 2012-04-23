@@ -1,43 +1,27 @@
 (function() {
 
 	Smart.ui.createLijstjeInhoudWindow = function() {
-		var inhoudlijstjeWindow = Titanium.UI.createWindow({
-			barImage : 'img/header.png',
-			fullscreen : false,
-			font : {
-				fontFamily : 'Bree Serif'
-			}
-		});
-		var lblTitle = Titanium.UI.createLabel({
-			text : Titanium.App.selectedLijstjeNaam,
-			color : '#fff',
-			font : FontTitle
-		});
+		var inhoudlijstjeWindow = Titanium.UI.createWindow(style.Window);
+		var lblTitle =Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text : Titanium.App.selectedLijstjeNaam
+		}));
 		inhoudlijstjeWindow.setTitleControl(lblTitle);
 
 		//
 		//Add button (rightNavButton)
 		//
-		var addButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_add.png",
-			width : 37,
-			height : 35
-		});
+		var addButton = Titanium.UI.createButton(style.addButton);
 		addButton.addEventListener('click', function() {
-			Smart.navGroup.open(Smart.ui.createAddProductWindow({
+			Smart.navGroup.open(Smart.ui.createAddProductWindow(),{
 				animated : false
-			}));
+			});
 		});
 		inhoudlijstjeWindow.rightNavButton = addButton;
 
 		//
 		//Back button
 		//
-		var backButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_back.png",
-			width : 57,
-			height : 35
-		});
+		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
 			Smart.navGroup.close(inhoudlijstjeWindow, {
 				animated : false
@@ -70,16 +54,10 @@
 					//Er staan nog geen producten op lijst
 					if(products.getList == false) {
 						Titanium.API.info('Geen lijstjes');
-						var lblNoLinks = Titanium.UI.createLabel({
-							top : 70,
+						var lblNoLinks = Titanium.UI.createLabel(Smart.combine(style.textError,{
+							top : 30,
 							text : 'Dit lijstje bevat nog geen producten. Voeg er toe.',
-							font : FontNormal,
-							color : '#AC3724',
-							left : 30,
-							right : 30,
-							width : 300,
-							height : 'auto'
-						});
+						}));
 						inhoudlijstjeWindow.add(lblNoLinks);
 
 					} else {
@@ -89,34 +67,21 @@
 							var productNaam = products[i].productNaam;
 
 							var row = Ti.UI.createTableViewRow({
-								height : 35
+								height : 30
 							});
 
-							var name = Ti.UI.createLabel({
-								text : productNaam,
-								left : 10,
-								width : 'auto',
-								height : 'auto',
-								textAlign : 'left',
-								color : '#474240',
-								font : FontNormal
-							});
+							var name = Ti.UI.createLabel(Smart.combine(style.textNormal,{
+								text : productNaam
+							}));
 
 							row.add(name);
 							row.className = 'item' + i;
 							data[i] = row;
 						};
 
-						var listLists = Titanium.UI.createTableView({
-							top : 5,
-							left : 10,
-							right : 10,
-							bottom : 15,
-							data : data,
-
-							backgroundImage : 'img/bg.png',
-							style : Titanium.UI.iPhone.TableViewStyle.GROUPED
-						});
+						var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView,{
+							data : data
+						}));
 						inhoudlijstjeWindow.add(listLists);
 
 						//Open detail van window

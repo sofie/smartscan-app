@@ -1,18 +1,11 @@
 (function() {
 
 	Smart.ui.createInfoWindow = function() {
-		var infoWindow = Titanium.UI.createWindow({
-			barColor:'#',
-			barImage : 'img/header.png',
-			backgroundImage : 'img/bg.png',
-			//fullscreen : false
-		});
+		var infoWindow = Titanium.UI.createWindow(style.Window);
 		
-		var lblTitle = Titanium.UI.createLabel({
-			text:'Informatie',
-			color:'#fff',
-			font : FontTitle
-		});
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text:'Informatie'
+		}));
 		infoWindow.setTitleControl(lblTitle);
 		
 		var lblCreatedBy = Titanium.UI.createLabel({

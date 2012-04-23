@@ -1,14 +1,10 @@
 (function() {
 
 	Smart.ui.createWinkelsWindow = function() {
-		var winkelsWindow = Titanium.UI.createWindow({
-			barImage : 'img/header.png'
-		});
-		var lblTitle = Titanium.UI.createLabel({
-			text:'Winkels',
-			color:'#fff',
-			font : FontTitle
-		});
+		var winkelsWindow = Titanium.UI.createWindow(style.Window);
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text:'Winkels'
+		}));
 		winkelsWindow.setTitleControl(lblTitle);
 
 		var btnCurrentLocation = Titanium.UI.createButton({

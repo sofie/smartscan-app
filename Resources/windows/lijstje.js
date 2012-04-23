@@ -1,30 +1,21 @@
 (function() {
 
 	Smart.ui.createLijstjeWindow = function() {
-		var lijstjeWindow = Titanium.UI.createWindow({
-			barImage : 'img/header.png',
-			fullscreen : false
-		});
-		var lblTitle = Titanium.UI.createLabel({
-			text : 'Mijn lijstjes',
-			color : '#fff',
-			font : FontTitle
-		});
+		var lijstjeWindow = Titanium.UI.createWindow(style.Window);
+		
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text : 'Mijn lijstjes'
+		}));
 		lijstjeWindow.setTitleControl(lblTitle);
 
 		//
 		//Add lijstje button (rightNavButton)
 		//
-		var addButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_add.png",
-			width : 37,
-			height : 35
-		});
-		addButton.addEventListener('click', function(ee) {
-
-			Smart.navGroup.open(Smart.ui.createAddLijstjeWindow({
+		var addButton = Titanium.UI.createButton(style.addButton);
+		addButton.addEventListener('click', function(e) {
+			Smart.navGroup.open(Smart.ui.createAddLijstjeWindow(),{
 				animated : false
-			}));
+			});
 		});
 
 		lijstjeWindow.rightNavButton = addButton;
@@ -32,8 +23,11 @@
 		//
 		// Bestaande lijstjes van gebruiker
 		//
-
-		getLists();
+		lijstjeWindow.addEventListener('open',function(){
+			Ti.API.info('Lijst win open');
+			getLists();
+		})
+		
 		function getLists() {
 
 			var data = [];
@@ -52,16 +46,10 @@
 					//Er zijn nog geen linken in de databank
 					if(lists.getList == false) {
 						Titanium.API.info('Geen lijstjes');
-						var lblNoLinks = Titanium.UI.createLabel({
-							top : 70,
-							text : 'Er zijn nog geen lijstjes. Maak 1 aan.',
-							font : FontNormal,
-							color : '#AC3724',
-							left : 30,
-							right : 30,
-							width : 300,
-							height : 'auto'
-						});
+						var lblNoLinks = Titanium.UI.createLabel(Smart.combine(style.textError,{
+							top:30,
+							text : 'Er zijn nog geen lijstjes. Maak 1 aan.'
+						}));
 						lijstjeWindow.add(lblNoLinks);
 
 					} else {
@@ -74,31 +62,18 @@
 								height : 35
 							});
 
-							var name = Ti.UI.createLabel({
-								text : lijstnaam,
-								left : 10,
-								width : 'auto',
-								height : 'auto',
-								textAlign : 'left',
-								color : '#474240',
-								font : FontNormal
-							});
+							var name = Ti.UI.createLabel(Smart.combine(style.textNormal,{
+								text : lijstnaam
+							}));
 
 							row.add(name);
 							row.className = 'item' + i;
 							data[i] = row;
 						};
 
-						var listLists = Titanium.UI.createTableView({
-							top : 0,
-							left : 10,
-							right : 10,
-							bottom : 64,
-							data : data,
-
-							backgroundImage : 'img/bg.png',
-							style : Titanium.UI.iPhone.TableViewStyle.GROUPED
-						});
+						var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView,{
+							data : data
+						}));
 						lijstjeWindow.add(listLists);
 
 						//Open detail van window
@@ -109,6 +84,35 @@
 							Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow(), {
 								animated : false
 							});
+						});
+						
+						//Delete row
+						listLists.addEventListener('delete', function(e) {
+							Ti.API.info('DELETE FROM lists WHERE id=' + lists[e.index].lijstId);
+
+							var deleteReq = Titanium.Network.createHTTPClient();
+							deleteReq.open("GET", "http://localhost/SmartScan/post_removelist.php");
+							deleteReq.timeout = 5000;
+							deleteReq.onload = function() {
+								try {
+									var json = this.responseText;
+									var response = JSON.parse(json);
+									if(response.remove === true) {
+										Titanium.API.info('Remove list: ' + this.responseText);
+
+									} else {
+										alert('Lijst kan niet verwijderd worden.');
+									}
+								} catch(e) {
+									alert(e);
+								}
+							};
+
+							var params = {
+								id : lists[e.index].lijstId
+							};
+							deleteReq.send(params);
+
 						});
 					}
 

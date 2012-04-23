@@ -1,26 +1,16 @@
 (function() {
 
 	Smart.ui.createAddProductWindow = function() {
-		var addProductWin = Titanium.UI.createWindow({
-			barImage : 'img/header.png',
-			layout : 'vertical',
-			fullscreen : false
-		});
-		var lblAddTitle = Titanium.UI.createLabel({
-			text : 'Product toevoegen',
-			color : '#fff',
-			font : FontTitle
-		});
-		addProductWin.setTitleControl(lblAddTitle);
+		var addProductWin = Titanium.UI.createWindow(style.Window);
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text : 'Product toevoegen'
+		}));
+		addProductWin.setTitleControl(lblTitle);
 		
 	//	getCategories();
 
 		//Backbutton
-		var backButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_back.png",
-			width : 57,
-			height : 35
-		});
+		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
 			Smart.navGroup.close(addProductWin, {
 				animated : false
@@ -31,28 +21,13 @@
 		//
 		//Inhoud window
 		//
-		var productNaam = Titanium.UI.createTextField({
-			color : '#888',
+		var productNaam = Titanium.UI.createTextField(Smart.combine(style.inputFieldBorder,{
 			top : 15,
-			left : 15,
 			right : 60,
-			height : 40,
-			hintText : 'Voeg product toe aan lijst...',
-			font : FontTextField,
-			opacity : 0.65,
-			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
-		});
+			hintText : 'Voeg product toe aan lijst...'
+		}));
 
-		var btnAddProduct = Titanium.UI.createButton({
-			backgroundImage : "img/btn_search.png",
-			width : 43,
-			height : 42,
-			right : 15,
-			top : -40
-		});
+		var btnAddProduct = Titanium.UI.createButton(style.searchButton);
 
 		btnAddProduct.addEventListener('click', function(e) {
 			if(productNaam.value != '') {
@@ -84,13 +59,14 @@
 				list_id : Titanium.App.selectedLijstje,
 				product_id : productNaam.value
 			};
+			Ti.API.info('Add: '+params.list_id+' '+params.product_id);
 
 			createReq.onload = function() {
 				try {
 					var json = this.responseText;
 					var response = JSON.parse(json);
 					Titanium.API.info(this.responseText);
-					if(response.add == true) {
+					if(response.add === true) {
 						Smart.navGroup.close(addProductWin, {
 							animated : false
 						});

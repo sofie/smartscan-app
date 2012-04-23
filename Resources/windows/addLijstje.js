@@ -1,24 +1,15 @@
 (function() {
 
 	Smart.ui.createAddLijstjeWindow = function() {
-		var addWin = Titanium.UI.createWindow({
-			barImage : 'img/header.png',
-			backgroundImage : 'img/bg.png',
-			layout : 'vertical'
-		});
-		var lblAddTitle = Titanium.UI.createLabel({
-			text : 'Nieuw lijstje',
-			color : '#fff',
-			font : FontTitle
-		});
-		addWin.setTitleControl(lblAddTitle);
+		var addWin = Titanium.UI.createWindow(style.Window);
+		
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text : 'Nieuw lijstje'
+		}));
+		addWin.setTitleControl(lblTitle);
 
 		//Backbutton
-		var backButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_back.png",
-			width : 57,
-			height : 35
-		});
+		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
 			Smart.navGroup.close(addWin, {
 				animated : false
@@ -27,31 +18,14 @@
 		addWin.leftNavButton = backButton;
 
 		//Inhoud add lijstje window
-		var lijstNaam = Titanium.UI.createTextField({
-			color : '#888',
+		var lijstNaam = Titanium.UI.createTextField(Smart.combine(style.inputFieldBorder,{
 			top : 10,
-			left : 20,
-			right : 20,
-			height : 40,
-			hintText : 'Nieuw boodschappenlijstje',
-			font : {
-				fontSize : 15,
-				fontFamily : 'Bree Serif'
-			},
-			opacity : 0.65,
-			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
-		});
+			hintText : 'Nieuw boodschappenlijstje'
+		}));
 
-		var btnCreateLijstje = Titanium.UI.createButton({
-			backgroundImage : 'img/btn_maken.png',
-			width : 100,
-			height : 42,
-			right : 20,
-			top : 15
-		});
+		var btnCreateLijstje = Titanium.UI.createButton(Smart.combine(style.makenButton,{
+			top : 65
+		}));
 
 		addWin.add(lijstNaam);
 		addWin.add(btnCreateLijstje);
@@ -72,8 +46,6 @@
 				name : lijstNaam.value,
 				user_id : Titanium.App.userId
 			};
-			Ti.API.info('Naam: '+params.name);
-			Ti.API.info('Id: '+params.user_id);
 			
 			createReq.onload = function() {
 				try {
@@ -82,12 +54,11 @@
 					var response = JSON.parse(json);
 					
 					if(response.add === true) {
-						Titanium.API.info(response);
 						alert('Lijst is toegevoegd aan databank.');
 						
-						Smart.navGroup.open(Smart.ui.createAddProductWindow({
+						Smart.navGroup.open(Smart.ui.createAddProductWindow(),{
 							animated : false
-						}));
+						});
 					} else {
 						alert('Lijst bestaat al. Kies een andere naam.');
 					}

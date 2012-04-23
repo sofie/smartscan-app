@@ -2,11 +2,11 @@
 	var navWindow;
 
 	Smart.ui.createApplicationMainWin = function() {
-		var mainWindow = Ti.UI.createWindow({
+		var mainWindow = Ti.UI.createWindow(Smart.combine(style.Window,{
 			backgroundImage : 'img/bg_main.png',
 			navBarHidden : true,
 			fullscreen : false
-		});
+		}));
 		navWindow = Ti.UI.createWindow();
 		Smart.navGroup = Ti.UI.iPhone.createNavigationGroup({
 			window : mainWindow
@@ -16,13 +16,7 @@
 		//
 		// back button/logout
 		//
-		var backButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_logout.png",
-			width : 82,
-			height : 35,
-			right : 20,
-			top : 20
-		});
+		var backButton = Titanium.UI.createButton(style.logoutButton);
 		backButton.addEventListener('click', function() {
 			mainWindow.close({animated:false});
 			Ti.App.fireEvent('app:logoutback', {
@@ -72,11 +66,7 @@
 					animated : false
 				});
 
-				var backButton = Titanium.UI.createButton({
-					backgroundImage : "img/btn_back.png",
-					width : 57,
-					height : 35
-				});
+				var backButton = Titanium.UI.createButton(style.backButton);
 				backButton.addEventListener('click', function() {
 					Smart.navGroup.close(iconWin, {
 						animated : false

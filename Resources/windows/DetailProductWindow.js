@@ -19,11 +19,7 @@
 		//
 		//Back button
 		//
-		var backButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_back.png",
-			width : 57,
-			height : 35
-		});
+		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
 			Smart.navGroup.close(detailproductWindow, {
 				animated : false

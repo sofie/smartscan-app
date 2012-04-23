@@ -16,13 +16,13 @@ exports.commonStyles = function() {
 
 		backButton : {
 			backgroundImage : "img/btn_back.png",
-			width : 57,
-			height : 35
+			width : 52,
+			height : 31
 		},
 		addButton : {
 			backgroundImage : "img/btn_add.png",
-			width : 37,
-			height : 35
+			width : 33,
+			height : 31
 		}
 	};
 };

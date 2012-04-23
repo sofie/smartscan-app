@@ -2,10 +2,7 @@
 	var navWindow;
 
 	Smart.ui.createAccountWin = function() {
-		var registerWin = Titanium.UI.createWindow({
-			barImage : 'img/header.png',
-			backgroundImage : 'img/bg.png'
-		});
+		var registerWin = Titanium.UI.createWindow(style.Window);
 		var lblTitle = Titanium.UI.createLabel({
 			text : 'Mijn account',
 			color : '#fff',
@@ -21,11 +18,7 @@
 		//
 		// back button/logout
 		//
-		var backButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_back.png",
-			width : 57,
-			height : 35
-		});
+		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
 			registerWin.close();
 			Ti.App.fireEvent('app:accountclose', {

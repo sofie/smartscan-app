@@ -26,5 +26,9 @@ Ti.include(
 	'smart/icons.js', 
 	'windows/main.js',
 	'windows/login.js',
-	'windows/account.js'
+	'windows/account.js',
+	
+	'config/config.js',
+	'styles/styles.js'
 );
+Smart.ui.createLoginWindow();
