@@ -40,7 +40,7 @@
 			height : 190,
 			width : 264,
 			layout : 'horizontal',
-			backgroundImage : 'img/bg_menu.png',
+			//backgroundImage : 'img/bg_menu.png',
 			opacity : 0.5
 		});
 		mainWindow.add(viewIconsBg);

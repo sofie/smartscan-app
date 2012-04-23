@@ -172,8 +172,8 @@
 		},
 		backButton : {
 			backgroundImage : "img/btn_back.png",
-			width : 52,
-			height : 31
+			width : 49,
+			height : 28
 		},
 		makenButton:{
 			backgroundImage : 'img/btn_maken.png',
@@ -190,13 +190,12 @@
 			top : 10
 		},
 		bgLoginTextField:{
-			backgroundImage : '/img/inputLogin.png',
+			backgroundImage : '/img/bg_inputLogin.png',
 			width : 280,
 			height : 100,
 			top : 20,
 			left : 'auto',
-			right : 'auto',
-			opacity : 0.7
+			right : 'auto'
 		},
 		wrmAccount:{
 			width : 320,
