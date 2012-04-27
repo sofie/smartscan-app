@@ -3,12 +3,12 @@
 
 	Smart.ui.createAccountWin = function() {
 		var registerWin = Titanium.UI.createWindow(style.Window);
-		var lblTitle = Titanium.UI.createLabel({
-			text : 'Mijn account',
-			color : '#fff',
-			font : FontTitle
-		});
+		
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+			text : 'Mijn account'
+		}));
 		registerWin.setTitleControl(lblTitle);
+		
 		navWindow = Ti.UI.createWindow();
 		Smart.navGroup = Ti.UI.iPhone.createNavigationGroup({
 			window : registerWin
@@ -38,105 +38,37 @@
 		});
 		registerWin.add(viewScrollRegister);
 
-		var viewRegister = Titanium.UI.createView({
-			backgroundImage : '/img/input_register.png',
-			width : 277,
-			height : 188,
-			top : 20,
-			left : 'auto',
-			right : 'auto',
-			opacity : 0.7
-		});
+		var viewRegister = Titanium.UI.createView(style.inputFieldRegister);
 		viewScrollRegister.add(viewRegister);
 
-		var userEmail = Titanium.UI.createTextField({
-			color : '#474240',
-			top : -3,
-			left : 20,
-			width : 260,
-			height : 50,
+		var userEmail = Titanium.UI.createTextField(Smart.combine(style.inputFieldNoBg,{
+			top : 7,
 			hintText : 'Email',
-			autocapitalization : false,
-			font : {
-				fontSize : 15,
-				fontFamily : 'Bree Serif'
-			},
-			keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
-
-		});
+			keyboardType : Titanium.UI.KEYBOARD_EMAIL
+		}));
 		viewRegister.add(userEmail);
-		var password1 = Titanium.UI.createTextField({
-			color : '#474240',
-			top : 47,
-			left : 20,
-			width : 260,
-			height : 50,
+		var password1 = Titanium.UI.createTextField(Smart.combine(style.inputFieldNoBg,{
+			top : 54,
 			hintText : 'Wachtwoord',
-			passwordMask : true,
-			autocapitalization : false,
-			font : {
-				fontSize : 15,
-				fontFamily : 'Bree Serif'
-			},
-			keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
-
-		});
+			passwordMask : true
+		}));
 		viewRegister.add(password1);
 
-		var password2 = Titanium.UI.createTextField({
-			color : '#474240',
-			top : 97,
-			left : 20,
-			width : 260,
-			height : 50,
+		var password2 = Titanium.UI.createTextField(Smart.combine(style.inputFieldNoBg,{
+			top : 101,
 			hintText : 'Herhaal wachtwoord',
-			passwordMask : true,
-			autocapitalization : false,
-			font : {
-				fontSize : 15,
-				fontFamily : 'Bree Serif'
-			},
-			keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
+			passwordMask : true
 
-		});
+		}));
 		viewRegister.add(password2);
 
-		var userName = Titanium.UI.createTextField({
-			color : '#474240',
-			top : 140,
-			left : 20,
-			width : 260,
-			height : 50,
-			hintText : 'Gebruikersnaam',
-			autocapitalization : false,
-			font : {
-				fontSize : 15,
-				fontFamily : 'Bree Serif'
-			},
-			keyboardType : Titanium.UI.KEYBOARD_EMAIL,
-			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
-
-		});
+		var userName = Titanium.UI.createTextField(Smart.combine(style.inputFieldNoBg,{
+			top : 148,
+			hintText : 'Gebruikersnaam'
+		}));
 		viewRegister.add(userName);
 
-		var registerBtn = Titanium.UI.createButton({
-			backgroundImage : '/img/btn_registreer.png',
-			top : 230,
-			right : 20,
-			width : 99,
-			height : 37
-		});
+		var registerBtn = Titanium.UI.createButton(style.registerButton);
 		registerWin.add(registerBtn);
 
 		/*
@@ -173,6 +105,9 @@
 					registerWin.close({
 						animated : false
 					});
+					Titanium.App.userId = response.userid;
+
+					Ti.API.info("Id:"+Titanium.App.userId);
 					mainWin = Smart.ui.createApplicationMainWin();
 					mainWin.open({
 						animated : false

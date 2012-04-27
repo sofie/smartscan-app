@@ -21,9 +21,8 @@
 		//
 		//Inhoud window
 		//
-		var productNaam = Titanium.UI.createTextField(Smart.combine(style.inputFieldBorder,{
+		var productNaam = Titanium.UI.createTextField(Smart.combine(style.inputFieldKort,{
 			top : 15,
-			right : 60,
 			hintText : 'Voeg product toe aan lijst...'
 		}));
 
@@ -68,6 +67,10 @@
 					Titanium.API.info(this.responseText);
 					if(response.add === true) {
 						Smart.navGroup.close(addProductWin, {
+							animated : false
+						});
+						
+						Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow(), {
 							animated : false
 						});
 						Ti.App.fireEvent('app:reloadLijst', {

@@ -9,7 +9,7 @@
 			image : 'img/btn_winkelen.png',
 			func : Smart.ui.createWinkelenWindow
 		}, {
-			image : 'img/btn_lijstje.png',
+			image : 'img/btn_lijstjes.png',
 			func : Smart.ui.createLijstjeWindow
 		}, {
 			image : 'img/btn_winkels.png',

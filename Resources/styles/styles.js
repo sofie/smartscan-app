@@ -26,7 +26,13 @@
 			backgroundImage : 'img/bg.png',
 			style : Titanium.UI.iPhone.TableViewStyle.GROUPED
 		},
-		
+		row:{
+			height : 40,
+			backgroundImage:'img/bg_textInput.png',
+			width:280,
+			selectedBackgroundColor : '#e3602b',
+			backgroundSelectedColor: '#e3602b',
+		},
 		titleBar : {
 			color : '#fff',
 			font : {
@@ -110,8 +116,15 @@
 			width : 300,
 			height : 'auto'		
 		},
-		
-		inputField:{
+		inputFieldRegister:{
+			backgroundImage : '/img/bg_inputRegister.png',
+			width : 280,
+			height : 200,
+			top : 20,
+			left : 'auto',
+			right : 'auto'
+		},
+		inputFieldNoBg:{
 			color : '#3A3737',
 			left : 20,
 			height : 40,
@@ -122,15 +135,16 @@
 			},
 			opacity : 0.9,
 			autocapitalization : false,
-			keyboardType : Titanium.UI.KEYBOARD_NUMBERS_PUNCTUATION,
+			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
 			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
 			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 		},
-		inputFieldBorder:{
+		inputField:{
 			color : '#3A3737',
 			left : 20,
 			height : 40,
+			width:280,
 			right:20,
 			font : {
 				fontSize : 13, 
@@ -138,10 +152,28 @@
 			},
 			opacity : 0.9,
 			autocapitalization : false,
-			keyboardType : Titanium.UI.KEYBOARD_NUMBERS_PUNCTUATION,
+			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
 			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
-			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_ROUNDED,
-			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
+			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
+			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS,
+			backgroundImage:'/img/bg_textInput.png'
+		},
+		inputFieldKort:{
+			color : '#3A3737',
+			left : 20,
+			height : 40,
+			width:225,
+			font : {
+				fontSize : 13, 
+				fontFamily : 'Bree Serif'
+			},
+			opacity : 0.9,
+			autocapitalization : false,
+			keyboardType : Titanium.UI.KEYBOARD_DEFAULT,
+			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
+			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
+			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS,
+			backgroundImage:'/img/bg_textInput_kort.png'
 		},
 		
 		loginButton:{
@@ -156,6 +188,13 @@
 			top : -37,
 			left : 20,
 			width : 178,
+			height : 37
+		},
+		registerButton:{
+			backgroundImage : '/img/btn_registreer.png',
+			top : 230,
+			right : 20,
+			width : 123,
 			height : 37
 		},
 		logoutButton:{

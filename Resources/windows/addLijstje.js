@@ -18,7 +18,7 @@
 		addWin.leftNavButton = backButton;
 
 		//Inhoud add lijstje window
-		var lijstNaam = Titanium.UI.createTextField(Smart.combine(style.inputFieldBorder,{
+		var lijstNaam = Titanium.UI.createTextField(Smart.combine(style.inputField,{
 			top : 10,
 			hintText : 'Nieuw boodschappenlijstje'
 		}));

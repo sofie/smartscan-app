@@ -42,6 +42,9 @@
 			getReq.onload = function() {
 				try {
 					var lists = JSON.parse(this.responseText);
+					if(lists.length===0){
+						Ti.API.info('Geen lists');
+					}
 
 					//Er zijn nog geen linken in de databank
 					if(lists.getList == false) {
@@ -58,9 +61,7 @@
 							var lijstid = lists[i].lijstId;
 							var lijstnaam = lists[i].lijstNaam;
 
-							var row = Ti.UI.createTableViewRow({
-								height : 35
-							});
+							var row = Ti.UI.createTableViewRow(style.row);
 
 							var name = Ti.UI.createLabel(Smart.combine(style.textNormal,{
 								text : lijstnaam
@@ -109,10 +110,11 @@
 							};
 
 							var params = {
-								id : lists[e.index].lijstId
+								id : lists[e.index].lijstId,
+								user_id:Titanium.App.userId
 							};
 							deleteReq.send(params);
-
+							//getLists();
 						});
 					}
 

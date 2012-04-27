@@ -26,6 +26,9 @@
 			Smart.navGroup.close(inhoudlijstjeWindow, {
 				animated : false
 			});
+			/*Smart.navGroup.open(Smart.ui.createLijstjeWindow(), {
+				animated : false
+			});*/
 		});
 		inhoudlijstjeWindow.leftNavButton = backButton;
 		
@@ -66,9 +69,7 @@
 							var productId = products[i].productId;
 							var productNaam = products[i].productNaam;
 
-							var row = Ti.UI.createTableViewRow({
-								height : 30
-							});
+							var row = Ti.UI.createTableViewRow(style.row);
 
 							var name = Ti.UI.createLabel(Smart.combine(style.textNormal,{
 								text : productNaam

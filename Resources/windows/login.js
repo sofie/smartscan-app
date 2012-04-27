@@ -43,16 +43,16 @@
 		//
 		var viewLogin = Titanium.UI.createView(style.bgLoginTextField);
 
-		var userEmail = Titanium.UI.createTextField(Smart.combine(style.inputField,{
+		var userEmail = Titanium.UI.createTextField(Smart.combine(style.inputFieldNoBg,{
 			top : 7,
 			hintText : 'Email',
 			keyboardType : Titanium.UI.KEYBOARD_EMAIL
 		}));
 		viewLogin.add(userEmail);
 
-		var userPassword = Titanium.UI.createTextField(Smart.combine(style.inputField,{
+		var userPassword = Titanium.UI.createTextField(Smart.combine(style.inputFieldNoBg,{
 			top : 54,
-			hintText : 'Password',
+			hintText : 'Wachtwoord',
 			passwordMask : true
 		}));
 		viewLogin.add(userPassword);
@@ -84,9 +84,10 @@
 
 				Titanium.API.info(this.responseText);
 
-				Titanium.App.userId = response.userId;
-
+				
 				if(response.logged == true) {
+					Titanium.App.userId = response.userId;
+
 					loginWin.close({
 						animated : false
 					});
