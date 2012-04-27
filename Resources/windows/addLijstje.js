@@ -57,9 +57,10 @@
 						Ti.App.naamLijst=lijstNaam.value;
 						Ti.API.info('Lijst is toegevoegd aan databank.');
 						
-						Smart.navGroup.open(Smart.ui.createAddProductWindow(),{
+						Smart.navGroup.close(addWin,{
 							animated : false
 						});
+						
 					} else {
 						alert('Lijst bestaat al. Kies een andere naam.');
 					}

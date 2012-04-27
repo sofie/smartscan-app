@@ -145,9 +145,9 @@
 							Titanium.App.selectedProdNaam = categories[e.index].naam;
 							Ti.API.info('Titanium.App.selectedProdIndex: '+ categories[e.index].id);
 							Ti.API.info('Titanium.App.selectedProdNaam: '+ categories[e.index].naam);
-							/*Smart.navGroup.open(Smart.ui.createDetailWindow(), {
+							Smart.navGroup.close(productLijstWin, {
 								animated : false
-							});*/
+							});
 							addProduct();
 							Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow(), {
 								animated : false

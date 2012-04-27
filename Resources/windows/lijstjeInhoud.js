@@ -26,9 +26,6 @@
 			Smart.navGroup.close(inhoudlijstjeWindow, {
 				animated : false
 			});
-			/*Smart.navGroup.open(Smart.ui.createLijstjeWindow(), {
-			 animated : false
-			 });*/
 		});
 		inhoudlijstjeWindow.leftNavButton = backButton;
 
