@@ -64,7 +64,7 @@
 
 			var params = {
 				list_id : Titanium.App.selectedLijstje,
-				product_id : productNaam.value
+				product_id : Titanium.App.selectedProdIndex
 			};
 			Ti.API.info('Add: '+params.list_id+' '+params.product_id);
 
@@ -141,12 +141,17 @@
 
 						//Open detail van window
 						listCat.addEventListener('click', function(e) {
-							Titanium.App.selectedProdCatIndex = categories[e.index].id;
-							Titanium.App.selectedNaam = categories[e.index].naam;
-							Ti.API.info('Titanium.App.selectedCatIndex: '+ categories[e.index].id);
+							Titanium.App.selectedProdIndex = categories[e.index].id;
+							Titanium.App.selectedProdNaam = categories[e.index].naam;
+							Ti.API.info('Titanium.App.selectedProdIndex: '+ categories[e.index].id);
+							Ti.API.info('Titanium.App.selectedProdNaam: '+ categories[e.index].naam);
 							/*Smart.navGroup.open(Smart.ui.createDetailWindow(), {
 								animated : false
 							});*/
+							addProduct();
+							Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow(), {
+								animated : false
+							});
 						});
 					}
 

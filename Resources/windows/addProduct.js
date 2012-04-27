@@ -74,12 +74,16 @@
 					var response = JSON.parse(json);
 					Titanium.API.info(this.responseText);
 					if(response.add === true) {
-						Smart.navGroup.close(addProductWin, {
+						/*Smart.navGroup.close(addProductWin, {
 							animated : false
 						});
 						
 						Ti.App.fireEvent('app:reloadLijst', {
 							action : 'Reload links'
+						});
+						*/
+						Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow(), {
+							animated : false
 						});
 					} else {
 						alert('Product staat al op lijstje');
