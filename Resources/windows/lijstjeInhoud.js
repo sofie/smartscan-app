@@ -53,7 +53,6 @@
 			getReq.onload = function() {
 				try {
 					var products = JSON.parse(this.responseText);
-					Ti.API.info(products);
 
 					//Er staan nog geen producten op lijst
 					if(products.getList === false) {
@@ -69,7 +68,6 @@
 						for(var i = 0; i < products.length; i++) {
 							var productId = products[i].productId;
 							var productNaam = products[i].productNaam;
-							Ti.API.info("ProductId:"+products[i].productId);
 
 							var row = Ti.UI.createTableViewRow(style.row);
 
@@ -90,13 +88,40 @@
 						//Open detail van product
 						listLists.addEventListener('click', function(e) {
 							Titanium.App.selectedProdIndex = products[e.index].productId;
-							Ti.API.info("Product id:"+products[e.index].productId);
-							Ti.API.info("Product naam:"+products[e.index].productNaam);
 							Titanium.App.selectedProd = products[e.index].productNaam;
 							Smart.navGroup.open(Smart.ui.createDetailProductWindow(), {
 								animated : false
 							});
 						});
+						listLists.addEventListener('delete', function(e) {
+							Titanium.App.selectedListItem = products[e.index].listId;
+						
+							Ti.API.info('DELETE FROM lists WHERE id=' + Titanium.App.selectedListItem);
+
+							var deleteReq = Titanium.Network.createHTTPClient();
+							deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+							deleteReq.timeout = 5000;
+							deleteReq.onload = function() {
+								try {
+									var json = this.responseText;
+									var response = JSON.parse(json);
+									if(response.remove === true) {
+										Titanium.API.info('Remove product: ' + this.responseText);
+
+									} else {
+										alert('Product kan niet verwijderd worden.');
+									}
+								} catch(e) {
+									alert(e);
+								}
+							};
+
+							var params = {
+								id : Titanium.App.selectedListItem
+							};
+							deleteReq.send(params);
+						});
+
 					}
 
 				} catch(e) {

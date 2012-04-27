@@ -44,7 +44,7 @@
 		bgProduct : {
 			left : 'auto',
 			right : 'auto',
-			width : 288,
+			width : 280,
 			top : 20,
 			backgroundImage : 'img/bg_product.png',
 			height : 179
@@ -73,7 +73,7 @@
 		textProductTitle : {
 			left : 20,
 			top : 10,
-			width : 230,
+			width : 255,
 			height : 25,
 			textAlign : 'left',
 			color : '#474240',
@@ -82,6 +82,7 @@
 				fontFamily : 'Bree serif'
 			}
 		},
+		
 		textProductDescription : {
 			left : 130,
 			right : 20,
@@ -117,6 +118,7 @@
 			height : 'auto'
 		},
 		inputFieldRegister : {
+			paddingLeft:10,
 			backgroundImage : '/img/bg_inputRegister.png',
 			width : 280,
 			height : 200,
@@ -141,6 +143,7 @@
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 		},
 		inputField : {
+			paddingLeft:10,
 			color : '#3A3737',
 			left : 20,
 			height : 40,
@@ -159,10 +162,11 @@
 			backgroundImage : '/img/bg_textInput.png'
 		},
 		inputFieldKort : {
+			paddingLeft:10,
 			color : '#3A3737',
 			left : 20,
 			height : 40,
-			width : 225,
+			width : 230,
 			font : {
 				fontSize : 13,
 				fontFamily : 'Bree Serif'
@@ -223,10 +227,10 @@
 		},
 		searchButton : {
 			backgroundImage : "img/btn_search.png",
-			width : 43,
-			height : 42,
+			width : 37,
+			height : 37,
 			right : 15,
-			top : 10
+			top : 15
 		},
 		bgLoginTextField : {
 			backgroundImage : '/img/bg_inputLogin.png',

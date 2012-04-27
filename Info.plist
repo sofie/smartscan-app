@@ -59,6 +59,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>/fonts/BreeSerif-Regular.otf</string>
+		<string>/fonts/merge.otf</string>
 	</array>
 </dict>
 </plist>

@@ -6,7 +6,8 @@ if (!$conn -> connect_error) {
 	
 	$list_id = $_POST['list_id'];
 	
-	$qry = "SELECT name, products.id FROM products
+	$qry = "SELECT name, product_id, list_details.id
+			FROM products
 			INNER JOIN list_details ON ( products.id = list_details.product_id )
 			WHERE list_id='".$list_id ."'";	
 	
@@ -17,7 +18,7 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getList" => true, "productNaam" => $singleResult['name'],"productId" => $singleResult['id ']);
+			$response = array("getList" => true, "productNaam" => $singleResult['name'],"productId" => $singleResult['product_id'], "listId" => $singleResult['id']);
 			$list[] = $response;
 		};
 		echo json_encode($list);

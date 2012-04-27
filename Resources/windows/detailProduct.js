@@ -3,7 +3,7 @@
 	Smart.ui.createDetailProductWindow = function() {
 		var detailproductWindow = Titanium.UI.createWindow(style.Window);
 		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar, {
-			text : Titanium.App.selectedProd
+			text : 'Productinfo'
 		}));
 		detailproductWindow.setTitleControl(lblTitle);
 
@@ -28,19 +28,15 @@
 		function getDetail() {
 			var getReq = Titanium.Network.createHTTPClient();
 			getReq.open("GET", "http://localhost/SmartScan/get_itemdetail.php");
-			//Titanium.API.info('Selected prod id: ' + Titanium.App.selectedProdIndex);
 			var params = {
-				name : Titanium.App.selectedProd
+				id : Titanium.App.selectedProdIndex
 			};
-			//Ti.API.info('Prod id: '+params.id);
 
 			getReq.timeout = 5000;
 			getReq.onload = function() {
 				try {
 					var detail = JSON.parse(this.responseText);
-					//Ti.API.info('Detail: '+detail);
 					if(detail.getItem === false) {
-						Titanium.API.info(this.responseText);
 						var lblNoDetail = Titanium.UI.createLabel(Smart.combine(style.textError, {
 							text : 'Kan product niet ophalen.',
 							top : 30
@@ -48,10 +44,9 @@
 						detailproductWindow.add(lblNoDetail);
 
 					} else {
-						var scrollView = Titanium.UI.createScrollView(style.scrollView);
 
-						Ti.App.pTitle = detail.name;
-						pTitle = detail.title;
+						name = detail.name;
+						title = detail.title;
 						var pFoto = detail.foto;
 						Ti.App.pId = detail.id;
 						var pBeschrijving = detail.beschrijving;
@@ -63,7 +58,8 @@
 							width : 100,
 							height : 100,
 							borderColor : '#B6AFA9',
-							backgroundColor : '#fff'
+							backgroundColor : '#fff',
+							borderWidth:1
 						});
 
 						var baseImg = Titanium.UI.createImageView({
@@ -80,9 +76,9 @@
 							left : 20,
 							top : 45
 						});
-
-						var titel = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
-							text : Ti.App.pTitle
+						
+						var title = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
+							text : name+' '+title
 						}));
 
 						var beschrijving = Titanium.UI.createLabel(Smart.combine(style.textProductDescription, {
@@ -92,15 +88,13 @@
 						var prijs = Titanium.UI.createLabel(Smart.combine(style.textProductPrice, {
 							text : '€ ' + pPrijs
 						}));
-						bgView.add(titel);
+						bgView.add(title);
 
 						bgView.add(imageView);
 						bgView.add(beschrijving);
 						bgView.add(prijs);
 
-						scrollView.add(bgView);
-
-						detailproductWindow.add(scrollView);
+						detailproductWindow.add(bgView);
 
 					}
 
