@@ -1,7 +1,7 @@
 (function() {
 	Smart.ui.theme = {
 		redColor : '#AC3724',
-		darkColor: '#474240',
+		darkColor : '#474240',
 	};
 
 	Smart.ui.properties = {
@@ -11,7 +11,7 @@
 		Window : {
 			width : '100%',
 			height : '100%',
-			backgroundImage:'/img/bg.png',
+			backgroundImage : '/img/bg.png',
 			barImage : 'img/header.png'
 		},
 		tableView : {
@@ -19,70 +19,70 @@
 			left : 0,
 			right : 0,
 			bottom : 10,
-							
-			editable:true,
-			allowsSelectionDuringEditing:true,
+
+			editable : true,
+			allowsSelectionDuringEditing : true,
 
 			backgroundImage : 'img/bg.png',
 			style : Titanium.UI.iPhone.TableViewStyle.GROUPED
 		},
-		row:{
+		row : {
 			height : 40,
-			backgroundImage:'img/bg_textInput.png',
-			width:280,
+			backgroundImage : 'img/bg_textInput.png',
+			width : 280,
 			selectedBackgroundColor : '#e3602b',
-			backgroundSelectedColor: '#e3602b',
+			backgroundSelectedColor : '#e3602b',
 		},
 		titleBar : {
 			color : '#fff',
 			font : {
-				fontFamily : 'Bree serif', 
-				fontSize: 24
+				fontFamily : 'Bree serif',
+				fontSize : 22
 			},
-			height:30
+			height : 30
 		},
-		bgProduct:{
+		bgProduct : {
 			left : 'auto',
 			right : 'auto',
-			width:288,
+			width : 288,
 			top : 20,
-			backgroundImage:'img/bg_product.png',
+			backgroundImage : 'img/bg_product.png',
 			height : 179
 		},
 		textNormal : {
 			color : '#3A3737',
 			left : 20,
 			font : {
-				fontSize : 13, 
+				fontSize : 13,
 				fontFamily : 'Bree serif'
 			},
 			textAlign : 'left',
 			width : '280'
 		},
-		textDelete:{
+		textDelete : {
 			font : {
-				fontSize : 13, 
+				fontSize : 13,
 				fontFamily : 'Bree serif'
 			},
 			color : '#AC3724',
-			top:13,
-			right:15,
-			height:20,
-			width:'auto'
+			top : 13,
+			right : 15,
+			height : 20,
+			width : 'auto'
 		},
-		textProductTitle:{
+		textProductTitle : {
 			left : 20,
 			top : 10,
 			width : 230,
 			height : 25,
 			textAlign : 'left',
 			color : '#474240',
-			font : { 
-				fontSize : 16, 
-				fontFamily : 'Bree serif' 
+			font : {
+				fontSize : 16,
+				fontFamily : 'Bree serif'
 			}
 		},
-		textProductDescription:{
+		textProductDescription : {
 			left : 130,
 			right : 20,
 			top : 46,
@@ -90,33 +90,33 @@
 			textAlign : 'left',
 			color : '#474240',
 			font : {
-				fontSize : 13, 
+				fontSize : 13,
 				fontFamily : 'Merge'
 			}
 		},
-		textProductPrice:{
+		textProductPrice : {
 			right : 20,
 			top : 120,
 			height : 30,
 			textAlign : 'right',
 			color : '#474240',
-			font : { 
-				fontSize : 16, 
-				fontFamily : 'Bree serif' 
+			font : {
+				fontSize : 16,
+				fontFamily : 'Bree serif'
 			}
 		},
-		textError:{
+		textError : {
 			font : {
-				fontSize : 13, 
+				fontSize : 13,
 				fontFamily : 'Bree serif'
 			},
 			color : '#AC3724',
 			left : 30,
 			right : 30,
 			width : 300,
-			height : 'auto'		
+			height : 'auto'
 		},
-		inputFieldRegister:{
+		inputFieldRegister : {
 			backgroundImage : '/img/bg_inputRegister.png',
 			width : 280,
 			height : 200,
@@ -124,13 +124,13 @@
 			left : 'auto',
 			right : 'auto'
 		},
-		inputFieldNoBg:{
+		inputFieldNoBg : {
 			color : '#3A3737',
 			left : 20,
 			height : 40,
-			width : Ti.Platform.displayCaps.platformWidth-60,
+			width : Ti.Platform.displayCaps.platformWidth - 60,
 			font : {
-				fontSize : 13, 
+				fontSize : 13,
 				fontFamily : 'Bree Serif'
 			},
 			opacity : 0.9,
@@ -140,14 +140,14 @@
 			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 		},
-		inputField:{
+		inputField : {
 			color : '#3A3737',
 			left : 20,
 			height : 40,
-			width:280,
-			right:20,
+			width : 280,
+			right : 20,
 			font : {
-				fontSize : 13, 
+				fontSize : 13,
 				fontFamily : 'Bree Serif'
 			},
 			opacity : 0.9,
@@ -156,15 +156,15 @@
 			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
 			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS,
-			backgroundImage:'/img/bg_textInput.png'
+			backgroundImage : '/img/bg_textInput.png'
 		},
-		inputFieldKort:{
+		inputFieldKort : {
 			color : '#3A3737',
 			left : 20,
 			height : 40,
-			width:225,
+			width : 225,
 			font : {
-				fontSize : 13, 
+				fontSize : 13,
 				fontFamily : 'Bree Serif'
 			},
 			opacity : 0.9,
@@ -173,31 +173,31 @@
 			returnKeyType : Titanium.UI.RETURNKEY_DEFAULT,
 			borderStyle : Titanium.UI.INPUT_BORDERSTYLE_NONE,
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS,
-			backgroundImage:'/img/bg_textInput_kort.png'
+			backgroundImage : '/img/bg_textInput_kort.png'
 		},
-		
-		loginButton:{
+
+		loginButton : {
 			backgroundImage : '/img/btn_login.png',
 			top : 25,
 			right : 20,
 			width : 90,
 			height : 37
 		},
-		accountButton:{
+		accountButton : {
 			backgroundImage : '/img/btn_account.png',
 			top : -37,
 			left : 20,
 			width : 178,
 			height : 37
 		},
-		registerButton:{
+		registerButton : {
 			backgroundImage : '/img/btn_registreer.png',
 			top : 230,
 			right : 20,
 			width : 123,
 			height : 37
 		},
-		logoutButton:{
+		logoutButton : {
 			backgroundImage : "img/btn_logout.png",
 			width : 82,
 			height : 35,
@@ -214,21 +214,21 @@
 			width : 49,
 			height : 28
 		},
-		makenButton:{
+		makenButton : {
 			backgroundImage : 'img/btn_maken.png',
 			width : 95,
 			height : 37,
 			right : 20,
 			top : 15
 		},
-		searchButton:{
+		searchButton : {
 			backgroundImage : "img/btn_search.png",
 			width : 43,
 			height : 42,
 			right : 15,
 			top : 10
 		},
-		bgLoginTextField:{
+		bgLoginTextField : {
 			backgroundImage : '/img/bg_inputLogin.png',
 			width : 280,
 			height : 100,
@@ -236,14 +236,21 @@
 			left : 'auto',
 			right : 'auto'
 		},
-		wrmAccount:{
+		wrmAccount : {
 			width : 320,
 			height : 136,
 			top : 100,
 			opacity : 0.5,
 			backgroundImage : '/img/wrmAccount.png'
+		},
+		bgProduct : {
+			left : 'auto',
+			right : 'auto',
+			width : 288,
+			top : 20,
+			backgroundImage : 'img/bg_product.png',
+			height : 179
 		}
-		
 	};
 })();
 

@@ -1,10 +1,8 @@
 <?php
-
 $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 
 if (!$conn -> connect_error) {
 	$id = $_POST['id'];
-	$user_id=$_POST['user_id'];
 
 	$qry = "SELECT id FROM lists WHERE id = '" . mysqli_real_escape_string($conn, $id) . "'";
 
@@ -17,12 +15,7 @@ if (!$conn -> connect_error) {
 		$query1 = $conn -> query($remove1);
 		
 		if ($queryRemove && $query1) {
-				$noLists = "SELECT * FROM `lists` WHERE user_id='".$user_id."'";
-				$queryNoLists = $conn -> query($noLists);
-				if ($num_rows = $queryNoLists -> num_rows = 0) {
-					$singleResult = mysqli_fetch_assoc($queryNoLists);
-				}
-				$response = array('remove' => true,'');
+				$response = array('remove' => true);
 				echo json_encode($response);
 		}
 		
@@ -37,4 +30,6 @@ if (!$conn -> connect_error) {
 	echo "Oeps, geen connectie.";
 	exit ;
 }
+
+
 ?>  

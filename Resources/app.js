@@ -13,8 +13,8 @@ Ti.include(
 	'windows/lijstje.js', 
 	'windows/lijstjeInhoud.js', 
 	'windows/addLijstje.js', 
-	'windows/addProductWindow.js',
-	//'windows/DetailProductWindow.js',
+	'windows/addProduct.js',
+	'windows/detailProduct.js',
 	
 	'windows/winkelen.js', 
 	'windows/startVanLijstje.js',

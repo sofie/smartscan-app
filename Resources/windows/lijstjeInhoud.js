@@ -2,7 +2,7 @@
 
 	Smart.ui.createLijstjeInhoudWindow = function() {
 		var inhoudlijstjeWindow = Titanium.UI.createWindow(style.Window);
-		var lblTitle =Titanium.UI.createLabel(Smart.combine(style.titleBar,{
+		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar, {
 			text : Titanium.App.selectedLijstjeNaam
 		}));
 		inhoudlijstjeWindow.setTitleControl(lblTitle);
@@ -12,7 +12,7 @@
 		//
 		var addButton = Titanium.UI.createButton(style.addButton);
 		addButton.addEventListener('click', function() {
-			Smart.navGroup.open(Smart.ui.createAddProductWindow(),{
+			Smart.navGroup.open(Smart.ui.createAddProductWindow(), {
 				animated : false
 			});
 		});
@@ -27,11 +27,11 @@
 				animated : false
 			});
 			/*Smart.navGroup.open(Smart.ui.createLijstjeWindow(), {
-				animated : false
-			});*/
+			 animated : false
+			 });*/
 		});
 		inhoudlijstjeWindow.leftNavButton = backButton;
-		
+
 		//
 		// Producten op lijst
 		//
@@ -53,11 +53,12 @@
 			getReq.onload = function() {
 				try {
 					var products = JSON.parse(this.responseText);
+					Ti.API.info(products);
 
 					//Er staan nog geen producten op lijst
-					if(products.getList == false) {
+					if(products.getList === false) {
 						Titanium.API.info('Geen lijstjes');
-						var lblNoLinks = Titanium.UI.createLabel(Smart.combine(style.textError,{
+						var lblNoLinks = Titanium.UI.createLabel(Smart.combine(style.textError, {
 							top : 30,
 							text : 'Dit lijstje bevat nog geen producten. Voeg er toe.',
 						}));
@@ -68,10 +69,11 @@
 						for(var i = 0; i < products.length; i++) {
 							var productId = products[i].productId;
 							var productNaam = products[i].productNaam;
+							Ti.API.info("ProductId:"+products[i].productId);
 
 							var row = Ti.UI.createTableViewRow(style.row);
 
-							var name = Ti.UI.createLabel(Smart.combine(style.textNormal,{
+							var name = Ti.UI.createLabel(Smart.combine(style.textNormal, {
 								text : productNaam
 							}));
 
@@ -80,20 +82,21 @@
 							data[i] = row;
 						};
 
-						var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView,{
+						var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView, {
 							data : data
 						}));
 						inhoudlijstjeWindow.add(listLists);
 
-						//Open detail van window
-						/*listLists.addEventListener('click', function(e) {
-						 Titanium.App.selectedIndex = products[e.index].linkId;
-						 Titanium.App.selectedNaam = products[e.index].linkNaam;
-						 Titanium.App.selectedProd1 = products[e.index].productNaam;
-						 Smart.navGroup.open(Smart.ui.createDetailWindow(), {
-						 animated : false
-						 });
-						 });*/
+						//Open detail van product
+						listLists.addEventListener('click', function(e) {
+							Titanium.App.selectedProdIndex = products[e.index].productId;
+							Ti.API.info("Product id:"+products[e.index].productId);
+							Ti.API.info("Product naam:"+products[e.index].productNaam);
+							Titanium.App.selectedProd = products[e.index].productNaam;
+							Smart.navGroup.open(Smart.ui.createDetailProductWindow(), {
+								animated : false
+							});
+						});
 					}
 
 				} catch(e) {
@@ -107,22 +110,23 @@
 
 			getReq.send(params);
 		}
+
 		//
 		// Details lijstje tonen
 		//
-		
-	/*
+
+		/*
 		tableview.addEventListener('click', function(e) {
-			//Globale variabele
-			Titanium.App.productTitle=e.rowData.title;
-			Smart.navGroup.open(detailproductWindow, {
-				animated : false
-			});
-			Ti.App.fireEvent('app:detailtonen', {
-				title:'Detail product tonen'
-			});
+		//Globale variabele
+		Titanium.App.productTitle=e.rowData.title;
+		Smart.navGroup.open(detailproductWindow, {
+		animated : false
 		});
-	*/
+		Ti.App.fireEvent('app:detailtonen', {
+		title:'Detail product tonen'
+		});
+		});
+		*/
 		//
 		//
 		// Product in detail
