@@ -89,6 +89,8 @@
 						listLists.addEventListener('click', function(e) {
 							Titanium.App.selectedProdIndex = products[e.index].productId;
 							Titanium.App.selectedProd = products[e.index].productNaam;
+							Titanium.App.selectedListId = products[e.index].listId;
+							Ti.API.info('List id: '+Titanium.App.selectedListId);
 							Smart.navGroup.open(Smart.ui.createDetailProductWindow(), {
 								animated : false
 							});

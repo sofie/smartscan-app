@@ -232,6 +232,13 @@
 			right : 15,
 			top : 15
 		},
+		verwijderenButton : {
+			backgroundImage : '/img/btn_verwijderen.png',
+			top : 220,
+			left : 20,
+			width : 128,
+			height : 37
+		},
 		bgLoginTextField : {
 			backgroundImage : '/img/bg_inputLogin.png',
 			width : 280,

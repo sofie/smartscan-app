@@ -17,8 +17,8 @@
 			});
 		});
 		detailproductWindow.leftNavButton = backButton;
-		
-		detailproductWindow.addEventListener('open',function(){
+
+		detailproductWindow.addEventListener('open', function() {
 			getDetail();
 		});
 		//
@@ -59,7 +59,7 @@
 							height : 100,
 							borderColor : '#B6AFA9',
 							backgroundColor : '#fff',
-							borderWidth:1
+							borderWidth : 1
 						});
 
 						var baseImg = Titanium.UI.createImageView({
@@ -76,11 +76,10 @@
 							left : 20,
 							top : 45
 						});
-						
-						var title = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
-							text : name+' '+title
-						}));
 
+						var title = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
+							text : name + ' ' + title
+						}));
 						var beschrijving = Titanium.UI.createLabel(Smart.combine(style.textProductDescription, {
 							text : pBeschrijving
 						}));
@@ -89,7 +88,6 @@
 							text : '€ ' + pPrijs
 						}));
 						bgView.add(title);
-
 						bgView.add(imageView);
 						bgView.add(beschrijving);
 						bgView.add(prijs);
@@ -109,6 +107,40 @@
 
 			getReq.send(params);
 		};
+		var verwijderenButton = Titanium.UI.createButton(style.verwijderenButton);
+		detailproductWindow.add(verwijderenButton);
+
+		verwijderenButton.addEventListener('click', function() {
+			var deleteReq = Titanium.Network.createHTTPClient();
+			deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+			deleteReq.timeout = 5000;
+			deleteReq.onload = function() {
+				try {
+					var json = this.responseText;
+					var response = JSON.parse(json);
+					if(response.remove === true) {
+						Titanium.API.info('Remove product: ' + this.responseText);
+
+					} else {
+						alert('Product kan niet verwijderd worden.');
+					}
+				} catch(e) {
+					alert(e);
+				}
+			};
+
+			var params = {
+				id : Titanium.App.selectedListId
+			};
+			deleteReq.send(params);
+			Smart.navGroup.close(detailproductWindow, {
+				animated : false
+			});
+			Ti.App.fireEvent('app:reloadLijst', {
+					action : 'Reload links'
+			});
+		});
+
 		return detailproductWindow;
 	};
 })();
