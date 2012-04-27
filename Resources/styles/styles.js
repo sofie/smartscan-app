@@ -114,7 +114,7 @@
 			color : '#AC3724',
 			left : 30,
 			right : 30,
-			width : 300,
+			width : 260,
 			height : 'auto'
 		},
 		inputFieldRegister : {

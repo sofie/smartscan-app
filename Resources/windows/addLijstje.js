@@ -54,7 +54,8 @@
 					var response = JSON.parse(json);
 					
 					if(response.add === true) {
-						alert('Lijst is toegevoegd aan databank.');
+						Ti.App.naamLijst=lijstNaam.value;
+						Ti.API.info('Lijst is toegevoegd aan databank.');
 						
 						Smart.navGroup.open(Smart.ui.createAddProductWindow(),{
 							animated : false

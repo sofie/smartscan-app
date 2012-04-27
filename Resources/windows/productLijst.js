@@ -1,24 +1,24 @@
 (function() {
 
-	Smart.ui.createAddProductWindow = function() {
-		var addProductWin = Titanium.UI.createWindow(style.Window);
+	Smart.ui.createProductLijstWindow = function() {
+		var productLijstWin = Titanium.UI.createWindow(style.Window);
 		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
 			text : 'Product toevoegen'
 		}));
-		addProductWin.setTitleControl(lblTitle);
+		productLijstWin.setTitleControl(lblTitle);
 		
-		addProductWin.addEventListener('open', function(){
-			getCategories();
+		productLijstWin.addEventListener('open', function(){
+			getProducts();
 		});
 		
 		//Backbutton
 		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
-			Smart.navGroup.close(addProductWin, {
+			Smart.navGroup.close(productLijstWin, {
 				animated : false
 			});
 		});
-		addProductWin.leftNavButton = backButton;
+		productLijstWin.leftNavButton = backButton;
 
 		//
 		//Inhoud window
@@ -45,11 +45,11 @@
 		}));
 		
 
-		addProductWin.add(productNaam);
-		addProductWin.add(btnAddProduct);
-		addProductWin.add(categorieLbl);
+		productLijstWin.add(productNaam);
+		productLijstWin.add(btnAddProduct);
+		productLijstWin.add(categorieLbl);
 
-		return addProductWin;
+		return productLijstWin;
 
 		/**
 		 *
@@ -74,7 +74,7 @@
 					var response = JSON.parse(json);
 					Titanium.API.info(this.responseText);
 					if(response.add === true) {
-						Smart.navGroup.close(addProductWin, {
+						Smart.navGroup.close(productLijstWin, {
 							animated : false
 						});
 						
@@ -97,29 +97,25 @@
 		}
 
 		//Get categories
-		function getCategories() {
+		function getProducts() {
 
 			var data = [];
 
 			var getReq = Titanium.Network.createHTTPClient();
-			getReq.open("GET", "http://localhost/smartscan/get_category.php");
+			getReq.open("GET", "http://localhost/smartscan/get_category_products.php");
 			getReq.timeout = 5000;
 
 			getReq.onload = function() {
 				try {
 					var categories = JSON.parse(this.responseText);
-					//Er zijn nog geen linken in de databank
-					if(categories.getCat === false) {
-						var lblNoCat = Titanium.UI.createLabel({
-							top : 70,
-							text : 'Geen categoriëen gevonden.',
-							color : '#AC3724',
-							left : 30,
-							right : 30,
-							width : 300,
-							height : 'auto'
-						});
-						addProductWin.add(lblNoCat);
+
+					if(categories.getCatProd === false) {
+						var lblNoCat = Titanium.UI.createLabel(Smart.combine(style.textError,{
+							top : 130,
+							text : 'Geen producten gevonden.',
+							left : 30
+						}));
+						productLijstWin.add(lblNoCat);
 
 					} else {
 						for(var i = 0; i < categories.length; i++) {
@@ -141,16 +137,16 @@
 							top :100,
 							data : data
 						}));
-						addProductWin.add(listCat);
+						productLijstWin.add(listCat);
 
 						//Open detail van window
 						listCat.addEventListener('click', function(e) {
-							Titanium.App.selectedCatIndex = categories[e.index].id;
+							Titanium.App.selectedProdCatIndex = categories[e.index].id;
 							Titanium.App.selectedNaam = categories[e.index].naam;
 							Ti.API.info('Titanium.App.selectedCatIndex: '+ categories[e.index].id);
-							Smart.navGroup.open(Smart.ui.createProductLijstWindow(), {
+							/*Smart.navGroup.open(Smart.ui.createDetailWindow(), {
 								animated : false
-							});
+							});*/
 						});
 					}
 
@@ -162,8 +158,11 @@
 				Ti.API.info("TEXT onerror:   " + this.responseText);
 				alert('Er is iets mis met de databank.');
 			}
+			var params = {
+				id : Titanium.App.selectedCatIndex
+			};
 
-			getReq.send();
+			getReq.send(params);
 		}
 
 	};

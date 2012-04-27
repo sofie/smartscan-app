@@ -4,8 +4,12 @@ $conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
 
 if (!$conn -> connect_error) {
 	
-	$qry = "SELECT name, id
-			FROM categories";
+	$id = $_POST['id'];
+	
+	$qry = "SELECT products.name, products.id
+			FROM products
+			INNER JOIN categories ON (categories.id = products.category)
+			WHERE categories.id='".$id ."'";
 			
 	$result = $conn -> query($qry);
 	$singleResult = mysqli_fetch_assoc($result);
@@ -15,13 +19,13 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getCat" => true, "naam" => $singleResult['name'],"id" => $singleResult['id']);
+			$response = array("getCatProd" => true, "naam" => $singleResult['name'],"id" => $singleResult['id']);
 			$list[] = $response;
 		};
 		echo json_encode($list);
 
 	} else {
-		$response = array("getCat" => false);
+		$response = array("getCatProd" => false);
 		echo json_encode($response);
 		$conn -> close();
 	}
