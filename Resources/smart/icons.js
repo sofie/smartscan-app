@@ -1,6 +1,6 @@
 (function() {
-	var iconHeight = 67;
-	var iconWidth = 64;
+	var iconHeight = 75;
+	var iconWidth = 75;
 
 	Smart.ui.icons = {
 		height: iconHeight,

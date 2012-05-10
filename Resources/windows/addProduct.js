@@ -19,6 +19,12 @@
 			});
 		});
 		addProductWin.leftNavButton = backButton;
+		
+		var scanButton = Titanium.UI.createButton(style.scanButton);
+		scanButton.addEventListener('click', function() {
+			
+		});
+		addProductWin.rightNavButton = scanButton;
 
 		//
 		//Inhoud window

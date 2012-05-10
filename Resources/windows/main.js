@@ -3,7 +3,7 @@
 
 	Smart.ui.createApplicationMainWin = function() {
 		var mainWindow = Ti.UI.createWindow(Smart.combine(style.Window,{
-			backgroundImage : 'img/bg_main.png',
+			backgroundImage : 'img/bg_main_1.png',
 			navBarHidden : true,
 			fullscreen : false
 		}));
@@ -29,21 +29,13 @@
 		//Icons
 		//
 		var viewIcons = Titanium.UI.createView({
-			bottom : 55,
+			bottom : 48,
 			height : 180,
-			left : 60,
+			left : 63,
 			width : 280,
 			layout : 'horizontal'
 		});
-		var viewIconsBg = Titanium.UI.createView({
-			bottom : 35,
-			height : 190,
-			width : 264,
-			layout : 'horizontal',
-			//backgroundImage : 'img/bg_menu.png',
-			opacity : 0.5
-		});
-		mainWindow.add(viewIconsBg);
+
 		mainWindow.add(viewIcons);
 
 		// Create each menu icon and include properties for any windows it opens
@@ -51,10 +43,10 @@
 			var iconWin = undefined;
 			var view = Titanium.UI.createView({
 				backgroundImage : icon.image,
-				top : 25,
-				right : 70,
-				height : 67,
-				width : 64
+				top : 15,
+				right : 40,
+				height : 75,
+				width : 75
 			});
 			view.addEventListener('click', function(e) {
 				iconWin = icon.func(icon.args);

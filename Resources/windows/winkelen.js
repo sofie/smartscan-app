@@ -4,7 +4,9 @@
 		//
 		// Main window
 		//
-		var winkelenWindow = Titanium.UI.createWindow(style.Window);
+		var winkelenWindow = Titanium.UI.createWindow(Smart.combine(style.Window,{
+			backgroundImage:'img/bg_winkelen.png'
+		}));
 		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
 			text : 'Winkelen'
 		}));
@@ -14,21 +16,13 @@
 		//Inhoud
 		//
 		var viewIcons = Titanium.UI.createView({
-			bottom : 105,
+			bottom : 108,
 			height : 100,
 			left : 50,
 			width : 280,
 			layout : 'horizontal'
 		});
-		var viewIconsBg = Titanium.UI.createView({
-			bottom : 75,
-			height : 120,
-			width : 264,
-			layout : 'horizontal',
-			backgroundImage : 'img/bg_menuwinkelen.png',
-			opacity : 0.5
-		});
-		winkelenWindow.add(viewIconsBg);
+		
 		winkelenWindow.add(viewIcons);
 
 		var createIcon = function(icon) {

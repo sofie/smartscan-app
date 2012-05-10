@@ -208,13 +208,6 @@
 			right : 20,
 			top : 20
 		},
-		scanKaartButton : {
-			backgroundImage : "img/btn_scanKaart.png",
-			width : 280,
-			height : 36,
-			left : 20,
-			top : 20
-		},
 		addButton : {
 			backgroundImage : "img/btn_add.png",
 			width : 33,
@@ -255,14 +248,14 @@
 			backgroundImage : '/img/bg_inputLogin.png',
 			width : 280,
 			height : 100,
-			top : 40,
+			top : 20,
 			left : 'auto',
 			right : 'auto'
 		},
 		wrmAccount : {
 			width : 320,
 			height : 136,
-			top : 30,
+			top : 100,
 			opacity : 0.5,
 			backgroundImage : '/img/wrmAccount.png'
 		},
