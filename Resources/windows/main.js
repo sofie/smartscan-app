@@ -16,14 +16,11 @@
 		//
 		// back button/logout
 		//
-		var backButton = Titanium.UI.createButton(style.logoutButton);
-		backButton.addEventListener('click', function() {
-			mainWindow.close({animated:false});
-			Ti.App.fireEvent('app:logoutback', {
-				action : 'Logout Back klik'
-			});
+		var logoutButton = Titanium.UI.createButton(style.logoutButton);
+		logoutButton.addEventListener('click', function() {
+			Smart.ui.createLoginWindow();
 		});
-		mainWindow.add(backButton);
+		mainWindow.add(logoutButton);
 
 		//
 		//Icons

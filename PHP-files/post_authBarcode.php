@@ -1,7 +1,7 @@
 <?php
 
-//$con =@ new mysqli('http://www.bgdesign.be:3351','smartscan','smartscan','smartscan'); 
-$con =@ new mysqli('localhost','root','root','smartscan'); 
+require_once('connection.php');
+$con = @ new mysqli($dbserver,$dbuser,$dbpass,$dbase);
  
 if ($con->connect_error)  
 {  

@@ -2,9 +2,9 @@ var Ti;
 
 Titanium.UI.setBackgroundImage('img/bg.png');
 
-/*Titanium.include('styles/font_styles.js');
-var commonStyle = require('styles/common_styles').commonStyles();
-*/
+//Ti.App.localonline="local";
+Ti.App.localonline="local";
+
 //libraries
 Ti.include('smart/smart.js');
 
@@ -32,4 +32,7 @@ Ti.include(
 	'config/config.js',
 	'styles/styles.js'
 );
+Titanium.App.addEventListener('app:logoutback', function(e) {
+	Smart.ui.createLoginWindow();
+});
 Smart.ui.createLoginWindow();

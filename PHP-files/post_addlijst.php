@@ -1,6 +1,7 @@
 <?php
 
-$conn = @new mysqli('localhost', 'root', 'root', 'smartscan');
+require_once('connection.php');
+$conn = @ new mysqli($dbserver,$dbuser,$dbpass,$dbase);
 
 if (!$conn -> connect_error) {
 	

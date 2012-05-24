@@ -41,7 +41,12 @@
 			var data = [];
 
 			var getReq = Titanium.Network.createHTTPClient();
-			getReq.open("GET", "http://localhost/SmartScan/get_products.php");
+			if(Ti.App.localonline === "local") {
+				getReq.open("GET", "http://localhost/SmartScan/get_products.php");
+			} else {
+				createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_products.php");
+			}
+
 			var params = {
 				list_id : Titanium.App.selectedLijstje
 			};
@@ -53,12 +58,15 @@
 
 					//Er staan nog geen producten op lijst
 					if(products.getList === false) {
-						Titanium.API.info('Geen lijstjes');
-						var lblNoLinks = Titanium.UI.createLabel(Smart.combine(style.textError, {
-							top : 30,
-							text : 'Dit lijstje bevat nog geen producten. Voeg er toe.',
-						}));
-						inhoudlijstjeWindow.add(lblNoLinks);
+						Titanium.API.info('Geen producten');
+						var noProductView = Titanium.UI.createView({
+							backgroundImage : "/img/no_products.png",
+							width : 239,
+							height : 376,
+							right : 10,
+							top : 5
+						});
+						inhoudlijstjeWindow.add(noProductView);
 
 					} else {
 
@@ -87,18 +95,23 @@
 							Titanium.App.selectedProdIndex = products[e.index].productId;
 							Titanium.App.selectedProd = products[e.index].productNaam;
 							Titanium.App.selectedListId = products[e.index].listId;
-							Ti.API.info('List id: '+Titanium.App.selectedListId);
+							Ti.API.info('List id: ' + Titanium.App.selectedListId);
 							Smart.navGroup.open(Smart.ui.createDetailProductWindow(), {
 								animated : false
 							});
 						});
 						listLists.addEventListener('delete', function(e) {
 							Titanium.App.selectedListItem = products[e.index].listId;
-						
+
 							Ti.API.info('DELETE FROM lists WHERE id=' + Titanium.App.selectedListItem);
 
 							var deleteReq = Titanium.Network.createHTTPClient();
-							deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+							if(Ti.App.localonline === "local") {
+								deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+							} else {
+								createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removeproduct.php");
+							}
+							
 							deleteReq.timeout = 5000;
 							deleteReq.onload = function() {
 								try {

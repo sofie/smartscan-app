@@ -1,0 +1,42 @@
+<html>
+	<head>
+		<title>Help met scannen</title>
+		<link href="css/style.css" rel="stylesheet" type="text/css" media="screen" />
+	</head>
+	<body>
+
+		<h2>Geen barcode gevonden</h2>
+		<div id="content">
+			<h3> Tips voor succesvol scannen </h3>
+			<div>
+				1. Zorg dat er voldoende licht is
+			</div>
+			<div>
+				2. Afstand moet ongeveer 7 tot 12 cm zijn
+			</div>
+			<div>
+				3. Schud om de camera te doen scherpstellen
+			</div>
+			<div>
+				4. Wacht tot de autofocus klaar is
+			</div>
+			<div>
+				5. Houd de camera stil tijdens het scannen
+			</div>
+		</div>
+		<script type="text/javascript">
+			function onZBarHelp(argv) {
+				var title;
+				switch(argv.reason) {
+					case "INFO":
+						break;
+					case "FAIL":
+						title = "No Barcode Detected";
+						break;
+				}
+				if(title)
+					document.getElementById('title').textContent = title;
+			}
+		</script>
+	</body>
+</html>

@@ -4,12 +4,12 @@
         <target device="mobileweb">false</target>
         <target device="iphone">true</target>
         <target device="ipad">false</target>
-        <target device="android">false</target>
+        <target device="android">true</target>
         <target device="blackberry">false</target>
     </deployment-targets>
     <sdk-version>1.8.1</sdk-version>
-    <id>com.appcelerator.Smart-app</id>
-    <name>smart-app</name>
+    <id>com.appcelerator.smartapp</id>
+    <name>smartapp</name>
     <version>1.0</version>
     <publisher>sofie</publisher>
     <url>http://</url>
@@ -35,7 +35,12 @@
             <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
         </orientations>
     </iphone>
-    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <android xmlns:android="http://schemas.android.com/apk/res/android">
+        <manifest>
+            <supports-screens android:anyDensity="false"/>
+        </manifest>
+        <icon>appicon.png</icon>
+    </android>
     <modules>
         <module version="0.4.2">tibar</module>
     </modules>

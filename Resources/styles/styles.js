@@ -23,12 +23,12 @@
 			editable : true,
 			allowsSelectionDuringEditing : true,
 
-			backgroundImage : 'img/bg.png',
+			backgroundImage : '/img/bg.png',
 			style : Titanium.UI.iPhone.TableViewStyle.GROUPED
 		},
 		row : {
 			height : 40,
-			backgroundImage : 'img/bg_textInput.png',
+			backgroundImage : '/img/bg_row.png',
 			width : 280,
 			selectedBackgroundColor : '#e3602b',
 			backgroundSelectedColor : '#e3602b',
@@ -49,6 +49,12 @@
 			backgroundImage : 'img/bg_product.png',
 			height : 179
 		},
+		
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Text																									//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		textNormal : {
 			color : '#3A3737',
 			left : 20,
@@ -117,6 +123,23 @@
 			width : 260,
 			height : 'auto'
 		},
+		textTotaal : {
+			right : 20,
+			bottom : 40,
+			height : 25,
+			width:60,
+			textAlign : 'right',
+			color : '#474240',
+			font : {
+				fontSize : 16,
+				fontFamily : 'Bree serif'
+			}
+		},
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Textfields																								//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		inputFieldRegister : {
 			paddingLeft:10,
 			backgroundImage : '/img/bg_inputRegister.png',
@@ -179,6 +202,10 @@
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS,
 			backgroundImage : '/img/bg_textInput_kort.png'
 		},
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Buttons																									//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		loginButton : {
 			backgroundImage : '/img/btn_login.png',
@@ -194,6 +221,11 @@
 			width : 178,
 			height : 37
 		},
+		gpsButton:{
+			backgroundImage : '/img/btn_gps.png',
+			width : 37,
+			height : 35
+		},
 		registerButton : {
 			backgroundImage : '/img/btn_registreer.png',
 			top : 230,
@@ -207,6 +239,13 @@
 			height : 35,
 			right : 20,
 			top : 20
+		},
+		klaarButton : {
+			backgroundImage : "img/btn_sessieklaar.png",
+			width : 166,
+			height : 45,
+			left : 20,
+			bottom : 20
 		},
 		scanKaartButton : {
 			backgroundImage : "img/btn_scanKaart.png",
@@ -251,6 +290,10 @@
 			width : 128,
 			height : 37
 		},
+		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// Andere																									//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		bgLoginTextField : {
 			backgroundImage : '/img/bg_inputLogin.png',
 			width : 280,

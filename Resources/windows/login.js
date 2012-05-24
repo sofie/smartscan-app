@@ -7,18 +7,19 @@
 			modal : true,
 			layout : 'vertical'
 		}));
+		if(Ti.Platform.osname !== 'android') {
+			var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar, {
+				text : 'Inloggen'
+			}));
 
-		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar, {
-			text : 'Inloggen'
-		}));
-		loginWin.setTitleControl(lblTitle);
-
+			loginWin.setTitleControl(lblTitle);
+		}
 		//
 		//Back/logout button
 		//
 		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
-			//navWindow.close();
+
 		});
 		loginWin.leftNavButton = backButton;
 
@@ -79,63 +80,9 @@
 		/*
 		 * Login via scannen
 		 */
-		var TiBar = require('tibar');
-		Ti.API.info("module is => " + TiBar);
 
-		var allConfigWithDefaults = {
-			classType : [{
-				"ZBarReaderController" : true
-			}],
-			sourceType : [{
-				"Library" : false
-			}, {
-				"Camera" : false
-			}, {
-				"Album" : true
-			}],
-			cameraMode : [{
-				"Default" : true
-			}],
-			config : {
-				"showsCameraControls" : true,
-				"showsZBarControls" : true,
-				"tracksSymbols" : true,
-				"enableCache" : true,
-				"showsHelpOnFail" : true,
-				"takesPicture" : false
-			},
-			symbol : {
-				"QR-Code" : false,
-				"CODE-128" : false,
-				"CODE-39" : false,
-				"I25" : false,
-				"DataBar" : false,
-				"DataBar-Exp" : false,
-				"EAN-13" : true,
-				"EAN-8" : true,
-				"UPC-A" : false,
-				"UPC-E" : false,
-				"ISBN-13" : false,
-				"ISBN-10" : false
-			}
-		};
 		scanKaartBtn.addEventListener('click', function() {
-			var config = {};
-			for(var section in allConfigWithDefaults) {
-				if( typeof allConfigWithDefaults[section] === 'object' && allConfigWithDefaults[section] instanceof Array) {
-					for(var itemix in allConfigWithDefaults[section]) {
-						for(var labelname in allConfigWithDefaults[section][itemix]) {
-
-							if(allConfigWithDefaults[section][itemix][labelname]) {
-								config[section] = labelname;
-							}
-						}
-					}
-				} else {
-					config[section] = allConfigWithDefaults[section];
-				}
-			}
-
+			Ti.include("/config/barcode.js");
 			Ti.API.debug(JSON.stringify(config));
 			TiBar.scan({
 				configure : config,
@@ -162,7 +109,12 @@
 		});
 		function loginBarcode() {
 			var loginReq = Titanium.Network.createHTTPClient();
-			loginReq.open("POST", "http://localhost/SmartScan/post_authBarcode.php");
+			if(Ti.App.localonline === "local") {
+				loginReq.open("POST", "http://localhost/SmartScan/post_authBarcode.php");
+			} else {
+				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_authBarcode.php");
+			}
+
 			loginReq.timeout = 5000;
 
 			var params = {
@@ -211,13 +163,18 @@
 
 			loginReq.send(params);
 		};
-		
+
 		//
 		//Login via form
 		//
 		function loginForm() {
 			var loginReq = Titanium.Network.createHTTPClient();
-			loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
+			if(Ti.App.localonline === "local") {
+				loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
+			} else {
+				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_auth.php");
+			}
+
 			loginReq.timeout = 5000;
 			var params = {
 				userEmail : userEmail.value,
@@ -262,23 +219,6 @@
 			}
 
 		});
-		//
-		//Logout
-		//
-		Titanium.App.addEventListener('app:logoutback', function(e) {
-			userEmail.value = '';
-			userPassword.value = '';
-			loginWin.open({
-				animated : false
-			});
-		});
-		//Back event account window
-		Titanium.App.addEventListener('app:accountclose', function(e) {
-			userEmail.value = '';
-			userPassword.value = '';
-			loginWin.open({
-				animated : false
-			});
-		});
+
 	}
 })();

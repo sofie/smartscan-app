@@ -1,0 +1,36 @@
+@charset "utf-8";
+@import URL('reset.css');
+
+@font-face {
+	font-family:myFont;
+    src:url('../fonts/BreeSerif-Regular.otf');
+}
+@font-face {
+	font-family:myFont2;
+    src:url('../fonts/merge.otf');
+}
+h2{
+	padding-top:15px;
+	padding-left:35px;
+	height:44px;
+	color : #fff;
+	font-family: myFont;
+	font-size : 24px;
+	background-image: url('../img/header.png');
+}
+h3{
+	padding-top:10px;
+	padding-bottom:10px;
+	color : #3A3737;
+	font-family: myFont;
+	font-size : 18px;
+}
+div#content{
+	margin-left: 20px;
+	font-family:myFont2;
+	font-size: 14px;
+	color: #3A3737;
+}
+div#content div{
+	padding-bottom:10px;
+}

@@ -16,14 +16,11 @@
 		navWindow.add(Smart.navGroup);
 
 		//
-		// back button/logout
+		// back button
 		//
 		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
-			registerWin.close();
-			Ti.App.fireEvent('app:accountclose', {
-				action : 'Account window close'
-			});
+			Smart.ui.createLoginWindow();
 		});
 		registerWin.leftNavButton = backButton;
 
@@ -71,15 +68,7 @@
 		var registerBtn = Titanium.UI.createButton(style.registerButton);
 		registerWin.add(registerBtn);
 
-		/*
-		var viewSpace = Titanium.UI.createView({
-		top:340,
-		height:100,
-		left:30,
-		width:100
-		});
-		registerWin.add(viewSpace);
-		*/
+		
 		//
 		//registeren
 		//
@@ -132,7 +121,12 @@
 					if(!checkemail(userEmail.value)) {
 						alert("Gelieve een geldig e-mailadres in te voeren.");
 					} else {
-						createReq.open("POST", "http://localhost/SmartScan/post_register.php");
+						if(Ti.App.localonline==="local"){
+							createReq.open("POST", "http://localhost/SmartScan/post_register.php");
+						}else{
+							createReq.open("POST","http://sofiehendrickx.eu/SmartScan/post_register.php");
+						}	
+						
 						var params = {
 							userPassword : password1.value,
 							userEmail : userEmail.value,

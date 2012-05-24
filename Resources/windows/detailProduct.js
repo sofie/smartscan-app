@@ -17,9 +17,15 @@
 			});
 		});
 		detailproductWindow.leftNavButton = backButton;
+		var navActInd = Titanium.UI.createActivityIndicator({
+			style : Ti.UI.iPhone.ActivityIndicatorStyle.PLAIN
+		});
+		detailproductWindow.setRightNavButton(navActInd);
 
 		detailproductWindow.addEventListener('open', function() {
 			getDetail();
+
+			navActInd.show();
 		});
 		//
 		// Product in detail
@@ -27,7 +33,11 @@
 
 		function getDetail() {
 			var getReq = Titanium.Network.createHTTPClient();
-			getReq.open("GET", "http://localhost/SmartScan/get_itemdetail.php");
+			if(Ti.App.localonline === "local") {
+				getReq.open("GET", "http://localhost/SmartScan/get_itemdetail.php");
+			} else {
+				createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_itemdetail.php");
+			}
 			var params = {
 				id : Titanium.App.selectedProdIndex
 			};
@@ -56,10 +66,7 @@
 
 						var cropView = Titanium.UI.createView({
 							width : 100,
-							height : 100,
-							borderColor : '#B6AFA9',
-							backgroundColor : '#fff',
-							borderWidth : 1
+							height : 100
 						});
 
 						var baseImg = Titanium.UI.createImageView({
@@ -93,6 +100,7 @@
 						bgView.add(prijs);
 
 						detailproductWindow.add(bgView);
+						navActInd.hide();
 
 					}
 
@@ -112,7 +120,12 @@
 
 		verwijderenButton.addEventListener('click', function() {
 			var deleteReq = Titanium.Network.createHTTPClient();
-			deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+			if(Ti.App.localonline === "local") {
+				deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+			} else {
+				createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removeproduct.php");
+			}
+			
 			deleteReq.timeout = 5000;
 			deleteReq.onload = function() {
 				try {
@@ -137,7 +150,7 @@
 				animated : false
 			});
 			Ti.App.fireEvent('app:reloadLijst', {
-					action : 'Reload links'
+				action : 'Reload links'
 			});
 		});
 

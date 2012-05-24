@@ -5,7 +5,7 @@
 		// Main window
 		//
 		var winkelenWindow = Titanium.UI.createWindow(Smart.combine(style.Window,{
-			backgroundImage:'img/bg_winkelen.png'
+			backgroundImage:'img/bg_winkelen_1.png'
 		}));
 		var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar,{
 			text : 'Winkelen'
@@ -18,7 +18,7 @@
 		var viewIcons = Titanium.UI.createView({
 			bottom : 108,
 			height : 100,
-			left : 50,
+			left : 60,
 			width : 280,
 			layout : 'horizontal'
 		});
@@ -30,7 +30,7 @@
 			var view = Titanium.UI.createView({
 				backgroundImage : icon.image,
 				top : 25,
-				right : 50,
+				right : 30,
 				height : 91,
 				width : 87
 			});
