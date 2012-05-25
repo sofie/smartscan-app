@@ -6,9 +6,10 @@ $conn = @new mysqli($dbserver, $dbuser, $dbpass, $dbase);
 if (!$conn -> connect_error) {
 
 	$id = $_POST['id'];
+	$einduur= $_POST['einduur'];
 
 	$insert = "UPDATE winkel_sessie
-				SET einduur='2012-06-24 13:15:00'
+				SET einduur='".mysqli_real_escape_string($conn, $einduur)."'
 				WHERE id='".mysqli_real_escape_string($conn, $id)."'";
 
 	$query = $conn -> query($insert);

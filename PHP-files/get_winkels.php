@@ -16,7 +16,7 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getStores" => true, "naam" => $singleResult['name'],"longitude" => $singleResult['longitude'],"latitude" => $singleResult['latitude']);
+			$response = array("getStores" => true, "naam" => $singleResult['naam'],"longitude" => $singleResult['longitude'],"latitude" => $singleResult['latitude']);
 			$list[] = $response;
 		};
 		echo json_encode($list);
