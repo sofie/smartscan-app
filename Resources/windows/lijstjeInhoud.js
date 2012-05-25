@@ -73,14 +73,25 @@
 						for(var i = 0; i < products.length; i++) {
 							var productId = products[i].productId;
 							var productNaam = products[i].productNaam;
+							var productTitle = products[i].productTitle;
 
 							var row = Ti.UI.createTableViewRow(style.row);
 
 							var name = Ti.UI.createLabel(Smart.combine(style.textNormal, {
-								text : productNaam
+								text : productNaam,
+								top:-13
+							}));
+							var title = Ti.UI.createLabel(Smart.combine(style.textNormal, {
+								text : productTitle,
+								top : 18,
+								font : {
+									fontSize : 10
+								},
+								opacity : 0.5
 							}));
 
 							row.add(name);
+							row.add(title);
 							row.className = 'item' + i;
 							data[i] = row;
 						};

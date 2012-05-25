@@ -127,7 +127,7 @@
 			right : 20,
 			bottom : 40,
 			height : 25,
-			width:60,
+			width:100,
 			textAlign : 'right',
 			color : '#474240',
 			font : {
