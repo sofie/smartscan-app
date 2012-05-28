@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////////
+/// Producten die op boodschappenlijst staan									//
+//////////////////////////////////////////////////////////////////////////////////
+
 (function() {
 
 	Smart.ui.createLijstjeInhoudWindow = function() {
@@ -19,7 +23,7 @@
 		inhoudlijstjeWindow.rightNavButton = addButton;
 
 		//
-		//Back button
+		//Back button (leftNavButton)
 		//
 		var backButton = Titanium.UI.createButton(style.backButton);
 		backButton.addEventListener('click', function() {
@@ -44,7 +48,7 @@
 			if(Ti.App.localonline === "local") {
 				getReq.open("GET", "http://localhost/SmartScan/get_products.php");
 			} else {
-				createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_products.php");
+				getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_products.php");
 			}
 
 			var params = {
@@ -111,6 +115,7 @@
 								animated : false
 							});
 						});
+						//Delete product van lijstje
 						listLists.addEventListener('delete', function(e) {
 							Titanium.App.selectedListItem = products[e.index].listId;
 
@@ -120,7 +125,7 @@
 							if(Ti.App.localonline === "local") {
 								deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
 							} else {
-								createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removeproduct.php");
+								deleteReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removeproduct.php");
 							}
 							
 							deleteReq.timeout = 5000;
@@ -159,127 +164,7 @@
 			getReq.send(params);
 		}
 
-		//
-		// Details lijstje tonen
-		//
-
-		/*
-		tableview.addEventListener('click', function(e) {
-		//Globale variabele
-		Titanium.App.productTitle=e.rowData.title;
-		Smart.navGroup.open(detailproductWindow, {
-		animated : false
-		});
-		Ti.App.fireEvent('app:detailtonen', {
-		title:'Detail product tonen'
-		});
-		});
-		*/
-		//
-		//
-		// Product in detail
-		//
-		Titanium.App.addEventListener('app:detailtonen', function(e) {
-			//Titanium.API.info('title: ' + e.rowData.title);
-			lblTitle.text = Titanium.App.productTitle;
-			pName.text = Titanium.App.productTitle;
-			pImage.image = '/img/milka.jpg';
-			pDescription.text = 'Omschrijving van product';
-			pPrice.text = '€ 2,45'
-		});
-		var detailproductWindow = Titanium.UI.createWindow({
-			barImage : 'img/header.png',
-			fullscreen : false,
-			font : {
-				fontFamily : 'Bree Serif'
-			},
-			layout : 'vertical'
-		});
-		var lblTitle = Titanium.UI.createLabel({
-			color : '#fff',
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 24
-			}
-		});
-		detailproductWindow.setTitleControl(lblTitle);
-
-		//
-		//Back button
-		//
-		var backDetailButton = Titanium.UI.createButton({
-			backgroundImage : "img/btn_back.png",
-			width : 57,
-			height : 35
-		});
-		backDetailButton.addEventListener('click', function() {
-			Smart.navGroup.close(detailproductWindow, {
-				animated : false
-			});
-		});
-		detailproductWindow.leftNavButton = backDetailButton;
-
-		var bgView = Titanium.UI.createView({
-			backgroundColor : '#fff',
-			opacity : 0.7,
-			left : 20,
-			top : 30,
-			right : 20,
-			height : 200,
-			borderRadius : 10
-		});
-
-		var pName = Titanium.UI.createLabel({
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 17
-			},
-			color : '#474240',
-			top : -150,
-			left : 20
-		});
-		bgView.add(pName);
-
-		var pImageBorder = Titanium.UI.createView({
-			backgroundColor : '#fff',
-			borderWidth : 1,
-			borderColor : '#494341',
-			width : 100,
-			height : 100,
-			left : 20
-		});
-		bgView.add(pImageBorder);
-
-		var pImage = Ti.UI.createImageView({
-			left : 'auto',
-			right : 'auto',
-			height : 100
-		});
-		pImageBorder.add(pImage);
-
-		var pDescription = Titanium.UI.createLabel({
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 14
-			},
-			color : '#474240',
-			left : 130,
-			top : -70
-		});
-		bgView.add(pDescription);
-
-		var pPrice = Titanium.UI.createLabel({
-			font : {
-				fontFamily : 'Bree Serif',
-				fontSize : 14
-			},
-			color : '#474240',
-			left : 130,
-			top : 85
-		});
-		bgView.add(pPrice);
-
-		detailproductWindow.add(bgView);
+		
 		return inhoudlijstjeWindow;
 	};
 })();

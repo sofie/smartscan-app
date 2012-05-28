@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////////
+/// Kaart met locatie gebruiker + winkels in de buurt + zoeken op postcode		//
+//////////////////////////////////////////////////////////////////////////////////
+
 (function() {
 
 	Smart.ui.createWinkelsWindow = function() {
@@ -9,15 +13,6 @@
 		winkelsWindow.addEventListener('open', function(e) {
 
 		});
-		/*
-		 var btnCurrentLocation = Titanium.UI.createButton(style.gpsButton);
-
-		 btnCurrentLocation.addEventListener('click', function() {
-		 Titanium.API.info('User location: ---')
-		 });
-
-		 winkelsWindow.rightNavButton = btnCurrentLocation;
-		 */
 
 		var searchField = Titanium.UI.createTextField(Smart.combine(style.inputFieldKort, {
 			top : 15,
@@ -217,23 +212,7 @@
 			};
 			Titanium.Geolocation.addEventListener('location', locationCallback);
 			locationAdded = true;
-			//getWinkels();
 		}
-
-		var btnBar = Titanium.UI.createButtonBar({
-			labels : ['Alle', 'Nu open'],
-			backgroundColor : '#73BD47',
-			bottom : 20,
-			style : Titanium.UI.iPhone.SystemButtonStyle.BAR,
-			height : 35,
-			width : 280,
-
-		});
-		winkelsWindow.add(btnBar);
-
-		function getWinkels() {
-
-		};
 
 		return winkelsWindow;
 	};

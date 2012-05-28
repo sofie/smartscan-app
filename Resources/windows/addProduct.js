@@ -1,3 +1,8 @@
+//////////////////////////////////////////////////////////////////////////////////////
+/// Gebruiker voegt product toe aan boodschappenlijstje door barcode te scannen, 	//
+/// te zoeken in de categorieën of te zoeken op naam								//
+//////////////////////////////////////////////////////////////////////////////////////
+
 (function() {
 
 	Smart.ui.createAddProductWindow = function() {
@@ -19,7 +24,8 @@
 			});
 		});
 		addProductWin.leftNavButton = backButton;
-
+		
+		//Scanbutton
 		var scanButton = Titanium.UI.createButton(style.scanButton);
 		scanButton.addEventListener('click', function() {
 			Ti.include("/config/barcode.js");
@@ -32,10 +38,6 @@
 					Ti.API.info('TiBar success callback!');
 					if(data && data.barcode) {
 						Ti.API.info("Barcode: " + data.barcode + ", symbol: " + data.symbology);
-						/*Ti.UI.createAlertDialog({
-						 title : "Scan result",
-						 message : "Inloggen gelukt."
-						 }).show();*/
 					}
 				},
 				cancel : function() {
@@ -48,9 +50,6 @@
 		});
 		addProductWin.rightNavButton = scanButton;
 
-		//
-		//Inhoud window
-		//
 		var productNaam = Titanium.UI.createTextField(Smart.combine(style.inputFieldKort, {
 			top : 15,
 			hintText : 'Voeg product toe aan lijst...'
@@ -78,13 +77,9 @@
 
 		return addProductWin;
 
-		/**
-		 *
-		 * HTTP Requests
-		 *
-		 */
-
-		//Add product to list
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Product toevoegen aan boodschappenlijst door zoeken op naam						//
+		//////////////////////////////////////////////////////////////////////////////////////
 		function addProduct() {
 			var createReq = Titanium.Network.createHTTPClient();
 			if(Ti.App.localonline === "local") {
@@ -127,7 +122,10 @@
 
 			createReq.send(params);
 		}
-
+		
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Product toevoegen door barcode te scannen										//
+		//////////////////////////////////////////////////////////////////////////////////////
 		function addProductBarcode() {
 			var createReq = Titanium.Network.createHTTPClient();
 			if(Ti.App.localonline === "local") {
@@ -171,13 +169,20 @@
 			createReq.send(params);
 		}
 
-		//Get categories
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Product toevoegen door zoeken in categorieën									//
+		//////////////////////////////////////////////////////////////////////////////////////
 		function getCategories() {
 
 			var data = [];
 
 			var getReq = Titanium.Network.createHTTPClient();
-			getReq.open("GET", "http://localhost/smartscan/get_category.php");
+			if(Ti.App.localonline === "local") {
+				getReq.open("GET", "http://localhost/smartscan/get_category.php");
+			} else {
+				getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_category.php");
+			}
+			
 			getReq.timeout = 5000;
 
 			getReq.onload = function() {

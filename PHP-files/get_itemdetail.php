@@ -9,10 +9,6 @@ if (!$conn -> connect_error) {
 
 	$qry = "SELECT name,title,description,prijsStuk, foto FROM `products` WHERE id='" .$id. "'";
 
-
-
-
-
 	$result = $conn -> query($qry);
 	
 

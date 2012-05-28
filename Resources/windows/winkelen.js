@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////////////
+/// Gebruiker kan kiezen om sessie te starten van 1 van zijn boodschappenlijstjes,	//
+/// of gewoon te starten															//
+//////////////////////////////////////////////////////////////////////////////////////
 (function() {
 
 	Smart.ui.createWinkelenWindow = function() {
@@ -18,7 +22,7 @@
 		var viewIcons = Titanium.UI.createView({
 			bottom : 108,
 			height : 100,
-			left : 60,
+			left : 65,
 			width : 280,
 			layout : 'horizontal'
 		});
@@ -30,9 +34,9 @@
 			var view = Titanium.UI.createView({
 				backgroundImage : icon.image,
 				top : 25,
-				right : 30,
-				height : 91,
-				width : 87
+				right : 40,
+				height : 85,
+				width : 75
 			});
 			view.addEventListener('click', function(e) {
 				iconWin = icon.func(icon.args);
@@ -43,6 +47,7 @@
 				Smart.navGroup.open(iconWin, {
 					animated : false
 				});
+				
 
 				var backButton = Titanium.UI.createButton(style.backButton);
 				backButton.addEventListener('click', function() {
@@ -59,7 +64,9 @@
 		for( i = 0; i < Smart.ui.iconsWinkelen.list.length; i++) {
 			viewIcons.add(createIcon(Smart.ui.iconsWinkelen.list[i]));
 		}
-
+		
+		
+		
 		return winkelenWindow;
 	};
 })();

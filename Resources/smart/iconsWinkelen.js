@@ -1,6 +1,6 @@
 (function() {
-	var iconHeight = 91;
-	var iconWidth = 87;
+	var iconHeight = 85;
+	var iconWidth = 75;
 
 	Smart.ui.iconsWinkelen = {
 		height: iconHeight,

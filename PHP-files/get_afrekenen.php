@@ -7,9 +7,10 @@ if (!$conn -> connect_error) {
 	
 	$session_id = $_POST['session_id'];
 	
-	$qry = "SELECT name, product_id,title,prijsStuk, session_id,aantal
+	$qry = "SELECT name, product_id,title,prijsStuk, session_id, startuur,user_id,aantal,barcode
 			FROM products
 			INNER JOIN winkel_productenlijst ON ( products.id = winkel_productenlijst.product_id )
+			INNER JOIN winkel_sessie ON ( winkel_sessie.id = winkel_productenlijst.session_id )
 			WHERE session_id='".$session_id ."'";	
 
 	
@@ -29,19 +30,21 @@ if (!$conn -> connect_error) {
 					FROM products
 					INNER JOIN winkel_productenlijst ON ( products.id = winkel_productenlijst.product_id )
 					WHERE session_id='".$session_id ."'";
+			
 			$resultTotaal = $conn -> query($totaal);	
 			$singleResultTotaal = mysqli_fetch_assoc($resultTotaal);
 			
-			$response = array("getList" => true, "naam" => $singleResult['name'],"title" => $singleResult['title'],"id" => $singleResult['product_id'],
-								"aantal"=>$singleResultTotaal['SUM(aantal)'],"prijsStuk"=>$singleResult['prijsStuk'],
-								"amount"=>$singleResult['aantal'],
-								"totaalPrijs"=>$singleResultTotaal['SUM(prijsStuk*aantal)'],"session_id"=>$singleResult['session_id']);
+			$response = array("getAfrekenen" => true, "naam" => $singleResult['name'],"title" => $singleResult['title'],"id" => $singleResult['product_id'],
+								"prijsStuk"=>$singleResult['prijsStuk'],
+								"totaalPrijs"=>$singleResultTotaal['SUM(prijsStuk*aantal)'],"sum_aantal"=>$singleResultTotaal['SUM(aantal)'],
+								"session_id"=>$singleResult['session_id'],"startuur"=>$singleResult['startuur'],"user_id"=>$singleResult['user_id'],
+								"aantal"=>$singleResult['aantal'],"barcode"=>$singleResult['barcode']);
 			$list[] = $response;
 		};
 		echo json_encode($list);
 
 	} else {
-		$response = array("getList" => false);
+		$response = array("getAfrekenen" => false);
 		echo json_encode($response);
 		$conn -> close();
 	}

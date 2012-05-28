@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////////////
+/// Window als login succcesvol, dashboard (winkelen, lijstjes, winkels, account)	//
+//////////////////////////////////////////////////////////////////////////////////////
+
 (function() {
 	var navWindow;
 
@@ -13,15 +17,6 @@
 		});
 		navWindow.add(Smart.navGroup);
 		
-		//
-		// back button/logout
-		//
-		var logoutButton = Titanium.UI.createButton(style.logoutButton);
-		logoutButton.addEventListener('click', function() {
-			Smart.ui.createLoginWindow();
-		});
-		mainWindow.add(logoutButton);
-
 		//
 		//Icons
 		//

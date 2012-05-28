@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////////////////////
+/// Lijstjes van gebruiker ophalen uit databank										//
+//////////////////////////////////////////////////////////////////////////////////////
 (function() {
 
 	Smart.ui.createLijstjeWindow = function() {
@@ -51,7 +54,7 @@
 						Ti.API.info('Geen lists');
 					}
 
-					//Er zijn nog geen linken in de databank
+					//Er zijn nog geen lijstjes
 					if(lists.getList == false) {
 						Titanium.API.info('Geen lijstjes');
 						var noListView = Titanium.UI.createView({
@@ -119,7 +122,7 @@
 							if(Ti.App.localonline === "local") {
 								deleteReq.open("GET", "http://localhost/SmartScan/post_removelist.php");
 							} else {
-								createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removelist.php");
+								deleteReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removelist.php");
 							}
 
 							deleteReq.timeout = 5000;
@@ -143,7 +146,6 @@
 								user_id : Titanium.App.userId
 							};
 							deleteReq.send(params);
-							//getLists();
 						});
 					}
 

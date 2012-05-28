@@ -8,6 +8,7 @@ if (!$conn -> connect_error)
 	$username = $_POST['userName'];
 	$password = $_POST['userPassword'];
 	$email = $_POST['userEmail'];
+	$barcode = $_POST['barcode'];
 
 	$sql = "SELECT email FROM users WHERE email = '" . $email . "' OR username = '" . $username . "'";
 
@@ -19,11 +20,12 @@ if (!$conn -> connect_error)
 	} 
 	else 
 	{
-		$insert = "INSERT INTO users (password,email,username) 
+		$insert = "INSERT INTO users (password,email,username,barcode) 
 		VALUES (
 		'" . md5($password) . "',
 		'" . mysqli_real_escape_string($conn, $email) . "',
-		'" . mysqli_real_escape_string($conn, $username) . "')";
+		'" . mysqli_real_escape_string($conn, $username) . "',
+		'" . mysqli_real_escape_string($conn, $barcode) . "')";
 		
 		$userId = "SELECT id FROM users WHERE username='".$username."'";
 
