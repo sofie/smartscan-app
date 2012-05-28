@@ -7,7 +7,7 @@ if (!$conn -> connect_error) {
 
 	$id = $_POST['id'];
 
-	$qry = "SELECT name,title,description,prijsStuk, foto FROM `products` WHERE id='" .$id. "'";
+	$qry = "SELECT email,username FROM `users` WHERE id='" .$id. "'";
 
 	$result = $conn -> query($qry);
 	
@@ -16,13 +16,10 @@ if (!$conn -> connect_error) {
 		$singleResult = mysqli_fetch_assoc($result);
 			$response = array(
 				"getItem" => true, 
-				"name" => $singleResult['name'], 
-				"id" => $singleResult['id'], 
-				"title" => $singleResult['title'], 
-				"foto" => $singleResult['foto'], 
-				"beschrijving" => $singleResult['description'], 
-				"prijs" => $singleResult['prijsStuk']
-			);
+				"email" => $singleResult['email'], 
+				"username" => $singleResult['username']);
+			
+
 		echo json_encode($response);
 
 	} else {

@@ -2,7 +2,8 @@
 /// Gebruiker start nieuwe sessie: scant producten + overzicht gescande producten, prijs, aantal	//
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-(function() {
+(
+	function() {
 
 		Smart.ui.createStartWinkelenWindow = function() {
 			var winkelenWindow = Titanium.UI.createWindow(style.Window);
@@ -12,15 +13,11 @@
 			winkelenWindow.setTitleControl(lblTitle);
 			startSession();
 
-			var backButton = Titanium.UI.createButton(style.backButton);
-			backButton.addEventListener('click', function() {
-				endSession();
-
-				Smart.navGroup.close(winkelenWindow, {
-					animated : false
-				});
-				Ti.App.sessionId=0;
+			winkelenWindow.addEventListener('close', function() {
+				removeSession();
 			});
+
+			var backButton = Titanium.UI.createButton(style.backButton);
 			winkelenWindow.leftNavButton = backButton;
 
 			var scanButton = Titanium.UI.createButton(style.scanButton);
@@ -28,7 +25,7 @@
 				scan();
 			});
 			winkelenWindow.setRightNavButton(scanButton);
-			
+
 			//Custom event: reload tableview na deleten product vanop detailProduct window
 			Titanium.App.addEventListener('app:reloadSession', function(e) {
 				getProducts();
@@ -46,7 +43,9 @@
 			var btn_klaar = Ti.UI.createButton(style.afrekenenButton);
 			winkelenWindow.add(btn_klaar);
 			btn_klaar.addEventListener('click', function() {
-				endSession();
+
+				updateSession();
+
 			});
 			var lbl_totaal = Ti.UI.createLabel(Smart.combine(style.textTotaal, {
 				text : '0 Artikelen'
@@ -122,8 +121,8 @@
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			/// Update aantal en totaal																					//
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-			function endSession() {
-				
+			function updateSession() {
+
 				var createReq = Titanium.Network.createHTTPClient();
 				if(Ti.App.localonline === "local") {
 					createReq.open("POST", "http://localhost/SmartScan/post_afrekenen.php");
@@ -150,6 +149,47 @@
 
 						} else {
 							alert('U hebt nog geen producten gescand.');
+						}
+
+					} catch(e) {
+						alert(e);
+					}
+				};
+				//Databank niet ok (path, MAMP,...)
+				createReq.onerror = function(e) {
+					Ti.API.info("TEXT onerror:   " + this.responseText);
+					alert('Er is iets mis met de databank.');
+				};
+				createReq.send(params);
+			};
+
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			/// Delete session																					//
+			//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			function removeSession() {
+				Ti.API.info('remove');
+
+				var createReq = Titanium.Network.createHTTPClient();
+				if(Ti.App.localonline === "local") {
+					createReq.open("POST", "http://localhost/SmartScan/post_removesession.php");
+				} else {
+					createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_removesession.php");
+				}
+
+				var params = {
+					id : Ti.App.sessionId
+				};
+
+				createReq.onload = function() {
+					try {
+						var json = this.responseText;
+						Ti.API.info('JSON: ' + json);
+						var response = JSON.parse(json);
+						if(response.remove === true) {
+							Ti.API.info('Sessie ' + Ti.App.sessionId + ' verwijderd');
+
+						} else {
+							alert('Sessie niet verwijderd.');
 						}
 
 					} catch(e) {
@@ -275,7 +315,7 @@
 								num_totaal.text = '€ ' + Ti.App.totaal;
 
 								var row = Ti.UI.createTableViewRow(style.row);
-								
+
 								var amount = Ti.UI.createLabel(Smart.combine(style.textNormal, {
 									text : amount,
 									top : -13
@@ -284,12 +324,12 @@
 								var name = Ti.UI.createLabel(Smart.combine(style.textNormal, {
 									text : productNaam,
 									top : -13,
-									left:40
+									left : 40
 								}));
 								var title = Ti.UI.createLabel(Smart.combine(style.textNormal, {
 									text : productTitle,
 									top : 18,
-									left:40,
+									left : 40,
 									font : {
 										fontSize : 10
 									},
@@ -302,7 +342,7 @@
 									top : -14
 
 								}));
-								
+
 								row.add(amount);
 								row.add(name);
 								row.add(prijs);
@@ -310,7 +350,7 @@
 								row.className = 'item' + i;
 								data[i] = row;
 							};
-							
+
 							var listProducts = Titanium.UI.createTableView(Smart.combine(style.tableView, {
 								data : data,
 								bottom : 100

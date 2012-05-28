@@ -266,6 +266,13 @@
 			width : 128,
 			height : 37
 		},
+		updateButton : {
+			backgroundImage : '/img/btn_update.png',
+			top : 145,
+			right : 20,
+			width : 128,
+			height : 37
+		},
 		afrekenenButton : {
 			backgroundImage : "img/btn_afrekenen.png",
 			width : 120,

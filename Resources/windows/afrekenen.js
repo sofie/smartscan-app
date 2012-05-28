@@ -133,7 +133,8 @@
 								var prijs = Ti.UI.createLabel(Smart.combine(style.textNormal, {
 									text : '€ ' + productPrijs,
 									textAlign : 'right',
-									right : 30
+									right : 30,
+									top:-15
 
 								}));
 								row.add(aantal);
