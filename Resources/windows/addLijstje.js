@@ -45,11 +45,19 @@
 			} else {
 				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_addlijst.php");
 			}
+			var currentTime = new Date();
+			var hours = currentTime.getHours();
+			var minutes = currentTime.getMinutes();
+			var secondes = currentTime.getSeconds();
+			var month = currentTime.getMonth() + 1;
+			var day = currentTime.getDate();
+			var year = currentTime.getFullYear();
 			
 
 			var params = {
 				name : lijstNaam.value,
-				user_id : Titanium.App.userId
+				user_id : Titanium.App.userId,
+				created : year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + secondes
 			};
 
 			createReq.onload = function() {

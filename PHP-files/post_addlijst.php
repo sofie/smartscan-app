@@ -7,6 +7,7 @@ if (!$conn -> connect_error) {
 	
 	$name = $_POST['name'];
 	$user_id = $_POST['user_id'];
+	$created = $_POST['created'];
 
 	$qry = "SELECT name FROM lists WHERE user_id = '" .$user_id. "' AND name ='".$name."'";
 	
@@ -16,15 +17,16 @@ if (!$conn -> connect_error) {
 		echo json_encode($response);
 	}else {
 		$insert = "
-			INSERT INTO lists (name, user_id) 
+			INSERT INTO lists (name, user_id,created) 
 			VALUES ('" . mysqli_real_escape_string($conn, $name) . "',
-					'" . mysqli_real_escape_string($conn, $user_id ). "')
+					'" . mysqli_real_escape_string($conn, $user_id ). "',
+					'" . mysqli_real_escape_string($conn, $created ). "')
 			";
 
 		$query = $conn -> query($insert);
 		if ($query) 
 		{
-			$response = array('add' => true, 'lijstNaam' => $name, 'userId' => $user_id);
+			$response = array('add' => true, 'lijstNaam' => $name, 'userId' => $user_id,'created'=>$created);
 			echo json_encode($response);
 			$conn -> close();
 		} 

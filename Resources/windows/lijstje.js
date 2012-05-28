@@ -68,14 +68,30 @@
 						for(var i = 0; i < lists.length; i++) {
 							var lijstid = lists[i].lijstId;
 							var lijstnaam = lists[i].lijstNaam;
+							var created = lists[i].created;
+
+							var jaar = created.substr(0, 4);
+							var maand = created.substr(5, 2);
+							var dag = created.substr(8, 2);
+							var prettyDate = dag + '-' + maand + '-' + jaar;
 
 							var row = Ti.UI.createTableViewRow(style.row);
 
 							var name = Ti.UI.createLabel(Smart.combine(style.textNormal, {
-								text : lijstnaam
+								text : lijstnaam,
+								top : -13
+							}));
+							var created = Ti.UI.createLabel(Smart.combine(style.textNormal, {
+								text : prettyDate,
+								top : 18,
+								font : {
+									fontSize : 10
+								},
+								opacity : 0.5
 							}));
 
 							row.add(name);
+							row.add(created);
 							row.className = 'item' + i;
 							data[i] = row;
 						};
@@ -105,7 +121,7 @@
 							} else {
 								createReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removelist.php");
 							}
-							
+
 							deleteReq.timeout = 5000;
 							deleteReq.onload = function() {
 								try {
