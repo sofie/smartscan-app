@@ -8,9 +8,9 @@ var allConfigWithDefaults = {
 	sourceType : [{
 		"Library" : false
 	}, {
-		"Camera" : false
+		"Camera" : true
 	}, {
-		"Album" : true
+		"Album" : false
 	}],
 	cameraMode : [{
 		"Default" : true
