@@ -16,7 +16,7 @@
 			func : Smart.ui.createWinkelsWindow
 		}, {
 			image : 'img/btn_info.png',
-			func : Smart.ui.createInfoWindow
+			func : Smart.ui.createAccountWindow
 		}]
 	};
 })();

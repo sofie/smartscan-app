@@ -1,3 +1,7 @@
+//////////////////////////////////////////////////////////////////////////////////////
+/// Overzicht van producten in categorie om toe te voegen aan boodschappenlijst	 	//
+//////////////////////////////////////////////////////////////////////////////////////
+
 (function() {
 
 	Smart.ui.createProductLijstWindow = function() {
@@ -50,11 +54,6 @@
 
 		return productLijstWin;
 
-		/**
-		 *
-		 * HTTP Requests
-		 *
-		 */
 
 		//Add product to list
 		function addProduct() {

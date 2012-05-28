@@ -33,6 +33,13 @@
 			selectedBackgroundColor : '#e3602b',
 			backgroundSelectedColor : '#e3602b',
 		},
+		rowAfrekenen : {
+			height : 30,
+			width : 280,
+			backgroundImage : '/img/bg_rowAfrekenen.png',
+			selectedBackgroundColor : '#e3602b',
+			backgroundSelectedColor : '#e3602b',
+		},
 		titleBar : {
 			color : '#fff',
 			font : {
@@ -135,6 +142,17 @@
 				fontFamily : 'Bree serif'
 			}
 		},
+		textAfrekenen : {
+			left : 20,
+			top : 165,
+			height : 25,
+			textAlign : 'left',
+			color : '#474240',
+			font : {
+				fontSize : 18,
+				fontFamily : 'Bree serif'
+			}
+		},
 		
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /// Textfields																								//
@@ -228,22 +246,30 @@
 		},
 		registerButton : {
 			backgroundImage : '/img/btn_registreer.png',
-			top : 230,
+			top : 290,
 			right : 20,
 			width : 123,
 			height : 37
 		},
 		logoutButton : {
-			backgroundImage : "img/btn_logout.png",
-			width : 82,
-			height : 35,
-			right : 20,
-			top : 20
+			backgroundImage : 'img/btn_logout.png',
+			height : 37,
+			width : 280,
+			bottom : 10,
+			left : 'auto',
+			right : 'auto'
 		},
 		klaarButton : {
-			backgroundImage : "img/btn_sessieklaar.png",
-			width : 166,
-			height : 45,
+			backgroundImage : '/img/btn_klaar.png',
+			top : -37,
+			right : 20,
+			width : 128,
+			height : 37
+		},
+		afrekenenButton : {
+			backgroundImage : "img/btn_afrekenen.png",
+			width : 120,
+			height : 60,
 			left : 20,
 			bottom : 20
 		},

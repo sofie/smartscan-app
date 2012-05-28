@@ -3,7 +3,7 @@ var Ti;
 Titanium.UI.setBackgroundImage('img/bg.png');
 
 //Ti.App.localonline="local";
-Ti.App.localonline="local";
+Ti.App.localonline="online";
 
 //libraries
 Ti.include('smart/smart.js');
@@ -20,14 +20,16 @@ Ti.include(
 	'windows/winkelen.js', 
 	'windows/startVanLijstje.js',
 	'windows/startWinkelen.js',
+	'windows/detailProductSession.js',
+	'windows/afrekenen.js',
 	
 	'windows/winkels.js',
-	'windows/info.js',
+	'windows/account.js',
 	
 	'smart/icons.js', 
 	'windows/main.js',
 	'windows/login.js',
-	'windows/account.js',
+	'windows/register.js',
 	
 	'config/config.js',
 	'styles/styles.js'

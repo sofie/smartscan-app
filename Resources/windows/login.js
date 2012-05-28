@@ -1,3 +1,6 @@
+//////////////////////////////////////////////////////////////////////////////////////
+/// Login window																	//
+//////////////////////////////////////////////////////////////////////////////////////
 (function() {
 	Smart.ui.createLoginWindow = function() {
 		var navWindow;
@@ -14,18 +17,7 @@
 
 			loginWin.setTitleControl(lblTitle);
 		}
-		//
-		//Back/logout button
-		//
-		var backButton = Titanium.UI.createButton(style.backButton);
-		backButton.addEventListener('click', function() {
-
-		});
-		loginWin.leftNavButton = backButton;
-
-		//
-		//Eerste scherm
-		//
+	
 		navWindow = Titanium.UI.createWindow({
 			exitOnClose : true,
 			navBarHidden : false
@@ -77,10 +69,10 @@
 		var wrmAccountView = Titanium.UI.createView(style.wrmAccount);
 		loginWin.add(wrmAccountView);
 
-		/*
-		 * Login via scannen
-		 */
-
+		
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Inloggen door barcode klantenkaart te scannen									//
+		//////////////////////////////////////////////////////////////////////////////////////
 		scanKaartBtn.addEventListener('click', function() {
 			Ti.include("/config/barcode.js");
 			Ti.API.debug(JSON.stringify(config));
@@ -92,10 +84,6 @@
 					Ti.API.info('TiBar success callback!');
 					if(data && data.barcode) {
 						Ti.API.info("Barcode: " + data.barcode + ", symbol: " + data.symbology);
-						/*Ti.UI.createAlertDialog({
-						 title : "Scan result",
-						 message : "Inloggen gelukt."
-						 }).show();*/
 					}
 				},
 				cancel : function() {
@@ -112,7 +100,7 @@
 			if(Ti.App.localonline === "local") {
 				loginReq.open("POST", "http://localhost/SmartScan/post_authBarcode.php");
 			} else {
-				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_authBarcode.php");
+				loginReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_authBarcode.php");
 			}
 
 			loginReq.timeout = 5000;
@@ -156,23 +144,20 @@
 					buttonNames : ['OK']
 				});
 				alertDialog.show();
-				//personeelNummer.blur();
-
-				//alert('Er is iets mis met de databank.');
 			}
 
 			loginReq.send(params);
 		};
 
-		//
-		//Login via form
-		//
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Inloggen met emailadres en wachtwoord											//
+		//////////////////////////////////////////////////////////////////////////////////////
 		function loginForm() {
 			var loginReq = Titanium.Network.createHTTPClient();
 			if(Ti.App.localonline === "local") {
 				loginReq.open("POST", "http://localhost/SmartScan/post_auth.php");
 			} else {
-				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_auth.php");
+				loginReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_auth.php");
 			}
 
 			loginReq.timeout = 5000;
