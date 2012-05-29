@@ -3,7 +3,7 @@ var Ti;
 Titanium.UI.setBackgroundImage('img/bg.png');
 
 //Ti.App.localonline="local";
-Ti.App.localonline="local";
+Ti.App.localonline="online";
 
 //libraries
 Ti.include('smart/smart.js');

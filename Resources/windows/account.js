@@ -9,6 +9,7 @@
 		accountWin.setTitleControl(lblTitle);
 		accountWin.addEventListener('open', function() {
 			getDetail();
+			getAankopen();
 		});
 
 		var logoutButton = Titanium.UI.createButton(style.logoutButton);
@@ -23,12 +24,28 @@
 			top : -350
 		}));
 		accountWin.add(lblAccount);
-		
+		var userEmail = Titanium.UI.createTextField(Smart.combine(style.inputField, {
+			top : 50,
+			keyboardType : Titanium.UI.KEYBOARD_EMAIL
+		}));
+		accountWin.add(userEmail);
+		var username = Titanium.UI.createTextField(Smart.combine(style.inputField, {
+			top : 90
+		}));
+		accountWin.add(username);
+
 		var updateBtn = Titanium.UI.createButton(style.updateButton);
 		accountWin.add(updateBtn);
-		updateBtn.addEventListener('click',function(){
+		updateBtn.addEventListener('click', function() {
 			updateAccount();
 		});
+
+		var lblAankopen = Titanium.UI.createLabel(Smart.combine(style.textNormal, {
+			text : 'Aankopen',
+			left : 20,
+			top : 10
+		}));
+		accountWin.add(lblAankopen);
 
 		//////////////////////////////////////////////////////////////////////////////////
 		/// Haalt detail op uit databank												//
@@ -48,6 +65,7 @@
 			getReq.onload = function() {
 				try {
 					var detail = JSON.parse(this.responseText);
+					Ti.API.info(this.responseText);
 					if(detail.getItem === false) {
 						var lblNoDetail = Titanium.UI.createLabel(Smart.combine(style.textError, {
 							text : 'Kan user niet ophalen.',
@@ -58,19 +76,9 @@
 					} else {
 
 						var email = detail.email;
-						var password = detail.password;
-
-						var userEmail = Titanium.UI.createTextField(Smart.combine(style.inputField, {
-							top : 50,
-							value : email,
-							keyboardType : Titanium.UI.KEYBOARD_EMAIL
-						}));
-						accountWin.add(userEmail);
-						var username = Titanium.UI.createTextField(Smart.combine(style.inputField, {
-							top : 90,
-							value : username
-						}));
-						accountWin.add(username);
+						var name = detail.username;
+						userEmail.value = email;
+						username.value = name;
 
 					}
 
@@ -89,57 +97,136 @@
 		/// Account gegevens updaten													//
 		//////////////////////////////////////////////////////////////////////////////////
 		function updateAccount() {
-			var getReq = Titanium.Network.createHTTPClient();
+			var createReq = Titanium.Network.createHTTPClient();
 			if(Ti.App.localonline === "local") {
-				getReq.open("GET", "http://localhost/SmartScan/get_accountDetail.php");
+				createReq.open("POST", "http://localhost/SmartScan/post_accountDetail.php");
 			} else {
-				getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_accountDetail.php");
+				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_accountDetail.php");
 			}
+
 			var params = {
-				id : Titanium.App.userId
+				id : Titanium.App.userId,
+				email : userEmail.value,
+				username : username.value
 			};
 
+			createReq.onload = function() {
+				try {
+					var json = this.responseText;
+					Ti.API.info('JSON: ' + json);
+					var response = JSON.parse(json);
+					if(response.add === true) {
+						Ti.API.info('User ' + Titanium.App.userId + 'geupdate');
+
+					} else {
+						alert('Kan niet updaten.');
+					}
+
+				} catch(e) {
+					alert(e);
+				}
+			};
+			//Databank niet ok (path, MAMP,...)
+			createReq.onerror = function(e) {
+				Ti.API.info("TEXT onerror:   " + this.responseText);
+				alert('Er is iets mis met de databank.');
+			};
+			createReq.send(params);
+		};
+
+		function getAankopen() {
+
+			var data = [];
+
+			var getReq = Titanium.Network.createHTTPClient();
+			if(Ti.App.localonline === "local") {
+
+				getReq.open("GET", "http://localhost/SmartScan/get_usersession.php");
+			} else {
+				getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_usersession.php");
+			}
+
+			var params = {
+				user_id : Titanium.App.userId
+			};
 			getReq.timeout = 5000;
+
 			getReq.onload = function() {
 				try {
-					var detail = JSON.parse(this.responseText);
-					if(detail.getItem === false) {
-						var lblNoDetail = Titanium.UI.createLabel(Smart.combine(style.textError, {
-							text : 'Kan user niet ophalen.',
-							top : 30
-						}));
-						accountWin.add(lblNoDetail);
+					var lists = JSON.parse(this.responseText);
+					if(lists.length === 0) {
+						Ti.API.info('Geen lists');
+					}
+
+					//Er zijn nog geen lijstjes
+					if(lists.getList == false) {
+						Titanium.API.info('Geen lijstjes');
+						var noListLbl = Titanium.UI.createLabel({
+							text : 'Je hebt nog geen aankopen gedaan.',
+							top : 205,
+							left : 20
+						});
+						lijstjeWindow.add(noListLbl);
 
 					} else {
 
-						var email = detail.email;
-						var password = detail.password;
+						for(var i = 0; i < lists.length; i++) {
+							var startuur = lists[i].startuur;
+							var totaal = lists[i].totaal;
+							var num_products = lists[i].num_products;
 
-						var userEmail = Titanium.UI.createTextField(Smart.combine(style.inputField, {
-							top : 50,
-							value : email,
-							keyboardType : Titanium.UI.KEYBOARD_EMAIL
+							var jaar = startuur.substr(0, 4);
+							var maand = startuur.substr(5, 2);
+							var dag = startuur.substr(8, 2);
+							var prettyDate = dag + '-' + maand + '-' + jaar;
+
+							var row = Ti.UI.createTableViewRow(style.row);
+
+							var uur = Ti.UI.createLabel(Smart.combine(style.textNormal, {
+								text : prettyDate,
+								top : -13
+							}));
+							var aantal = Ti.UI.createLabel(Smart.combine(style.textNormal, {
+								text : num_products+' artikelen',
+								top : 18,
+								font : {
+									fontSize : 10
+								},
+								opacity : 0.5
+							}));
+							var tot = Ti.UI.createLabel(Smart.combine(style.textNormal, {
+								text : '€ '+totaal,
+								top : -13,
+								textAlign : 'right',
+								right : 60
+							}));
+
+							row.add(uur);
+							row.add(aantal);
+							row.add(tot);
+							row.className = 'item' + i;
+							data[i] = row;
+						};
+
+						var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView, {
+							data : data,
+							top:225
 						}));
-						accountWin.add(userEmail);
-						var username = Titanium.UI.createTextField(Smart.combine(style.inputField, {
-							top : 90,
-							value : username
-						}));
-						accountWin.add(username);
+						accountWin.add(listLists);
 
 					}
 
 				} catch(e) {
 					alert(e);
 				}
-			}
+			};
 			getReq.onerror = function(e) {
 				Ti.API.info("TEXT onerror:   " + this.responseText);
 				alert('Er is iets mis met de databank.');
 			}
 
 			getReq.send(params);
-		};
+		}
 
 		return accountWin;
 	};
