@@ -10,7 +10,7 @@ if (!$conn -> connect_error) {
 	$username = $_POST['username'];
 
 	$insert = "UPDATE users
-				SET email='" . mysqli_real_escape_string($conn, $email) . "' AND username='" . mysqli_real_escape_string($conn, $username) . "'
+				SET email='" . mysqli_real_escape_string($conn, $email) . "', username='" . mysqli_real_escape_string($conn, $username) . "'
 				WHERE id='" . mysqli_real_escape_string($conn, $id) . "'";
 
 	$query = $conn -> query($insert);

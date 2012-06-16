@@ -10,6 +10,9 @@
 		lijstjeWindow.addEventListener('open', function() {
 			Ti.API.info('Lijst win open');
 			getLists();
+		});
+		var lblInstructions=Ti.UI.createLabel({
+			
 		})
 		function getLists() {
 
@@ -39,7 +42,7 @@
 						Titanium.API.info('Geen lijstjes');
 						var lblNoLinks = Titanium.UI.createLabel(Smart.combine(style.textError, {
 							top : 30,
-							text : 'Er zijn nog geen lijstjes. Maak 1 aan.'
+							text : 'Je hebt nog geen lijstjes.'
 						}));
 						lijstjeWindow.add(lblNoLinks);
 
@@ -64,6 +67,15 @@
 							data : data
 						}));
 						lijstjeWindow.add(listLists);
+						
+						listLists.addEventListener('click', function(e) {
+							Titanium.App.selectedLijstje = lists[e.index].lijstId;
+							Titanium.App.selectedLijstjeNaam = lists[e.index].lijstNaam;
+							Titanium.App.selectedProd1 = lists[e.index].productNaam;
+							Smart.navGroup.open(Smart.ui.createStartVanLijstjeInhoudWindow(), {
+								animated : false
+							});
+						});
 
 					}
 

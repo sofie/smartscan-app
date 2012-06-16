@@ -20,7 +20,7 @@ if (!$conn -> connect_error)
 	else 
 	{
 		$insert = "
-			INSERT INTO list_details (aantal) 
+			INSERT INTO list_details (amount) 
 			VALUES ('" . mysqli_real_escape_string($conn, $aantal) . "')
 			";
 

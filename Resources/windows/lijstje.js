@@ -10,7 +10,6 @@
 			text : 'Mijn lijstjes'
 		}));
 		lijstjeWindow.setTitleControl(lblTitle);
-
 		//
 		//Add lijstje button (rightNavButton)
 		//
@@ -45,6 +44,7 @@
 			var params = {
 				user_id : Titanium.App.userId
 			};
+			
 			getReq.timeout = 5000;
 
 			getReq.onload = function() {
@@ -55,7 +55,7 @@
 					}
 
 					//Er zijn nog geen lijstjes
-					if(lists.getList == false) {
+					if(lists.getList === false) {
 						Titanium.API.info('Geen lijstjes');
 						var noListView = Titanium.UI.createView({
 							backgroundImage : "/img/no_list.png",

@@ -14,6 +14,12 @@
 			backgroundImage : '/img/bg.png',
 			barImage : 'img/header.png'
 		},
+		afrekenenWindow : {
+			width : '100%',
+			height : '100%',
+			backgroundImage : '/img/bg_afrekenen.jpg',
+			barImage : 'img/header.png'
+		},
 		tableView : {
 			top : 0,
 			left : 0,
@@ -56,11 +62,10 @@
 			backgroundImage : 'img/bg_product.png',
 			height : 179
 		},
-		
-		
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Text																									//
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// Text																									//
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		textNormal : {
 			color : '#3A3737',
@@ -95,7 +100,7 @@
 				fontFamily : 'Bree serif'
 			}
 		},
-		
+
 		textProductDescription : {
 			left : 130,
 			right : 20,
@@ -134,7 +139,7 @@
 			right : 20,
 			bottom : 40,
 			height : 25,
-			width:100,
+			width : 100,
 			textAlign : 'right',
 			color : '#474240',
 			font : {
@@ -153,13 +158,13 @@
 				fontFamily : 'Bree serif'
 			}
 		},
-		
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Textfields																								//
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// Textfields																								//
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		inputFieldRegister : {
-			paddingLeft:10,
+			paddingLeft : 10,
 			backgroundImage : '/img/bg_inputRegister.png',
 			width : 280,
 			height : 200,
@@ -184,7 +189,7 @@
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS
 		},
 		inputField : {
-			paddingLeft:10,
+			paddingLeft : 10,
 			color : '#3A3737',
 			left : 20,
 			height : 40,
@@ -203,7 +208,7 @@
 			backgroundImage : '/img/bg_textInput.png'
 		},
 		inputFieldKort : {
-			paddingLeft:10,
+			paddingLeft : 10,
 			color : '#3A3737',
 			left : 20,
 			height : 40,
@@ -220,10 +225,10 @@
 			clearButtonMode : Titanium.UI.INPUT_BUTTONMODE_ALWAYS,
 			backgroundImage : '/img/bg_textInput_kort.png'
 		},
-		
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Buttons																									//
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// Buttons																									//
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		loginButton : {
 			backgroundImage : '/img/btn_login.png',
@@ -239,7 +244,7 @@
 			width : 178,
 			height : 37
 		},
-		gpsButton:{
+		gpsButton : {
 			backgroundImage : '/img/btn_gps.png',
 			width : 37,
 			height : 35
@@ -323,22 +328,22 @@
 			width : 128,
 			height : 37
 		},
-		
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/// Andere																									//
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		/// Andere																									//
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		bgLoginTextField : {
 			backgroundImage : '/img/bg_inputLogin.png',
 			width : 280,
 			height : 100,
-			top : 40,
+			top : 20,
 			left : 'auto',
 			right : 'auto'
 		},
 		wrmAccount : {
 			width : 320,
 			height : 136,
-			top : 30,
+			top : 25,
 			opacity : 0.5,
 			backgroundImage : '/img/wrmAccount.png'
 		},
@@ -349,6 +354,14 @@
 			top : 20,
 			backgroundImage : 'img/bg_product.png',
 			height : 179
+		},
+		pin : {
+			animate : true,
+			image : '/img/pin.png'
+		},
+		pinBlue : {
+			animate : true,
+			image : '/img/pin_blue.png'
 		}
 	};
 })();

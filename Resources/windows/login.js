@@ -36,6 +36,16 @@
 		//
 		var scanKaartBtn = Titanium.UI.createButton(style.scanKaartButton);
 		loginWin.add(scanKaartBtn);
+		
+		var bg_lijn = Ti.UI.createView({
+			width:280,
+			height:11,
+			left:20,
+			top:20,
+			opacity:0.6,
+			backgroundImage:'img/of.png'
+		});
+		loginWin.add(bg_lijn);
 
 		var viewLogin = Titanium.UI.createView(style.bgLoginTextField);
 

@@ -6,9 +6,7 @@
 	function() {
 
 		Smart.ui.createAfrekenenWindow = function() {
-			var mainWin = Titanium.UI.createWindow(Smart.combine(style.Window, {
-				backgroundImage : '/img/bg_afrekenen.jpg',
-			}));
+			var mainWin = Titanium.UI.createWindow(style.afrekenenWindow);
 			var lblTitle = Titanium.UI.createLabel(Smart.combine(style.titleBar, {
 				text : 'Afrekenen'
 			}));

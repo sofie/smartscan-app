@@ -21,16 +21,16 @@
 		var lblAccount = Titanium.UI.createLabel(Smart.combine(style.textNormal, {
 			text : 'Account gegevens',
 			left : 20,
-			top : -350
+			top : -360
 		}));
 		accountWin.add(lblAccount);
 		var userEmail = Titanium.UI.createTextField(Smart.combine(style.inputField, {
-			top : 50,
+			top : 80,
 			keyboardType : Titanium.UI.KEYBOARD_EMAIL
 		}));
 		accountWin.add(userEmail);
 		var username = Titanium.UI.createTextField(Smart.combine(style.inputField, {
-			top : 90
+			top : 40
 		}));
 		accountWin.add(username);
 
@@ -103,6 +103,7 @@
 			} else {
 				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_accountDetail.php");
 			}
+			Ti.API.info(Ti.App.localonline);
 
 			var params = {
 				id : Titanium.App.userId,
@@ -116,7 +117,13 @@
 					Ti.API.info('JSON: ' + json);
 					var response = JSON.parse(json);
 					if(response.add === true) {
-						Ti.API.info('User ' + Titanium.App.userId + 'geupdate');
+						Ti.API.info('UPDATE users SET email= '+params.email+' AND username= '+params.username+' WHERE id= '+params.id);
+						var alertDialog = Ti.UI.createAlertDialog({
+							title : 'Account',
+							message : 'Account gegevens aangepast.',
+							buttonNames : ['OK']
+						});
+						alertDialog.show();
 
 					} else {
 						alert('Kan niet updaten.');

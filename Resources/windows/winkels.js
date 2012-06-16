@@ -97,13 +97,11 @@
 				var timestamp = e.coords.timestamp;
 				var altitudeAccuracy = e.coords.altitudeAccuracy;
 
-				var point = Titanium.Map.createAnnotation({
+				var point = Titanium.Map.createAnnotation(Smart.combine(style.pin,{
 					latitude : latitude,
 					longitude : longitude,
-					title : "U bevindt zich hier",
-					animate : true,
-					image : '/img/pin.png'
-				});
+					title : "U bevindt zich hier"
+				}));
 				var mapview = Titanium.Map.createView({
 					left : 20,
 					right : 20,
@@ -164,13 +162,11 @@
 								var longitudeDb = stores[i].longitude;
 								var latitudeDb = stores[i].latitude;
 
-								var point = Titanium.Map.createAnnotation({
+								var point = Titanium.Map.createAnnotation(Smart.combine(style.pinBlue,{
 									latitude : latitudeDb,
 									longitude : longitudeDb,
-									animate : true,
-									title : naam,
-									image : '/img/pin_blue.png'
-								});
+									title : naam
+								}));
 								Ti.App.annotation = point.latitude;
 
 								mapview.addAnnotation(point);

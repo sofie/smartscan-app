@@ -20,6 +20,7 @@ Ti.include(
 	'windows/winkelen.js', 
 	'windows/startVanLijstje.js',
 	'windows/startWinkelen.js',
+	'windows/startVanLijstjeInhoud.js',
 	'windows/detailProductSession.js',
 	'windows/afrekenen.js',
 	

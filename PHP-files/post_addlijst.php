@@ -17,7 +17,7 @@ if (!$conn -> connect_error) {
 		echo json_encode($response);
 	}else {
 		$insert = "
-			INSERT INTO lists (name, user_id,created) 
+			INSERT INTO lists (name, user_id,date_created) 
 			VALUES ('" . mysqli_real_escape_string($conn, $name) . "',
 					'" . mysqli_real_escape_string($conn, $user_id ). "',
 					'" . mysqli_real_escape_string($conn, $created ). "')

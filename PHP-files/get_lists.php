@@ -7,7 +7,7 @@ if (!$conn -> connect_error) {
 	
 	$user_id = $_POST['user_id'];
 	
-	$qry = "SELECT name, id, created
+	$qry = "SELECT name, id, date_created
 			FROM lists
 			WHERE user_id='".$user_id ."'";
 			
@@ -19,7 +19,7 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getList" => true, "lijstNaam" => $singleResult['name'],"lijstId" => $singleResult['id'],"created"=>$singleResult['created']);
+			$response = array("getList" => true, "lijstNaam" => $singleResult['name'],"lijstId" => $singleResult['id'],"created"=>$singleResult['date_created']);
 			$list[] = $response;
 		};
 		echo json_encode($list);

@@ -7,7 +7,7 @@ if (!$conn -> connect_error) {
 
 	$id = $_POST['id'];
 
-	$qry = "SELECT name,title,description,prijsStuk, foto FROM `products` WHERE id='" .$id. "'";
+	$qry = "SELECT name,title,description,price, photo FROM `products` WHERE id='" .$id. "'";
 
 	$result = $conn -> query($qry);
 	
@@ -19,9 +19,9 @@ if (!$conn -> connect_error) {
 				"name" => $singleResult['name'], 
 				"id" => $singleResult['id'], 
 				"title" => $singleResult['title'], 
-				"foto" => $singleResult['foto'], 
+				"foto" => $singleResult['photo'], 
 				"beschrijving" => $singleResult['description'], 
-				"prijs" => $singleResult['prijsStuk']
+				"prijs" => $singleResult['price']
 			);
 		echo json_encode($response);
 
