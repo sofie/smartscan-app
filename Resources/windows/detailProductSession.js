@@ -28,9 +28,9 @@
 
 				navActInd.show();
 			});
-			
+
 			var amount = Ti.UI.createTextField({
-				width : 60,
+				width : 50,
 				height : 30,
 				top : 120,
 				left : 130,
@@ -51,7 +51,7 @@
 			//////////////////////////////////////////////////////////////////////////////////
 			function getDetail() {
 				var getReq = Titanium.Network.createHTTPClient();
-				if(Ti.App.localonline === "local") {
+				if (Ti.App.localonline === "local") {
 					getReq.open("GET", "http://localhost/SmartScan/get_itemdetail.php");
 				} else {
 					getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_itemdetail.php");
@@ -64,7 +64,7 @@
 				getReq.onload = function() {
 					try {
 						var detail = JSON.parse(this.responseText);
-						if(detail.getItem === false) {
+						if (detail.getItem === false) {
 							var lblNoDetail = Titanium.UI.createLabel(Smart.combine(style.textError, {
 								text : 'Kan product niet ophalen.',
 								top : 30
@@ -105,6 +105,12 @@
 							var title = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
 								text : name + ' ' + title
 							}));
+							var promo = Titanium.UI.createLabel( Smart.combine(style.textError, {
+								text : 'PROMO',
+								top:13,
+								textAlign:'right',
+								right:30
+							}));	
 							var beschrijving = Titanium.UI.createLabel(Smart.combine(style.textProductDescription, {
 								text : pBeschrijving
 							}));
@@ -113,11 +119,27 @@
 								text : '€ ' + pPrijs
 							}));
 
+							if (Titanium.App.selectedDiscount) {
+								prijs.opacity = 0.4;
+								prijs.top=105;
+								bgView.add(promo);
+							}
+							var discountPrijs = pPrijs - pPrijs * Titanium.App.selectedDiscount;
+							discountPrijs = discountPrijs.toFixed(2);
+							var discount = Ti.UI.createLabel(Smart.combine(style.textProductPrice, {
+								text : ' € ' + discountPrijs,
+								top : 125,
+								color : '#AC3724'
+							}));
+							if (Ti.App.selectedDiscount === null) {
+								discount.text = "";
+							}
 
 							bgView.add(title);
 							bgView.add(imageView);
 							bgView.add(beschrijving);
 							bgView.add(prijs);
+							bgView.add(discount);
 							bgView.add(amount);
 
 							detailproductWindow.add(bgView);
@@ -148,17 +170,20 @@
 				Ti.API.info(Ti.App.amount);
 				updateAantal();
 			});
-			
+
 			//////////////////////////////////////////////////////////////////////////////////
 			/// Hoeveelheid van gescand product aanpassen									//
 			//////////////////////////////////////////////////////////////////////////////////
 			function updateAantal() {
 
 				var createReq = Titanium.Network.createHTTPClient();
-				if(Ti.App.localonline === "local") {
+				if (Ti.App.localonline === "local") {
 					createReq.open("POST", "http://localhost/SmartScan/post_updateaantal.php");
 				} else {
 					createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_updateaantal.php");
+				}
+				if (amount.value == "") {
+					amount.value = 1;
 				}
 
 				var params = {
@@ -172,7 +197,7 @@
 						var json = this.responseText;
 						Ti.API.info('JSON: ' + json);
 						var response = JSON.parse(json);
-						if(response.add === true) {
+						if (response.add === true) {
 							Ti.API.info('Sessie ' + Ti.App.sessionId + ' beëindigd');
 							Ti.App.fireEvent('app:reloadSession', {
 								action : 'Reload producten sessie'
@@ -205,7 +230,7 @@
 				Ti.API.info('DELETE FROM winkel_productenlijst WHERE product_id=' + Titanium.App.selectedProdIndex + ' AND session_id=' + Titanium.App.selectedSessionId);
 
 				var deleteReq = Titanium.Network.createHTTPClient();
-				if(Ti.App.localonline === "local") {
+				if (Ti.App.localonline === "local") {
 					deleteReq.open("GET", "http://localhost/SmartScan/post_removeproductSession.php");
 				} else {
 					deleteReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removeproductSession.php");
@@ -216,7 +241,7 @@
 					try {
 						var json = this.responseText;
 						var response = JSON.parse(json);
-						if(response.remove === true) {
+						if (response.remove === true) {
 							Titanium.API.info('Remove product: ' + this.responseText);
 
 							Ti.App.fireEvent('app:reloadSession', {

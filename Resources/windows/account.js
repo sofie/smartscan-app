@@ -43,7 +43,7 @@
 		var lblAankopen = Titanium.UI.createLabel(Smart.combine(style.textNormal, {
 			text : 'Aankopen',
 			left : 20,
-			top : 10
+			top : -10
 		}));
 		accountWin.add(lblAankopen);
 
@@ -168,12 +168,13 @@
 					//Er zijn nog geen lijstjes
 					if(lists.getList == false) {
 						Titanium.API.info('Geen lijstjes');
-						var noListLbl = Titanium.UI.createLabel({
+						var noListLbl = Titanium.UI.createLabel(Smart.combine(style.textError, {
 							text : 'Je hebt nog geen aankopen gedaan.',
-							top : 205,
-							left : 20
-						});
-						lijstjeWindow.add(noListLbl);
+							top : 215,
+							left:12,
+							color:'#76746f'
+						}));
+						accountWin.add(noListLbl);
 
 					} else {
 
@@ -217,7 +218,8 @@
 
 						var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView, {
 							data : data,
-							top:225
+							top:215,
+							bottom:55
 						}));
 						accountWin.add(listLists);
 

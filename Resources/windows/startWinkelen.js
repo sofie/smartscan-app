@@ -2,8 +2,7 @@
 /// Gebruiker start nieuwe sessie: scant producten + overzicht gescande producten, prijs, aantal	//
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-(
-	function() {
+(function() {
 
 		Smart.ui.createStartWinkelenWindow = function() {
 			var winkelenWindow = Titanium.UI.createWindow(style.Window);
@@ -43,14 +42,14 @@
 			var btn_klaar = Ti.UI.createButton(style.afrekenenButton);
 			winkelenWindow.add(btn_klaar);
 			btn_klaar.addEventListener('click', function() {
-
 				updateSession();
-
 			});
+			
 			var lbl_totaal = Ti.UI.createLabel(Smart.combine(style.textTotaal, {
 				text : '0 Artikelen'
 			}));
 			winkelenWindow.add(lbl_totaal);
+			
 			var num_totaal = Ti.UI.createLabel(Smart.combine(style.textTotaal, {
 				text : '€ 0,00',
 				bottom : 20,
@@ -232,13 +231,20 @@
 								var json = this.responseText;
 								var response = JSON.parse(json);
 								Ti.API.info("Add link: " + this.responseText);
-
-								if(response.add === true) {
+								
+								if(response.bestaatAl===true){
+									Ti.API.info('bestaat al');
 									getProducts();
-								} else {
-									noProductView.show();
-									alert('Product niet gevonden.');
+								}else{
+									if(response.add === true) {
+										getProducts();
+									} else {
+										noProductView.show();
+										alert('Product niet gevonden.');
+									}
 								}
+
+								
 
 							} catch(e) {
 								alert(e);
@@ -293,7 +299,6 @@
 
 						//Er staan nog geen producten op lijst
 						if(products.getList === false) {
-							Ti.API.info('Geen prod2');
 							var lblNoProd = Ti.UI.createLabel({
 								text : "Druk op button",
 								top : 20,
@@ -313,6 +318,7 @@
 								var amount = products[i].amount;
 								lbl_totaal.text = Ti.App.num_products + ' Artikelen';
 								num_totaal.text = '€ ' + Ti.App.totaal;
+								var discount = products[i].discount;
 
 								var row = Ti.UI.createTableViewRow(style.row);
 
@@ -342,11 +348,26 @@
 									top : -14
 
 								}));
+								var discountLbl = Ti.UI.createLabel(Smart.combine(style.textError, {
+									text : 'PROMO',
+									textAlign : 'right',
+									right:70,
+									top:0
+								}));
+								
+								if(discount){
+									prijs.top=10
+								}
+								
+								if(discount===null){
+									discountLbl.text="";
+								}
 
 								row.add(amount);
 								row.add(name);
 								row.add(prijs);
 								row.add(title);
+								row.add(discountLbl);
 								row.className = 'item' + i;
 								data[i] = row;
 							};
@@ -361,16 +382,16 @@
 								Titanium.App.selectedProdIndex = products[e.index].id;
 								Titanium.App.selectedProd = products[e.index].naam;
 								Titanium.App.selectedSessionId = products[e.index].session_id;
+								Titanium.App.selectedDiscount = products[e.index].discount;
 								Ti.API.info('Session id: ' + Titanium.App.selectedSessionId);
 								Smart.navGroup.open(Smart.ui.createDetailProductSessionWindow(), {
 									animated : false
 								});
 							});
+							
 							listProducts.addEventListener('delete', function(e) {
 								Titanium.App.selectedProduct = products[e.index].id;
 								Titanium.App.selectedSession = products[e.index].session_id;
-
-								Ti.API.info('DELETE FROM winkel_productenlijst WHERE product_id=' + Titanium.App.selectedProduct + ' AND session_id=' + Titanium.App.selectedSession);
 
 								var deleteReq = Titanium.Network.createHTTPClient();
 								if(Ti.App.localonline === "local") {
@@ -386,6 +407,9 @@
 										var response = JSON.parse(json);
 										if(response.remove === true) {
 											Titanium.API.info('Remove product: ' + this.responseText);
+											Ti.App.fireEvent('app:reloadSession', {
+												action : 'Reload producten sessie'
+											});
 
 										} else {
 											alert('Product kan niet verwijderd worden.');

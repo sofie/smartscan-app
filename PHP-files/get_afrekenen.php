@@ -7,7 +7,7 @@ if (!$conn -> connect_error) {
 	
 	$session_id = $_POST['session_id'];
 	
-	$qry = "SELECT name, product_id,title,price, session_id, startuur,user_id,aantal,barcode
+	$qry = "SELECT name, product_id,title,calculated_price, session_id, startuur,user_id,aantal,barcode
 			FROM products
 			INNER JOIN winkel_productenlijst ON ( products.id = winkel_productenlijst.product_id )
 			INNER JOIN winkel_sessie ON ( winkel_sessie.id = winkel_productenlijst.session_id )
@@ -26,7 +26,7 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		 
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$totaal="SELECT SUM(price*aantal),SUM(aantal)
+			$totaal="SELECT SUM(calculated_price*aantal),SUM(aantal)
 					FROM products
 					INNER JOIN winkel_productenlijst ON ( products.id = winkel_productenlijst.product_id )
 					WHERE session_id='".$session_id ."'";
@@ -35,8 +35,8 @@ if (!$conn -> connect_error) {
 			$singleResultTotaal = mysqli_fetch_assoc($resultTotaal);
 			
 			$response = array("getAfrekenen" => true, "naam" => $singleResult['name'],"title" => $singleResult['title'],"id" => $singleResult['product_id'],
-								"price"=>$singleResult['price'],
-								"totaalPrijs"=>$singleResultTotaal['SUM(price*aantal)'],"sum_aantal"=>$singleResultTotaal['SUM(aantal)'],
+								"prijsStuk"=>$singleResult['calculated_price'],
+								"totaalPrijs"=>$singleResultTotaal['SUM(calculated_price*aantal)'],"sum_aantal"=>$singleResultTotaal['SUM(aantal)'],
 								"session_id"=>$singleResult['session_id'],"startuur"=>$singleResult['startuur'],"user_id"=>$singleResult['user_id'],
 								"aantal"=>$singleResult['aantal'],"barcode"=>$singleResult['barcode']);
 			$list[] = $response;

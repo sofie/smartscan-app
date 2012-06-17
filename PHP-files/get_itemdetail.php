@@ -14,6 +14,11 @@ if (!$conn -> connect_error) {
 
 	if (mysqli_num_rows($result) > 0) {
 		$singleResult = mysqli_fetch_assoc($result);
+		
+		$promo = "SELECT discount FROM `promotions` WHERE product_id='".$singleResult['id'] ."'";
+		$resultPromo = $conn -> query($promo);
+		$singleResultPromo = mysqli_fetch_assoc($resultPromo);
+			
 			$response = array(
 				"getItem" => true, 
 				"name" => $singleResult['name'], 
@@ -21,7 +26,8 @@ if (!$conn -> connect_error) {
 				"title" => $singleResult['title'], 
 				"foto" => $singleResult['photo'], 
 				"beschrijving" => $singleResult['description'], 
-				"prijs" => $singleResult['price']
+				"prijs" => $singleResult['price'],
+				"discount" => $singleResultPromo['discount']
 			);
 		echo json_encode($response);
 

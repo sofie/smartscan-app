@@ -78,6 +78,7 @@
 							var productId = products[i].productId;
 							var productNaam = products[i].productNaam;
 							var productTitle = products[i].productTitle;
+							var discount = products[i].discount;
 
 							var row = Ti.UI.createTableViewRow(style.row);
 
@@ -93,9 +94,20 @@
 								},
 								opacity : 0.5
 							}));
+							
+							var discountLbl = Ti.UI.createLabel(Smart.combine(style.textError, {
+								text : 'PROMO',
+								textAlign : 'right',
+								right:60
+							}));
+							
+							if(discount===null){
+								discountLbl.text="";
+							}
 
 							row.add(name);
 							row.add(title);
+							row.add(discountLbl);
 							row.className = 'item' + i;
 							data[i] = row;
 						};
@@ -110,7 +122,7 @@
 							Titanium.App.selectedProdIndex = products[e.index].productId;
 							Titanium.App.selectedProd = products[e.index].productNaam;
 							Titanium.App.selectedListId = products[e.index].listId;
-							Ti.API.info('List id: ' + Titanium.App.selectedListId);
+							Titanium.App.discount = products[e.index].discount;
 							Smart.navGroup.open(Smart.ui.createDetailProductWindow(), {
 								animated : false
 							});

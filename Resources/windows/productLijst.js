@@ -129,14 +129,27 @@
 						for(var i = 0; i < categories.length; i++) {
 							var id = categories[i].id;
 							var naam = categories[i].naam;
+							var discount = categories[i].discount;
+							
 
 							var row = Ti.UI.createTableViewRow(style.row);
 
 							var name = Ti.UI.createLabel(Smart.combine(style.textNormal, {
 								text : naam
 							}));
+							
+							var discountLbl = Ti.UI.createLabel(Smart.combine(style.textError, {
+								text : 'PROMO',
+								textAlign : 'right',
+								right:60
+							}));
+							
+							if(discount===null){
+								discountLbl.text="";
+							}
 
 							row.add(name);
+							row.add(discountLbl);
 							row.className = 'item' + i;
 							data[i] = row;
 						};

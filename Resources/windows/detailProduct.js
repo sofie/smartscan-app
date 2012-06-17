@@ -61,6 +61,7 @@
 						Ti.App.pId = detail.id;
 						var pBeschrijving = detail.beschrijving;
 						var pPrijs = detail.prijs;
+						
 
 						var bgView = Titanium.UI.createView(style.bgProduct);
 
@@ -94,10 +95,26 @@
 						var prijs = Titanium.UI.createLabel(Smart.combine(style.textProductPrice, {
 							text : '€ ' + pPrijs
 						}));
+						
+						if(Titanium.App.discount){
+							Ti.API.info('Discount opacity');
+							prijs.opacity=0.4
+						}
+						var discountPrijs=pPrijs-pPrijs*Titanium.App.discount;
+						discountPrijs=discountPrijs.toFixed(2);
+						var discount = Ti.UI.createLabel(Smart.combine(style.textProductPrice, {
+							text : 'PROMO  € ' +discountPrijs,
+							top:140,
+							color:'#AC3724'
+						}));	
+						if(Ti.App.discount===null){
+							discount.text="";
+						}
 						bgView.add(title);
 						bgView.add(imageView);
 						bgView.add(beschrijving);
 						bgView.add(prijs);
+						bgView.add(discount);
 
 						detailproductWindow.add(bgView);
 						navActInd.hide();

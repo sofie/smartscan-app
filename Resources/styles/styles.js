@@ -273,7 +273,7 @@
 		},
 		updateButton : {
 			backgroundImage : '/img/btn_update.png',
-			top : 145,
+			top : 135,
 			right : 20,
 			width : 128,
 			height : 37

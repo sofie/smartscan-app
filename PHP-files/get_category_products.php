@@ -13,14 +13,16 @@ if (!$conn -> connect_error) {
 			WHERE categories.id='".$id ."'";
 			
 	$result = $conn -> query($qry);
-	$singleResult = mysqli_fetch_assoc($result);
 
 	if ($num_rows = $result -> num_rows > 0) {
 		$list = array();
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getCatProd" => true, "naam" => $singleResult['name'],"id" => $singleResult['id']);
+			$promo = "SELECT discount FROM `promotions` WHERE product_id='".$singleResult['id'] ."'";
+			$resultPromo = $conn -> query($promo);
+			$singleResultPromo = mysqli_fetch_assoc($resultPromo);
+			$response = array("getCatProd" => true, "naam" => $singleResult['name'],"id" => $singleResult['id'],"discount"=>$singleResultPromo['discount']);
 			$list[] = $response;
 		};
 		echo json_encode($list);

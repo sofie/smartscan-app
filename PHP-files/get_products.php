@@ -19,7 +19,12 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getList" => true, "productNaam" => $singleResult['name'],"productTitle" => $singleResult['title'],"productId" => $singleResult['product_id'], "listId" => $singleResult['id']);
+			$promo = "SELECT discount FROM `promotions` WHERE product_id='".$singleResult['product_id'] ."'";
+			$resultPromo = $conn -> query($promo);
+			$singleResultPromo = mysqli_fetch_assoc($resultPromo);
+			$response = array("getList" => true, "productNaam" => $singleResult['name'],"productTitle" => $singleResult['title'],
+								"productId" => $singleResult['product_id'], "listId" => $singleResult['id'],
+								"discount"=>$singleResultPromo['discount']);
 			$list[] = $response;
 		};
 		echo json_encode($list);
