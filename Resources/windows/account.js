@@ -188,7 +188,11 @@
 							var dag = startuur.substr(8, 2);
 							var prettyDate = dag + '-' + maand + '-' + jaar;
 
-							var row = Ti.UI.createTableViewRow(style.row);
+							var row = Ti.UI.createTableViewRow(Smart.combine(style.row,{
+								selectionStyle:Titanium.UI.iPhone.TableViewCellSelectionStyle.NONE,
+								backgroundImage : '/img/bg_textInput.png',
+
+							}));
 
 							var uur = Ti.UI.createLabel(Smart.combine(style.textNormal, {
 								text : prettyDate,

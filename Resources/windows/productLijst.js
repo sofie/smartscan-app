@@ -27,40 +27,115 @@
 		//
 		//Inhoud window
 		//
-		var productNaam = Titanium.UI.createTextField(Smart.combine(style.inputFieldKort, {
-			top : 15,
-			hintText : 'Voeg product toe aan lijst...'
+		var searchBg = Titanium.UI.createView(style.searchBar);
+		productLijstWin.add(searchBg);
+		
+		var searchbar = Titanium.UI.createTextField(Smart.combine(style.SearchField,{
+			hintText : 'Voeg producten toe aan lijst...'
 		}));
-
-		var btnAddProduct = Titanium.UI.createButton(style.searchButton);
-
-		btnAddProduct.addEventListener('click', function(e) {
-			if(productNaam.value != '') {
-				productNaam.blur();
-				addProduct();
-
-			} else {
-				alert('Gelieve een naam in te vullen.');
-			}
+		productLijstWin.add(searchbar);
+		
+		searchbar.addEventListener('change', function() {
+			getProductNaam();
 		});
+		
 		var categorieLbl = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
-			text : 'Product categoriëen',
-			top : 75
+			text : 'Zoek product in categoriëen',
+			top : 60
 		}));
 
-		productLijstWin.add(productNaam);
-		productLijstWin.add(btnAddProduct);
 		productLijstWin.add(categorieLbl);
 
 		return productLijstWin;
+		
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Product toevoegen door zoeken op naam											//
+		//////////////////////////////////////////////////////////////////////////////////////
+		function getProductNaam() {
 
+			var data = [];
 
-		//Add product to list
+			var getReq = Titanium.Network.createHTTPClient();
+			if(Ti.App.localonline === "local") {
+				getReq.open("GET", "http://localhost/smartscan/get_allproducts.php");
+			} else {
+				getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_allproducts.php");
+			}
+			
+			getReq.timeout = 5000;
+
+			getReq.onload = function() {
+				try {
+					var products = JSON.parse(this.responseText);
+					Titanium.App.product = products;
+					Titanium.App.dataproduct = products.length;
+					
+					//Er zijn nog geen linken in de databank
+					if(products.getProd === false) {
+						var lblNoCat = Titanium.UI.createLabel(Smart.combine(style.textError, {
+							top : 42,
+							text : 'Geen producten gevonden.',
+							left : 45,
+							right : 30,
+							width : 300,
+							height : 'auto'
+						}));
+						productLijstWin.add(lblNoCat);
+
+					} else {
+						for(var i = 0; i < products.length; i++) {
+							var id = products[i].id;
+							var pNaam = products[i].naam;
+
+							var row = Ti.UI.createTableViewRow(style.row);
+
+							var name = Ti.UI.createLabel(Smart.combine(style.textNormal, {
+								text : pNaam
+							}));
+
+							row.add(name);
+							row.className = 'item' + i;
+							data[i] = row;
+						};
+
+						var listCat = Titanium.UI.createTableView(Smart.combine(style.tableView, {
+							data : data,
+							top:40,
+							bottom:200
+						}));
+						productLijstWin.add(listCat);
+						
+						listCat.addEventListener('click', function(e) {
+							Titanium.App.selectedProdIndex = products[e.index].id;
+							addProduct();
+						});
+
+					}
+
+				} catch(e) {
+					alert(e);
+				}
+			};
+			var params = {
+				name : searchbar.value
+			};
+			Ti.API.info('Search: '+params.name);
+			
+			getReq.onerror = function(e) {
+				Ti.API.info("TEXT onerror:   " + this.responseText);
+				alert('Er is iets mis met de databank.');
+			}
+
+			getReq.send(params);
+		}
+		
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Product toevoegen aan boodschappenlijst door zoeken op naam						//
+		//////////////////////////////////////////////////////////////////////////////////////
 		function addProduct() {
 			var createReq = Titanium.Network.createHTTPClient();
 			if(Ti.App.localonline === "local") {
 				createReq.open("POST", "http://localhost/smartscan/post_addproduct.php");
-
 			} else {
 				createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_addproduct.php");
 			}
@@ -75,18 +150,17 @@
 				try {
 					var json = this.responseText;
 					var response = JSON.parse(json);
-					Titanium.API.info('LIjst: '+this.responseText);
+					Titanium.API.info(this.responseText);
 					if(response.add === true) {
-						if(response.promo===true){
-							Ti.API.info('Promo');
-						}
-						Smart.navGroup.close(productLijstWin, {
-							animated : false
-						});
 
 						Ti.App.fireEvent('app:reloadLijst', {
 							action : 'Reload links'
 						});
+						Smart.navGroup.close(productLijstWin, {
+							animated : false
+						});
+						Smart.ui.createLijstjeInhoudWindow();
+
 					} else {
 						alert('Product staat al op lijstje');
 					}
@@ -101,8 +175,11 @@
 
 			createReq.send(params);
 		}
+	
 
-		//Get categories
+		//////////////////////////////////////////////////////////////////////////////////////
+		/// Producten van gekozen categorie													//
+		//////////////////////////////////////////////////////////////////////////////////////
 		function getProducts() {
 
 			var data = [];

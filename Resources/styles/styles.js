@@ -62,6 +62,25 @@
 			backgroundImage : 'img/bg_product.png',
 			height : 179
 		},
+		searchBar : {
+			backgroundImage : 'img/bg_search.png',
+			width : Ti.Platform.displayCaps.platformWidth,
+			height : 43,
+			top : 0,
+			left : 0
+		},
+		SearchField : {
+			color : '#b3b3b3',
+			font : {
+				fontFamily : 'Arial',
+				fontSize : 13
+			},
+			returnKeyType : Titanium.UI.RETURNKEY_SEARCH,
+			width : 265,
+			height : 30,
+			top : 7,
+			left : 40,
+		},
 
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		/// Text																									//
