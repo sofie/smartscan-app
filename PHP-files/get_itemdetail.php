@@ -18,7 +18,7 @@ if (!$conn -> connect_error) {
 		$promo = "SELECT discount FROM `promotions` WHERE product_id='".$singleResult['id'] ."'";
 		$resultPromo = $conn -> query($promo);
 		$singleResultPromo = mysqli_fetch_assoc($resultPromo);
-			
+	
 			$response = array(
 				"getItem" => true, 
 				"name" => $singleResult['name'], 
@@ -30,6 +30,15 @@ if (!$conn -> connect_error) {
 				"discount" => $singleResultPromo['discount']
 			);
 		echo json_encode($response);
+		
+		$link = "SELECT linkId FROM `link_details` WHERE `productId`='".$singleResult['id'] ."'";
+		$resultLink = $conn -> query($link);
+		$singleResultLink = mysqli_fetch_assoc($resultLink);
+			
+		if ($num_rows = $resultLink -> num_rows > 0) {
+			$response = array("getLink" => true);
+			echo json_encode($response);
+		}
 
 	} else {
 		$response = array("getItem" => false);

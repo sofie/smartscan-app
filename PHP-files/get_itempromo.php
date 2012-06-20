@@ -3,14 +3,10 @@
 require_once('connection.php');
 $conn = @ new mysqli($dbserver,$dbuser,$dbpass,$dbase);
 
-if (!$conn -> connect_error) {
-	
-	$user_id = $_POST['user_id'];
-	
-	$qry = "SELECT startuur,user_id,totaal,num_products
-			FROM winkel_sessie
-			WHERE user_id='".$user_id ."' AND einduur !='0000-00-00 00:00:00'
-			ORDER BY startuur";
+	if (!$conn -> connect_error) {
+		
+	$product_id = $_POST['product_id'];
+	$qry = "SELECT linkId FROM `link_details` WHERE `productId`='".$product_id."'";
 			
 	$result = $conn -> query($qry);
 	$singleResult = mysqli_fetch_assoc($result);
@@ -20,13 +16,13 @@ if (!$conn -> connect_error) {
 		mysqli_data_seek($result,0);
 		
 		while ($singleResult = mysqli_fetch_assoc($result)) {
-			$response = array("getList" => true, "startuur" => $singleResult['startuur'],"totaal"=>$singleResult['totaal'],"num_products"=>$singleResult['num_products']);
+			$response = array("getLink" => true, "linkId" => $singleResult['linkId']);
 			$list[] = $response;
 		};
 		echo json_encode($list);
 
 	} else {
-		$response = array("getList" => false);
+		$response = array("getLink" => false);
 		echo json_encode($response);
 		$conn -> close();
 	}

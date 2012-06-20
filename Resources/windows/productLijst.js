@@ -75,8 +75,11 @@
 				try {
 					var json = this.responseText;
 					var response = JSON.parse(json);
-					Titanium.API.info(this.responseText);
+					Titanium.API.info('LIjst: '+this.responseText);
 					if(response.add === true) {
+						if(response.promo===true){
+							Ti.API.info('Promo');
+						}
 						Smart.navGroup.close(productLijstWin, {
 							animated : false
 						});

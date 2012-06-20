@@ -6,7 +6,8 @@ $conn = @ new mysqli($dbserver,$dbuser,$dbpass,$dbase);
 if (!$conn -> connect_error) {
 	
 	$qry = "SELECT name, id
-			FROM categories";
+			FROM categories
+			ORDER BY name";
 			
 	$result = $conn -> query($qry);
 	$singleResult = mysqli_fetch_assoc($result);

@@ -29,7 +29,18 @@ if (!$conn -> connect_error)
 		$query = $conn -> query($insert);
 		if ($query) 
 		{
-			$response = array('add' => true, 'listId' => $list_id, 'productId' => $product_id);
+			$promoQry="SELECT id FROM products WHERE id in(SELECT product_id FROM promotions WHERE product_id='" .$product_id. "')";
+			$promoQuery = $conn -> query($promoQry);
+			$resultPromo = mysqli_fetch_assoc($promoQuery);
+			
+			$promo;
+			if($num_rows = $promoQuery -> num_rows == 0){
+				$promo = false;
+			}else{
+				$promo = true;
+			}
+			
+			$response = array('add' => true, 'listId' => $list_id, 'productId' => $product_id, 'promo'=>$promo);
 			echo json_encode($response);
 			$conn -> close();
 		} 
