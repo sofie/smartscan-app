@@ -115,7 +115,8 @@
 						};
 
 						var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView, {
-							data : data
+							data : data,
+							bottom:55
 						}));
 						inhoudlijstjeWindow.add(listLists);
 
@@ -126,7 +127,6 @@
 							Titanium.App.selectedListId = products[e.index].listId;
 							Titanium.App.discount = products[e.index].discount;
 							Titanium.App.link=products[e.index].link;
-							Ti.API.info('Titanium.App.link: '+Titanium.App.link);
 							Smart.navGroup.open(Smart.ui.createDetailProductWindow(), {
 								animated : false
 							});
@@ -179,6 +179,12 @@
 
 			getReq.send(params);
 		}
+		var klaarButton = Titanium.UI.createButton(style.klaarLangButton);
+		klaarButton.addEventListener('click', function() {
+			
+			Smart.ui.createApplicationMainWin();
+		});
+		inhoudlijstjeWindow.add(klaarButton);
 
 		
 		return inhoudlijstjeWindow;

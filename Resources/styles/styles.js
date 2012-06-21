@@ -296,6 +296,14 @@
 			left : 'auto',
 			right : 'auto'
 		},
+		klaarLangButton : {
+			backgroundImage : 'img/btn_klaarLang.png',
+			height : 37,
+			width : 280,
+			bottom : 10,
+			left : 'auto',
+			right : 'auto'
+		},
 		klaarButton : {
 			backgroundImage : '/img/btn_klaar.png',
 			top : -37,
