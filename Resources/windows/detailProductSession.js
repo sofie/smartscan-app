@@ -25,7 +25,7 @@
 
 			detailproductWindow.addEventListener('open', function() {
 				getDetail();
-
+				getLink();
 				navActInd.show();
 			});
 
@@ -105,12 +105,12 @@
 							var title = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
 								text : name + ' ' + title
 							}));
-							var promo = Titanium.UI.createLabel( Smart.combine(style.textError, {
+							var promo = Titanium.UI.createLabel(Smart.combine(style.textError, {
 								text : 'PROMO',
-								top:13,
-								textAlign:'right',
-								right:30
-							}));	
+								top : 13,
+								textAlign : 'right',
+								right : 30
+							}));
 							var beschrijving = Titanium.UI.createLabel(Smart.combine(style.textProductDescription, {
 								text : pBeschrijving
 							}));
@@ -121,7 +121,7 @@
 
 							if (Titanium.App.selectedDiscount) {
 								prijs.opacity = 0.4;
-								prijs.top=105;
+								prijs.top = 105;
 								bgView.add(promo);
 							}
 							var discountPrijs = pPrijs - pPrijs * Titanium.App.selectedDiscount;
@@ -170,6 +170,137 @@
 				Ti.API.info(Ti.App.amount);
 				updateAantal();
 			});
+
+			//////////////////////////////////////////////////////////////////////////////////
+			/// Haalt link op uit databank													//
+			//////////////////////////////////////////////////////////////////////////////////
+			function getLink() {
+				var data = [];
+				var getReq = Titanium.Network.createHTTPClient();
+				if (Ti.App.localonline === "local") {
+					getReq.open("GET", "http://localhost/SmartScan/get_itemlink.php");
+				} else {
+					getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_itemlink.php");
+				}
+				var params = {
+					product_id : Titanium.App.selectedProdIndex,
+					link_id : Titanium.App.link
+				};
+
+				getReq.timeout = 5000;
+				getReq.onload = function() {
+					try {
+						var detail = JSON.parse(this.responseText);
+
+						if (detail.getLink === false) {
+							Ti.API.info('Geen link');
+
+						} else {
+							var lbl = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
+								text : 'Korting als je dit product samen met het product hieronder koopt.',
+								top : 230,
+								height : 50,
+								font : {
+									fontSize : 14,
+									fontFamily : 'Bree serif'
+								}
+							}));
+							detailproductWindow.add(lbl);
+
+							for (var i = 0; i < detail.length; i++) {
+
+								var row = Ti.UI.createTableViewRow(Smart.combine(style.row, {
+
+								}));
+								var title = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
+									text : detail[i].anderName,
+									top : 0
+								}));
+
+								row.add(title);
+								row.className = 'item' + i;
+								data[i] = row;
+							};
+
+							var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView, {
+								data : data,
+								top : 275
+							}));
+							detailproductWindow.add(listLists);
+							listLists.addEventListener('click', function(e) {
+								Titanium.App.selectedProdIndex = detail[e.index].anderId;
+								Titanium.App.selectedProdNaam = detail[e.index].anderName;
+								Titanium.App.selectedBarcode = detail[e.index].anderBarcode;
+
+								Ti.API.info('Titanium.App.selectedProdIndex: ' + detail[e.index].anderId);
+								Ti.API.info('Titanium.App.selectedProdNaam: ' + detail[e.index].anderName);
+								Smart.navGroup.close(detailproductWindow, {
+									animated : false
+								});
+								addProduct();
+							});
+
+						}
+
+					} catch(e) {
+						alert(e);
+					}
+				}
+				getReq.onerror = function(e) {
+					Ti.API.info("TEXT onerror:   " + this.responseText);
+					alert('Er is iets mis met de databank.');
+				}
+
+				getReq.send(params);
+			};
+
+			//////////////////////////////////////////////////////////////////////////////////
+			/// Link toevoegen																//
+			//////////////////////////////////////////////////////////////////////////////////
+			function addProduct() {
+
+				var createReq = Titanium.Network.createHTTPClient();
+				if (Ti.App.localonline === "local") {
+					createReq.open("POST", "http://localhost/SmartScan/post_sessieproducten.php");
+				} else {
+					createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_sessieproducten.php");
+				}
+
+				var params = {
+					barcode : Titanium.App.selectedBarcode,
+					session_id : Ti.App.sessionId
+				};
+
+				createReq.onload = function() {
+					try {
+						var json = this.responseText;
+						var response = JSON.parse(json);
+						Ti.API.info("Add link: " + this.responseText);
+
+						if (response.add === true) {
+							Ti.App.fireEvent('app:reloadSession', {
+								action : 'Reload producten sessie'
+							});
+							Smart.navGroup.close(detailproductWindow, {
+								animated : false
+							});
+							Smart.ui.createStartWinkelenWindow();
+						} else {
+							alert('Product niet gevonden.');
+						}
+
+					} catch(e) {
+						alert(e);
+					}
+				};
+				createReq.onerror = function(e) {
+					Ti.API.info("TEXT onerror:   " + this.responseText);
+					alert('Er is iets mis met de databank.');
+				}
+
+				createReq.send(params);
+
+			};
 
 			//////////////////////////////////////////////////////////////////////////////////
 			/// Hoeveelheid van gescand product aanpassen									//

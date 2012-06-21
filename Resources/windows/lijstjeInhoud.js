@@ -79,6 +79,8 @@
 							var productNaam = products[i].productNaam;
 							var productTitle = products[i].productTitle;
 							var discount = products[i].discount;
+							var link = products[i].link;
+							Ti.API.info('link: '+link);
 
 							var row = Ti.UI.createTableViewRow(style.row);
 
@@ -123,6 +125,8 @@
 							Titanium.App.selectedProd = products[e.index].productNaam;
 							Titanium.App.selectedListId = products[e.index].listId;
 							Titanium.App.discount = products[e.index].discount;
+							Titanium.App.link=products[e.index].link;
+							Ti.API.info('Titanium.App.link: '+Titanium.App.link);
 							Smart.navGroup.open(Smart.ui.createDetailProductWindow(), {
 								animated : false
 							});

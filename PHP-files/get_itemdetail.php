@@ -36,7 +36,7 @@ if (!$conn -> connect_error) {
 		$singleResultLink = mysqli_fetch_assoc($resultLink);
 			
 		if ($num_rows = $resultLink -> num_rows > 0) {
-			$response = array("getLink" => true);
+			$response = array("getItem" => true);
 			echo json_encode($response);
 		}
 

@@ -120,6 +120,19 @@
 			}
 		},
 
+		textDelete : {
+			font : {
+				fontSize : 13,
+				fontFamily : 'Bree serif'
+			},
+			color : '#AC3724',
+			top : 5,
+			right : 15,
+			height : 20,
+			width : 30,
+			textAlign : 'right'
+			
+		},
 		textProductDescription : {
 			left : 130,
 			right : 20,

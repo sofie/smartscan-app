@@ -25,6 +25,7 @@
 
 			detailproductWindow.addEventListener('open', function() {
 				getDetail();
+				getLink();
 
 				navActInd.show();
 			});
@@ -63,6 +64,44 @@
 							var pBeschrijving = detail.beschrijving;
 							var pPrijs = detail.prijs;
 
+							var delete_btn = Titanium.UI.createLabel(Smart.combine(style.textDelete, {
+								text : 'X'
+							}));
+							delete_btn.addEventListener('click', function() {
+								var deleteReq = Titanium.Network.createHTTPClient();
+								if (Ti.App.localonline === "local") {
+									deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+								} else {
+									deleteReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removeproduct.php");
+								}
+
+								deleteReq.timeout = 5000;
+								deleteReq.onload = function() {
+									try {
+										var json = this.responseText;
+										var response = JSON.parse(json);
+										if (response.remove === true) {
+											Titanium.API.info('Remove product: ' + this.responseText);
+
+										} else {
+											alert('Product kan niet verwijderd worden.');
+										}
+									} catch(e) {
+										alert(e);
+									}
+								};
+
+								var params = {
+									id : Titanium.App.selectedListId
+								};
+								deleteReq.send(params);
+								Smart.navGroup.close(detailproductWindow, {
+									animated : false
+								});
+								Ti.App.fireEvent('app:reloadLijst', {
+									action : 'Reload links'
+								});
+							})
 							var bgView = Titanium.UI.createView(style.bgProduct);
 
 							var cropView = Titanium.UI.createView({
@@ -110,7 +149,7 @@
 							if (Ti.App.discount === null) {
 								discount.text = "";
 							}
-
+							bgView.add(delete_btn);
 							bgView.add(title);
 							bgView.add(imageView);
 							bgView.add(beschrijving);
@@ -133,47 +172,136 @@
 
 				getReq.send(params);
 			};
-			var verwijderenButton = Titanium.UI.createButton(style.verwijderenButton);
-			detailproductWindow.add(verwijderenButton);
-
 			//////////////////////////////////////////////////////////////////////////////////
-			/// Product verwijderen uit lijst												//
+			/// Haalt link op uit databank													//
 			//////////////////////////////////////////////////////////////////////////////////
-			verwijderenButton.addEventListener('click', function() {
-				var deleteReq = Titanium.Network.createHTTPClient();
+			function getLink() {
+				var data = [];
+				var getReq = Titanium.Network.createHTTPClient();
 				if (Ti.App.localonline === "local") {
-					deleteReq.open("GET", "http://localhost/SmartScan/post_removeproduct.php");
+					getReq.open("GET", "http://localhost/SmartScan/get_itemlink.php");
 				} else {
-					deleteReq.open("GET", "http://sofiehendrickx.eu/SmartScan/post_removeproduct.php");
+					getReq.open("GET", "http://sofiehendrickx.eu/SmartScan/get_itemlink.php");
+				}
+				var params = {
+					product_id : Titanium.App.selectedProdIndex,
+					link_id : Titanium.App.link
+				};
+
+				getReq.timeout = 5000;
+				getReq.onload = function() {
+					try {
+						var detail = JSON.parse(this.responseText);
+
+						if (detail.getLink === false) {
+							Ti.API.info('Geen link');
+
+						} else {
+							var lbl = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
+								text : 'Korting als je dit product samen met het product hieronder koopt.',
+								top : 230,
+								height : 50,
+								font : {
+									fontSize : 14,
+									fontFamily : 'Bree serif'
+								}
+							}));
+							detailproductWindow.add(lbl);
+
+							for (var i = 0; i < detail.length; i++) {
+
+								var row = Ti.UI.createTableViewRow(Smart.combine(style.row, {
+
+								}));
+								var title = Titanium.UI.createLabel(Smart.combine(style.textProductTitle, {
+									text : detail[i].anderName,
+									top : 0
+								}));
+
+								row.add(title);
+								row.className = 'item' + i;
+								data[i] = row;
+							};
+
+							var listLists = Titanium.UI.createTableView(Smart.combine(style.tableView, {
+								data : data,
+								top : 275
+							}));
+							detailproductWindow.add(listLists);
+							listLists.addEventListener('click', function(e) {
+								Titanium.App.selectedProdIndex = detail[e.index].anderId;
+								Titanium.App.selectedProdNaam = detail[e.index].anderName;
+								Ti.API.info('Titanium.App.selectedProdIndex: ' + detail[e.index].anderId);
+								Ti.API.info('Titanium.App.selectedProdNaam: ' + detail[e.index].anderName);
+								Smart.navGroup.close(detailproductWindow, {
+									animated : false
+								});
+								addProduct();
+								Smart.navGroup.open(Smart.ui.createLijstjeInhoudWindow(), {
+									animated : false
+								});
+							});
+
+						}
+
+					} catch(e) {
+						alert(e);
+					}
+				}
+				getReq.onerror = function(e) {
+					Ti.API.info("TEXT onerror:   " + this.responseText);
+					alert('Er is iets mis met de databank.');
 				}
 
-				deleteReq.timeout = 5000;
-				deleteReq.onload = function() {
+				getReq.send(params);
+			};
+
+			//////////////////////////////////////////////////////////////////////////////////////
+			/// Product toevoegen aan boodschappenlijst											//
+			//////////////////////////////////////////////////////////////////////////////////////
+			function addProduct() {
+				var createReq = Titanium.Network.createHTTPClient();
+				if (Ti.App.localonline === "local") {
+					createReq.open("POST", "http://localhost/smartscan/post_addproduct.php");
+				} else {
+					createReq.open("POST", "http://sofiehendrickx.eu/SmartScan/post_addproduct.php");
+				}
+
+				var params = {
+					list_id : Titanium.App.selectedLijstje,
+					product_id : Titanium.App.selectedProdIndex
+				};
+				Ti.API.info('Add: ' + params.list_id + ' ' + params.product_id);
+
+				createReq.onload = function() {
 					try {
 						var json = this.responseText;
 						var response = JSON.parse(json);
-						if (response.remove === true) {
-							Titanium.API.info('Remove product: ' + this.responseText);
+						Titanium.API.info(this.responseText);
+						if (response.add === true) {
+
+							Ti.App.fireEvent('app:reloadLijst', {
+								action : 'Reload links'
+							});
+							Smart.navGroup.close(detailproductWindow, {
+								animated : false
+							});
+							Smart.ui.createLijstjeInhoudWindow();
 
 						} else {
-							alert('Product kan niet verwijderd worden.');
+							alert('Product staat al op lijstje');
 						}
 					} catch(e) {
 						alert(e);
 					}
 				};
+				createReq.onerror = function(e) {
+					Ti.API.info("TEXT onerror:   " + this.responseText);
+					alert('Er is iets mis met de databank.');
+				}
 
-				var params = {
-					id : Titanium.App.selectedListId
-				};
-				deleteReq.send(params);
-				Smart.navGroup.close(detailproductWindow, {
-					animated : false
-				});
-				Ti.App.fireEvent('app:reloadLijst', {
-					action : 'Reload links'
-				});
-			});
+				createReq.send(params);
+			}
 
 			return detailproductWindow;
 		};

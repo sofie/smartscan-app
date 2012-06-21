@@ -36,9 +36,13 @@ if (!$conn -> connect_error) {
 			$resultPromo = $conn -> query($promo);
 			$singleResultPromo = mysqli_fetch_assoc($resultPromo);
 			
+			$link = "SELECT linkId FROM links WHERE linkHoofdproduct='".$singleResult['product_id'] ."'";
+			$resultLink = $conn -> query($link);
+			$singleResultLink = mysqli_fetch_assoc($resultLink);
+			
 			$response = array("getList" => true, "naam" => $singleResult['name'],"title" => $singleResult['title'],"id" => $singleResult['product_id'],
 								"aantal"=>$singleResultTotaal['SUM(aantal)'],"prijsStuk"=>$singleResult['calculated_price']*$singleResult['aantal'],
-								"amount"=>$singleResult['aantal'],"discount"=>$singleResultPromo['discount'],
+								"amount"=>$singleResult['aantal'],"discount"=>$singleResultPromo['discount'],"link"=>$singleResultLink['linkId'],
 								"totaalPrijs"=>$singleResultTotaal['SUM(calculated_price*aantal)'],"session_id"=>$singleResult['session_id']);
 			$list[] = $response;
 		};

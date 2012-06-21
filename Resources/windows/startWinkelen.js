@@ -383,6 +383,7 @@
 								Titanium.App.selectedProd = products[e.index].naam;
 								Titanium.App.selectedSessionId = products[e.index].session_id;
 								Titanium.App.selectedDiscount = products[e.index].discount;
+								Titanium.App.link=products[e.index].link;
 								Ti.API.info('Session id: ' + Titanium.App.selectedSessionId);
 								Smart.navGroup.open(Smart.ui.createDetailProductSessionWindow(), {
 									animated : false
